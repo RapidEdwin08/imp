@@ -1,0 +1,16 @@
+High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
+	version 1.25.10; written and copyright by Michael Hipp and others
+	free software (LGPL) without any warranty but with best wishes
+Decoder: generic
+Trying output module: alsa, device: <nil>
+
+Directory: /home/pi/RetroPie/roms/music/bgm/A-SIDE/
+Playing MPEG stream 1 of 1: e1m2.mp3 ...
+
+MPEG 1.0 L III vbr 44100 j-s
+
+Title:   The Imp's Song                  Artist: Robert Prince                 
+Album:   D00M
+Year:    1993
+
+> 0000+0000  00:00
