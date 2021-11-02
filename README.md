@@ -62,10 +62,11 @@ cd ~/imp && ./imp_setup.sh offline
 
 If you are [Upgrading] to a Newer Version of IMP:  
 *UNINSTALL [IMP] FIRST using the SETUP Script CURRENTLY INSTALLED*  
-DELETE (or BACKUP) the 0lder ~/imp Directory and ~/imp-setup.tar.gz AFTER.  
-
 ```bash
 cd ~/imp && ./imp_setup.sh #Proceed to Uninstall 0lder [IMP]
+```
+Then REMOVE (or BACKUP) the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newer Version of [IMP]  
+```bash
 cd ~ #Change to Home Directory
 mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
 mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
