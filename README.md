@@ -7,17 +7,17 @@ eg. [Recall Last Track/Position] [Track Info] and [Previous Track] are DISABLED 
 
 ## FEATURES
 
-Music Player is Placed in RetroPie Settings Menu
-Current Playlist
-Previous Track [DISABLED in LITE Mode] {Icon Changes to Reflect LITE MODE}
-Play
-Pause
-Stop
-Next Track
-Shuffle Off/On
-Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}/
-Start BGM Music
-Volume % [mpg123 Player Volume]
+Music Player {Placed in RetroPie Settings Menu}  
+Current Playlist  
+Previous Track [DISABLED in LITE Mode] {Icon Changes to Reflect LITE MODE}  
+Play  
+Pause  
+Stop  
+Next Track  
+Shuffle Off/On  
+Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}  
+Start BGM Music  
+Volume % [mpg123 Player Volume]  
 
 Music [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]  
 ~/RetroPie/roms/music [symbolic link to ~/RetroPie/retropiemenu/imp/music]  
@@ -66,6 +66,7 @@ DELETE (or BACKUP) the 0lder ~/imp Directory and ~/imp-setup.tar.gz AFTER.
 
 ```bash
 cd ~/imp && ./imp_setup.sh #Proceed to Uninstall 0lder [IMP]
+cd ~ #Change to Home Directory
 mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
 mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
 ```
