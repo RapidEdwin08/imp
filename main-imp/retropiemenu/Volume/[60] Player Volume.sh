@@ -10,7 +10,7 @@
 # mpg123 -f  "6552" # Volume % "20 "
 # mpg123 -f  "3276" # Volume % "10 "
 # mpg123 -f  "1638" # Volume % "5  "
-volumeLEVEL=1638
+volumeLEVEL=19656
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 
