@@ -1,0 +1,9 @@
+  <system>
+    <name>retropie</name>
+    <fullname>RetroPie</fullname>
+    <path>/home/pi/RetroPie/retropiemenu</path>
+    <extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U </extension>
+    <command>bash /opt/retropie/configs/all/retropiemenu.sh %ROM%</command>      
+    <platform/>
+    <theme>retropie</theme>
+  </system>
