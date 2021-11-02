@@ -503,40 +503,42 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	fi
 fi
 
-# Check for the Most Important Setup Directories and Files [main-imp/*]
-if [ ! -d main-imp/ ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/*] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
-fi
+if [ "$selectTYPE" == "$IMPstandard" ]; then
+	# Check for the Most Important Setup Directories and Files [main-imp/*]
+	if [ ! -d main-imp/ ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/*] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 
-# Check for the Most Important Setup Directories and Files [configs-all/*]
-if [ ! -d main-imp/configs-all ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/configs-all/*] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
-fi
+	# Check for the Most Important Setup Directories and Files [configs-all/*]
+	if [ ! -d main-imp/configs-all ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/configs-all/*] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 
-# Check for the Most Important Setup Directories and Files [configs-all/*]
-if [ ! -f main-imp/configs-all/retropiemenu.sh ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/retropiemenu.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
-fi
+	# Check for the Most Important Setup Directories and Files [configs-all/*]
+	if [ ! -f main-imp/configs-all/retropiemenu.sh ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/retropiemenu.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 
-# Check for the Most Important Setup Directories and Files [configs-all/*]
-if [ ! -f main-imp/configs-all/autostart.sh ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/autostart.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
-fi
+	# Check for the Most Important Setup Directories and Files [configs-all/*]
+	if [ ! -f main-imp/configs-all/autostart.sh ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/autostart.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 
-# Check for the Most Important Setup Directories and Files [configs-all/*]
-if [ ! -f main-imp/configs-all/runcommand-onend.sh ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/runcommand-onend.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
-fi
+	# Check for the Most Important Setup Directories and Files [configs-all/*]
+	if [ ! -f main-imp/configs-all/runcommand-onend.sh ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/runcommand-onend.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 
-# Check for the Most Important Setup Directories and Files [configs-all/*]
-if [ ! -f main-imp/configs-all/runcommand-onstart.sh ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/runcommand-onstart.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
-	mainMENU
+	# Check for the Most Important Setup Directories and Files [configs-all/*]
+	if [ ! -f main-imp/configs-all/runcommand-onstart.sh ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [configs-all/runcommand-onstart.sh] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+		mainMENU
+	fi
 fi
 
 # Check for the Most Important Setup Directories and Files [configs-imp/*]
