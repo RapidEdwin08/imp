@@ -35,8 +35,8 @@ if [[ $(cat $IMPSettings/a-side.flag) == "1" || $(cat $IMPSettings/b-side.flag) 
 	cat /dev/null > $IMPPlaylist/init
 	
 	# Put something in [BGMdir] If No MP3s found
-	if [ ! -f "$BGMa/"*.mp3 ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
-	if [ ! -f "$BGMb/"*.mp3 ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
+	if [[ ! -f "$BGMa/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
+	if [[ ! -f "$BGMb/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
 fi
 
 # Overwrite init playlist if BGM A-SIDE flag 1
@@ -56,7 +56,7 @@ if [ $(cat $IMPSettings/b-side.flag) == "1" ]; then
 fi
 
 # Put something in [musicDIR] If No MP3s found at all
-if [ ! -f "$musicDIR/"*.mp3 ]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
+if [[ ! -f "$musicDIR/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
 
 # Start the Music Play Script
 bash "$IMP/play.sh" &
