@@ -1,0 +1,46 @@
+
+                    ### [IMP] CUSTOM INSTALL ###
+ *** You are Expected to MODIFY the Scripts MANUALLY IF NEEDED ***
+ 
+ INSTALLER will Create Scripts Required for IMP in [~imp/custom-imp]
+   It Will NOT OVERWRITE Any Scripts Located in [~/imp/custom-imp]
+ You must DELETE [~/imp/custom-imp] Folder to Re-Create Clean Scripts
+
+     ### [EXAMPLE]: Main Scripts Required [~/imp/custom-imp] ###
+#################################################################
+[autostart.sh]
+while pgrep omxplayer >/dev/null; do sleep 1; done
+bash /opt/retropie/configs/imp/boot.sh > /dev/null 2>&1 & #auto
+emulationstation #auto
+						  
+[runcommand-onend.sh]
+bash /opt/retropie/configs/imp/run-onend.sh &
+					   
+[runcommand-onstart.sh]
+bash /opt/retropie/configs/imp/run-onstart.sh
+#################################################################
+
+ INSTALLER will Also Attempt to Create 0ptional Scripts If they Exist
+  TEMPLATES are provided for Reference in: [custom-imp/templates]
+
+   # [0PTIONAL]: MODIFY Scripts that toggle ES/Attract Mode/Pegasus #
+                      [~/RetroPie/retropiemenu/]
+                    [~/RetroPie/attractmodemenu/]
+                           attractmode.sh
+                         emulationstation.sh
+                             pegasus.sh
+
+  # [0PTIONAL]: MODIFY Scripts that toggle ES/Attract Mode/Pegasus #
+                   [/opt/retropie/configs/all/]
+                           AM-start.sh
+                           ES-start.sh
+                         Pegasus-start.sh
+
+    # [0PTIONAL]: REPLACE [IMP] Menu Scripts that Require Input #
+            [.no1nput] Scripts Provided in [templates]
+                       Current Playlist.sh
+                       Current Settings.sh
+                        HTTP Server Log.sh
+
+   # [0PTIONAL]: {custom-imp.sh} Script will be Executed If Found #
+                   ~/imp/custom-imp/custom-imp.sh
