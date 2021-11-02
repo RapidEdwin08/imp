@@ -49,8 +49,8 @@ Delay at Startup [seconds]
 ## INSTALLATION
 
 ```bash
-wget https://github.com/RapidEdwin08/imp/raw/main/imp-setup.tar.gz -P ~/
-tar xvzf imp-setup.tar.gz -C ~/
+cd ~
+git clone https://github.com/RapidEdwin08/imp.git
 sudo chmod 755 ~/imp/imp_setup.sh
 cd ~/imp && ./imp_setup.sh
 ```
