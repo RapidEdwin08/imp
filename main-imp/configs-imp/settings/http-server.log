@@ -1,0 +1,4 @@
+Shared Folder - - [/home/pi/RetroPie/roms/music]
+192.168.33.33 - - [10/Dec/1993 13:29:29] "GET /bgm/ HTTP/1.1" 200 -
+192.168.33.33 - - [10/Dec/1993 13:29:29] "GET /bgm/B-SIDE/ HTTP/1.1" 200 -
+192.168.33.33 - - [10/Dec/1993 13:29:31] "GET /bgm/B-SIDE/e1m2.mp3 HTTP/1.1" 200 -
