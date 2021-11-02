@@ -8,43 +8,43 @@ eg. [Recall Last Track/Position] [Track Info] and [Previous Track] are DISABLED 
 ## FEATURES
 
 Music Player is Placed in RetroPie Settings Menu
- Current Playlist
- Previous Track [DISABLED in LITE Mode] {Icon Changes to Reflect LITE MODE}
- Play
- Pause
- Stop
- Next Track
- Shuffle Off/On
- Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}
- Start BGM Music
- Volume % [mpg123 Player Volume]
+Current Playlist
+Previous Track [DISABLED in LITE Mode] {Icon Changes to Reflect LITE MODE}
+Play
+Pause
+Stop
+Next Track
+Shuffle Off/On
+Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}
+Start BGM Music
+Volume % [mpg123 Player Volume]
 
 Music [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]
- ~/RetroPie/roms/music [symbolic link to ~/RetroPie/retropiemenu/imp/music]
+~/RetroPie/roms/music [symbolic link to ~/RetroPie/retropiemenu/imp/music]
 
 Settings
- Current Settings
- Lite Mode [Off/On]
- Infinite Mode [Off/On]
+Current Settings
+Lite Mode [Off/On]
+Infinite Mode [Off/On]
 
 BGM Settings [*Will Override Playlist at Startup*]
- BGM A-Side [Off/On]  [~/RetroPie/roms/music/bgm/A-SIDE]
- BGM B-Side [Off/On]  [~/RetroPie/roms/music/bgm/B-SIDE]
+BGM A-Side [Off/On] [~/RetroPie/roms/music/bgm/A-SIDE]
+BGM B-Side [Off/On] [~/RetroPie/roms/music/bgm/B-SIDE]
 
 Game Settings
- Music Over Games [Off/On]
- Volume Fade at Games [Off/On]
- Delay at Game End [seconds]
+Music Over Games [Off/On]
+Volume Fade at Games [Off/On]
+Delay at Game End [seconds]
 
 HTTP Server [Port:8080 You must STOP HTTP Server before you can START it on Another Directory]
- HTTP Server [Log]
- HTTP Server [On] Music Directory
- HTTP Server [On] ROMS Directory
- HTTP Server [Off]
+HTTP Server [Log]
+HTTP Server [On] Music Directory
+HTTP Server [On] ROMS Directory
+HTTP Server [Off]
 
 Startup Settings
- Music at Startup [Off/On]
- Delay at Startup [seconds]
+Music at Startup [Off/On]
+Delay at Startup [seconds]
 
 ## INSTALLATION
 
