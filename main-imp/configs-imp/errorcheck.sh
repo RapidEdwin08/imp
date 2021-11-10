@@ -12,33 +12,33 @@ echo -e '> 0000+0000' >> $IMPPlaylist/current-track
 # sleep 2
 
 # Check for cannot open file error
-errorOPEN=$(cat $IMPPlaylist/current-track | grep -q 'error: Cannot open' ; echo $?)
+errorOPEN=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'error: Cannot open' ; echo $?)
 if [ "$errorOPEN" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # Check for connection error
-errorCONN=$(cat $IMPPlaylist/current-track | grep -q 'error: Unable to establish connection' ; echo $?)
+errorCONN=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'error: Unable to establish connection' ; echo $?)
 if [ "$errorCONN" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # Check for error: reading the rest of 4096
 # [src/libmpg123/readers.c:186] error: reading the rest of 4096
-errorREAD=$(cat $IMPPlaylist/current-track | grep -q 'error: reading the rest of' ; echo $?)
+errorREAD=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'error: reading the rest of' ; echo $?)
 if [ "$errorREAD" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # Check for error: buffer reading
 # [src/libmpg123/readers.c:844] error: buffer reading
-errorBUFFER=$(cat $IMPPlaylist/current-track | grep -q 'error: buffer reading' ; echo $?)
+errorBUFFER=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'error: buffer reading' ; echo $?)
 if [ "$errorBUFFER" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # === Cannot specify output file without previously specifying a driver.
-errorDRIVER=$(cat $IMPPlaylist/current-track | grep -q 'Cannot specify output file without previously specifying a driver' ; echo $?)
+errorDRIVER=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'Cannot specify output file without previously specifying a driver' ; echo $?)
 if [ "$errorDRIVER" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # You made some mistake in program usage... let me briefly remind you:
-errorSYNTAX=$(cat $IMPPlaylist/current-track | grep -q 'You made some mistake in program usage... let me briefly remind you:' ; echo $?)
+errorSYNTAX=$(tail -n 5 $IMPPlaylist/current-track | grep -q 'You made some mistake in program usage... let me briefly remind you:' ; echo $?)
 if [ "$errorSYNTAX" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # Check for bad file by way of Finished Decoding after 0:01 sec
-# errorOO1=$(cat $IMPPlaylist/current-track | grep -q '[0:01]' ; echo $?)
+# errorOO1=$(tail -n 5 $IMPPlaylist/current-track | grep -q '[0:01]' ; echo $?)
 # if [ "$errorOO1" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 tput reset
