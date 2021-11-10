@@ -677,9 +677,9 @@ fi
 # Remove [mpg123] from [rc.local] if found
 mpg123RC=$(cat /etc/rc.local | grep -q 'mpg123' ; echo $?)
 if [ "$mpg123RC" == '0' ]; then
-	# Parse all lines Except [mpg123]
+	# Parse all lines Except [mpg123] [BGM]
 	# cat /etc/rc.local | grep -Fv "(sleep 20; mpg123 -Z /home/pi/RetroPie/roms/music/*.mp3 >/dev/null 2>&1) &" > main-imp/rc.local
-	cat /etc/rc.local | grep -v "mpg123" > main-imp/rc.local
+	cat /etc/rc.local | grep -v "mpg123" | grep -v "BGM" > main-imp/rc.local
 	
 	# Backup [rc.local] if not exist already
 	if [ ! -f /etc/rc.local.b4imp ]; then sudo cp /etc/rc.local /etc/rc.local.b4imp 2>/dev/null; fi
