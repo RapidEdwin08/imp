@@ -674,9 +674,10 @@ if [ ! -f ~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh.b4imp ]; the
 	cp ~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh ~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh.b4imp
 fi
 
-# Remove [mpg123] from [rc.local] if found
+# Remove [mpg123] [BGM] from [rc.local] if found
 mpg123RC=$(cat /etc/rc.local | grep -q 'mpg123' ; echo $?)
-if [ "$mpg123RC" == '0' ]; then
+bgmRC=$(cat /etc/rc.local | grep -q 'BGM' ; echo $?)
+if [ "$mpg123RC" == '0' ] || [ "$bgmRC" == '0' ]; then
 	# Parse all lines Except [mpg123] [BGM]
 	# cat /etc/rc.local | grep -Fv "(sleep 20; mpg123 -Z /home/pi/RetroPie/roms/music/*.mp3 >/dev/null 2>&1) &" > main-imp/rc.local
 	cat /etc/rc.local | grep -v "mpg123" | grep -v "BGM" > main-imp/rc.local
