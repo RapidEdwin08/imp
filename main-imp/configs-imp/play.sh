@@ -17,9 +17,10 @@ if [ ! -d "$BGMdir" ]; then mkdir "$BGMdir"; fi
 if [ ! -d "$BGMa" ]; then mkdir "$BGMa"; fi
 if [ ! -d "$BGMb" ]; then mkdir "$BGMb"; fi
 
-# Put something in [musicDIR] If No MP3s found at all
-mp3MUSIC=$(find $musicDIR -iname *.mp3 )
-if [[ "$mp3MUSIC" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
+# Put something in [musicDIR] If No MP3s found at all - Exclude BGM Directories
+for d in $(find $musicDIR -type d | grep -v $BGMa | grep -v $BGMb); do find $d -iname *.mp3 >> /dev/shm/tmpMP3; done
+if [[ $(cat /dev/shm/tmpMP3) == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
+rm /dev/shm/tmpMP3 > /dev/null 2>&1
 
 # If BGMa flag 1 - Put something in [BGMadir] If No MP3s found
 if [ "$(cat $IMPSettings/a-side.flag)" == '1' ]; then
