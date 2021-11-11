@@ -25,11 +25,20 @@ cat /dev/null > $IMPPlaylist/abc
 cat /dev/null > $IMPPlaylist/shuffle
 
 # Put something in [musicDIR] If No MP3s found at all
-if [[ ! -f "$musicDIR/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
+mp3MUSIC=$(find $musicDIR -iname *.mp3 )
+if [[ "$mp3MUSIC" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
 
-# Put something in [BGMdir] If No MP3s found
-if [[ ! -f "$BGMa/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
-if [[ ! -f "$BGMb/"*.mp3 ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
+# If BGMa flag 1 - Put something in [BGMadir] If No MP3s found
+if [ "$(cat $IMPSettings/a-side.flag)" == '1' ]; then
+	mp3BGMa=$(find $BGMa -iname *.mp3 )
+	if [[ "$mp3BGMa" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
+fi
+
+# If BGMb flag 1 - Put something in [BGMbdir] If No MP3s found
+if [ "$(cat $IMPSettings/b-side.flag)" == '1' ]; then
+	mp3BGMb=$(find $BGMb -iname *.mp3 )
+	if [[ "$mp3BGMb" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
+fi
 
 # Add all MP3s from musicROMS directory to Playlist Non-Recursive
 find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/abc
