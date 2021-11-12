@@ -5,8 +5,11 @@ IMPPlaylist=$IMP/playlist
 playerVOL=$(cat $IMPSettings/volume.flag)
 httpSTREAM=$(head -qn1 $IMPPlaylist/abc | grep -q 'http:' ; echo $?)
 # FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
-currentTRACK=$IMPPlaylist/current-track
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
+if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
+	currentTRACK=$IMPPlaylist/current-track
+else
+	currentTRACK=/dev/shm/current-track
+fi
 
 # [$IMP/mpg123loop.sh] runs with -continue -k to Continue from Last Frame Position pulled from [$currentTRACK] - Does NOT apply to HTTP
 # If [$IMP/stop.sh] called with NO Argument - Start from the beginning by Setting Last Position > 0000+0000  00:00. > [$currentTRACK]
@@ -34,6 +37,9 @@ if [ $(cat $IMPSettings/shuffle.flag) == "1" ]; then
 else
 	currentPLIST="$IMPPlaylist/abc"
 fi
+
+# Disable Livewire if Not already
+if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
 
 # [IMP] FULL MODE - Always Logging while Playing - Full Features
 if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
