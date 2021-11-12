@@ -3,8 +3,11 @@ IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 # FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
-currentTRACK=$IMPPlaylist/current-track
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
+if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
+	currentTRACK=$IMPPlaylist/current-track
+else
+	currentTRACK=/dev/shm/current-track
+fi
 
 # Called after read line in mpg123loop (Does NOT apply to LITE MODE)
 # Checks for common mpg123 Errors to Kill Loop in Event of Errors
