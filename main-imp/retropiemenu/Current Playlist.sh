@@ -4,12 +4,13 @@ IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 # FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
-currentTRACK=$IMPPlaylist/current-track
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
-
-# FULL MODE Write to Disk - LITE MODE Write to tmpfs
-trackTIME=$(grep '>*+' /opt/retropie/configs/imp/playlist/current-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1)
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then trackTIME=$(grep '>*+' /dev/shm/current-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1); fi
+if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
+	currentTRACK=$IMPPlaylist/current-track
+	trackTIME=$(grep '>*+' /opt/retropie/configs/imp/playlist/current-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1)
+else
+	currentTRACK=/dev/shm/current-track
+	trackTIME=$(grep '>*+' /dev/shm/current-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1)
+fi
 
 trackFILE=$(grep -iE 'Playing MPEG stream' $currentTRACK | cut -b 28-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
 trackTITLE=$(grep -iE 'Title:' $currentTRACK)
