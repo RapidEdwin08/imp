@@ -9,7 +9,7 @@ eg. [Recall Last Track/Position] NOT Retained at STARTUP while in LITE Mode.
 
 Music Player {Placed in RetroPie Settings Menu}  
 Current Playlist  
-Previous Track
+Previous Track  
 Play  
 Pause  
 Stop  
