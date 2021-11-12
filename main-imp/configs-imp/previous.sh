@@ -9,9 +9,9 @@
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
-
-# Lite mode
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then exit 0; fi
+# FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
+currentTRACK=$IMPPlaylist/current-track
+if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
 
 # Full Stop
 bash $IMP/stop.sh
@@ -30,11 +30,11 @@ LINEcount=$(grep -c ".*" $currentPLIST)
 # Parse Current Track file to obtain Last track played - Cut off the last x4 characters
 # Expected Result MP3: Playing MPEG stream 1 of 1: Song.mp3 ...
 # Expected Result Stream: Playing MPEG stream 1 of 1: lush-128-mp3 ...
-mp3LAST=$(grep -iE 'Playing MPEG stream' $IMPPlaylist/current-track | cut -b 29-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
+mp3LAST=$(grep -iE 'Playing MPEG stream' $currentTRACK | cut -b 29-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
 
 # Expected Result  Directory: /home/pi/RetroPie/roms/music/
 # Expected Result  Directory: http://ice1.somafm.com/
-dirBASE=$(grep -iE 'Directory:' $IMPPlaylist/current-track | cut -b 12-999)
+dirBASE=$(grep -iE 'Directory:' $currentTRACK | cut -b 12-999)
 
 # Expected Result mp3: /home/pi/RetroPie/roms/music/Song.mp3
 # Expected Result stream http://ice1.somafm.com/lush-128-mp3

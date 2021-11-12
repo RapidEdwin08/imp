@@ -2,6 +2,9 @@
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
+# FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
+currentTRACK=$IMPPlaylist/current-track
+if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
 
 # musicDIR=$(readlink ~/RetroPie/retropiemenu/imp/music) # ES does not play well with Symbolic Links in [retropiemenu]
 musicDIR=~/RetroPie/retropiemenu/imp/music
@@ -46,8 +49,8 @@ else
     exit 0
 fi
 
-# Lite mode
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then
+# Skip Recall Last Track/Position if currentTRACK NOT found
+if [ ! -f $currentTRACK ]; then
 	# Start the Music Player Loop Script
 	bash "$IMP/mpg123loop.sh" &
 	exit 0
@@ -56,11 +59,11 @@ fi
 # Parse Current Track file to obtain Last track played - Cut off the last x4 characters
 # Expected Result MP3: Playing MPEG stream 1 of 1: Song.mp3 ...
 # Expected Result Stream: Playing MPEG stream 1 of 1: lush-128-mp3 ...
-mp3LAST=$(grep -iE 'Playing MPEG stream' $IMPPlaylist/current-track | cut -b 29-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
+mp3LAST=$(grep -iE 'Playing MPEG stream' $currentTRACK | cut -b 29-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
 
 # Expected Result  Directory: /home/pi/RetroPie/roms/music/
 # Expected Result  Directory: http://ice1.somafm.com/
-dirBASE=$(grep -iE 'Directory:' $IMPPlaylist/current-track | cut -b 12-999)
+dirBASE=$(grep -iE 'Directory:' $currentTRACK | cut -b 12-999)
 
 # Expected Result mp3: /home/pi/RetroPie/roms/music/Song.mp3
 # Expected Result stream http://ice1.somafm.com/lush-128-mp3
@@ -107,8 +110,8 @@ LINEcount=$(grep -c ".*" $currentPLIST)
 # Last track played NOT Identified - Do NOT Rebuild Playlist - Maintain the 0rder
 if [[ "$PLfirst" == '' ]]; then
 	# Last Position 0000 If Last Track not found or Not in Current Playlist
- 	echo "" >> $IMPPlaylist/current-track
- 	echo -e '> 0000+0000' >> $IMPPlaylist/current-track
+ 	echo "" >> $currentTRACK
+ 	echo -e '> 0000+0000' >> $currentTRACK
 else
 	# Last track played Identified - Rebuild ABC Playlists with Last Track played First
 	echo $PLfirst > $IMPPlaylist/init
