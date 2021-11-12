@@ -40,6 +40,9 @@ if [ "$(cat $IMPSettings/b-side.flag)" == '1' ]; then
 	if [[ "$mp3BGMb" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
 fi
 
+# Disable Livewire if Not already
+if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
+
 # Continue mpg123 if coming from a Paused state
 result=`pgrep mpg123`
 if [[ "$result" == '' ]]; then
