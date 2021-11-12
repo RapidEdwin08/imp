@@ -570,6 +570,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh ]; then mv ~/Retro
 
 # Disable Livewire
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
+if [ -f /home/pi/RetroPie/retropiemenu/bgm-mute.sh ]; then mv /home/pi/RetroPie/retropiemenu/bgm-mute.sh /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp; fi
 
 # Disable BGM Naprosnia
 sudo pkill -STOP audacious > /dev/null 2>&1
@@ -1350,6 +1351,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh.b4imp ]; then mv ~
 
 # Enable Livewire
 if [ -f ~/.DisableMusic ]; then rm ~/.DisableMusic; fi
+if [ -f /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp ]; then mv /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp /home/pi/RetroPie/retropiemenu/bgm-mute.sh; fi
 
 # Enable BGM Naprosnia
 # if [ -f ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh 2>/dev/null; fi
