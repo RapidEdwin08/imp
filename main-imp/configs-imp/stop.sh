@@ -3,8 +3,11 @@ IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 # FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
-currentTRACK=$IMPPlaylist/current-track
-if [ $(cat $IMPSettings/lite.flag) == "1" ]; then currentTRACK=/dev/shm/current-track; fi
+if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
+	currentTRACK=$IMPPlaylist/current-track
+else
+	currentTRACK=/dev/shm/current-track
+fi
 
 # Settings Flags
 echo "0" > $IMPSettings/music-switch.flag
@@ -14,7 +17,6 @@ echo "0" > $IMPSettings/pause.flag
 # If [$IMP/stop.sh] called with ANY Argument - Continue track from Last Position by NOT Setting Last Position 0000+0000 
 # If [$IMP/stop.sh] called with NO Argument - Start from the beginning by Setting Last Position 0000+0000 > [$currentTRACK]
 
-#if [[ $1 == '' ]] && [[ $(cat $IMPSettings/lite.flag) == "0" ]]; then
 if [[ $1 == '' ]]; then
 	pkill -STOP mpg123  > /dev/null 2>&1
 	# Start from the beginning by Setting Last Position 0000+0000
