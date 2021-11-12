@@ -56,7 +56,3 @@ sed -i s+$ESCmusicDIR+$ESCmusicROMS+ $IMPPlaylist/init
 # Start the Music Player Loop Script
 bash "$IMP/play.sh"
 exit 0
-
-# Add all MP3s from BGM A-SIDE + B-SIDE directory to Playlist Non-Recursive
-find "$BGMa" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/init
-find "$BGMb" -maxdepth 1 -type f -name "*.mp3" >> $IMPPlaylist/init
