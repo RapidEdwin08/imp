@@ -2,14 +2,14 @@
 
 Integrated Music Player for RetroPie. Based on every article you ever read about mpg123 scripts in RetroPie.  
 Features include Recall Last Track/Position, Next/Previous Track, Select and Play MP3/PLS/M3U Files like a ROM.  
-Incudes LITE Mode with Limited features to Limit Writing to Disk.  
-eg. [Recall Last Track/Position] [Track Info] and [Previous Track] are DISABLED in LITE Mode.  
+Incudes LITE Mode with Limited features to Limit Writing to Disk {Writes to RAM Disk instead}.  
+eg. [Recall Last Track/Position] NOT Retained at STARTUP while in LITE Mode.  
 
 ## FEATURES
 
 Music Player {Placed in RetroPie Settings Menu}  
 Current Playlist  
-Previous Track [DISABLED in LITE Mode] {Icon Changes to Reflect LITE MODE}  
+Previous Track
 Play  
 Pause  
 Stop  
@@ -107,7 +107,7 @@ LITE MODE:
 [IMP] Writes to File for some of it's Features, such as forming Playlists when Starting Music, Recall Last Track/Position, and Previous Track  
 [IMP] Constantly Writes the mpg123 output to a Log File to obtain Info needed for these Features  
 Constantly writing to a File while Playing Music may NOT be Ideal Depending on the OS Storage type (SD Card)  
-[IMP] 0ffers a LITE Mode for this reason, which does NOT write constantly to a Log File in exchange for less features  
+[IMP] 0ffers a LITE Mode for this reason, which Constantly Writes the mpg123 output to RAM Disk [tmpfs] instead for less features  
 The only time [IMP] Writes to File in LITE Mode is creating Playlists, such as selecting an MP3, Starting ALL/BGM Music, or turning Shuffle On  
 If you are using an SD Card you may want to USE LITE Mode , or Enable the [Overlay File System] after setting up your Default BGM Playlist  
 
