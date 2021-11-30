@@ -494,28 +494,4 @@
  ~/RetroPie/roms/jukebox/mp3</desc>
 		<image>./icons/jukebox.png</image>
 	</game>
-	<game>
-		<path>./imp/music/SLAYRadio</path>
-		<name>[SLAYRadio]</name>
-		<desc>[slayradio.org]: SLAY Radio is an internet-based radio station, transmitting from Gothenburg (Göteborg) in Sweden... </desc>
-		<image>./icons/slayradio-logo.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SLAYRadio/slayradio.128.m3u</path>
-		<name>SLAYRadio</name>
-		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
-		<image>./icons/slayradio.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM</path>
-		<name>[Mp3Radio.FM]</name>
-		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM/mp3radio.pls</path>
-		<name>Main Channel</name>
-		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
 </gameList>
