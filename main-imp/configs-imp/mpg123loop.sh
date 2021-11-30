@@ -15,6 +15,10 @@ fi
 # If [$IMP/stop.sh] called with NO Argument - Start from the beginning by Setting Last Position > 0000+0000  00:00. > [$currentTRACK]
 # If [$IMP/stop.sh] called with ANY Argument - Continue track from Last Position by NOT Setting Last Position > 0000+0000  00:00.
 
+# STOP L00P if mpg123 NOT Installed
+mpg123VER=$(mpg123 --version)
+if [[ ! "$mpg123VER" == "mpg123 1."* ]]; then bash $IMP/stop.sh && exit 0; fi
+
 # Check for LastFramePosition - If NOT found Set Last Position 0000+0000 manually - Does NOT apply to HTTP
 if [ "$httpSTREAM" == '1' ]; then
 	LastFramePosition="$(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1)"

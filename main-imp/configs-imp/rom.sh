@@ -5,7 +5,7 @@ mp3DIR=$(dirname "$1")
 if [ ! $(readlink "$mp3DIR") == '' ]; then mp3DIR=$(readlink "$mp3DIR"); fi
 INITmp3BASE=$(basename "$1")
 # Too Many Special Characters
-mp3BASE=$(echo "$INITmp3BASE" | LC_ALL=C sed -e 's/[^a-zA-Z0-9,._+@%/-]/\\&/g; 1{$s/^$/""/}; 1!s/^/"/; $!s/$/"/')
+mp3BASE=$(echo "$INITmp3BASE" | LC_ALL=C sed -e 's/[^a-zA-ZöÖóÓòÒôÔñÑÇçŒœßØøÅåÆæÞþÐð«»¢£¥€¤0-9,._+@%/-]/\\&/g; 1{$s/^$/""/}; 1!s/^/"/; $!s/$/"/')
 
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
@@ -17,12 +17,9 @@ BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
 
-# Create Music Directories if not found
-if [ ! -d "$musicDIR" ]; then mkdir "$musicDIR"; fi
-if [ ! -d "$musicROMS" ]; then ln -s "$musicDIR" "$musicROMS"; fi
-if [ ! -d "$BGMdir" ]; then mkdir "$BGMdir"; fi
-if [ ! -d "$BGMa" ]; then mkdir "$BGMa"; fi
-if [ ! -d "$BGMb" ]; then mkdir "$BGMb"; fi
+# Check for [IMP] Files/Folders Linked to [retropiemenu] [gamelist.xml]
+# Create Files/Folders If Needed to Prevent ERROR [Assertion `mType == FLODER' failed]
+bash "$IMP/rpmenucheck.sh" > /dev/null 2>&1
 
 # Stop instances of mpg123 
 bash "$IMP/stop.sh" > /dev/null 2>&1
