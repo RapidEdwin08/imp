@@ -4,13 +4,12 @@ High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
 Decoder: generic
 Trying output module: alsa, device: <nil>
 
-Directory: /home/pi/RetroPie/roms/music/bgm/A-SIDE/
+Directory: /home/pi/RetroPie/roms/music/bgm/B-SIDE/
 Playing MPEG stream 1 of 1: e1m2.mp3 ...
 
 MPEG 1.0 L III vbr 44100 j-s
 
-Title:   The Imp's Song                  Artist: Robert Prince                 
-Album:   D00M
-Year:    1993
+Title:   The IMP's Song                  Artist: Robert Prince                 
+Album:   Doom
 
 > 0000+0000  00:00
