@@ -3,6 +3,10 @@ IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 echo "1" > $IMPSettings/music-startup.flag
 
+# Check for [IMP] Files/Folders Linked to [retropiemenu] [gamelist.xml]
+# Create Files/Folders If Needed to Prevent ERROR [Assertion `mType == FLODER' failed]
+bash "$IMP/rpmenucheck.sh" > /dev/null 2>&1
+
 # v2021.11 Addition - Runs at [IMP] install + Runs here in case of [RetroPie-Setup] Scripts gets Updated
 rpsKODIautostart=~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh
 rpsKODI='echo -e \"kodi #auto\\nemulationstation #auto\" >>\"$script\"'
