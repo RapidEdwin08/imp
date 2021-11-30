@@ -92,10 +92,26 @@ echo
 echo "         NOTE: [UNINSTALL] of [IMP] does NOT REMOVE [mpg123]  "
 )
 
+GAMELISTimpFINISHREF=$(
+echo
+echo "               # retropiemenu [gamelist.xml] Reference #"
+echo
+echo "                        ~/RetroPie/retropiemenu "
+echo "     /opt/retropie/configs/all/emulationstation/gamelists/retropie "
+echo
+echo "               *** [REBOOT] or [RESTART ES] Recommended ***"
+echo
+)
+
+gamelistIMP=main-imp/gamelist.imp
+if [ "$installFLAG" == 'offline' ]; then gamelistIMP=main-imp/gamelist.offline; fi
+if [ "$installFLAG" == 'somafm' ]; then gamelistIMP=main-imp/icons/somafm/gamelist.somafm; fi
+
 customIMPREF=$(cat ~/imp/main-imp/templates/README)
 IMPstandard="[STANDARD] IMP (Recommended)"
 IMPcustom="[CUSTOM] IMP"
 IMPmpg123="[mpg123] Utilities"
+IMPgamelistRP="[retropiemenu] gamlist.xml Refresh"
 
 mainMENU()
 {
@@ -116,14 +132,15 @@ installTYPE=$(dialog --stdout --no-collapse --title "  $internetSTATUS" \
 	1 "$IMPstandard" \
 	2 "$IMPcustom" \
 	3 "$IMPmpg123" \
-	4 "Uninstall [IMP]")
+	4 "$IMPgamelistRP" \
+	5 "Uninstall [IMP]")
 tput reset
 
 # If ESC then Exit
 if [ "$installTYPE" == '' ]; then exit 0; fi
 
 # Uninstall
-if [ "$installTYPE" == '4' ]; then
+if [ "$installTYPE" == '5' ]; then
 	selectTYPE="UNINSTALL [IMP]"
 	# Confirm Uninstall
 	confREMOVE=$(dialog --stdout --no-collapse --title "               UNINSTALL [IMP]               " \
@@ -133,6 +150,20 @@ if [ "$installTYPE" == '4' ]; then
 		2 "Back to Main Menu")
 	# Uninstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confREMOVE" == '1' ]; then impUNINSTALL; fi
+	mainMENU
+fi
+
+# Refresh retropiemenu gamelist.xml
+if [ "$installTYPE" == '4' ]; then
+	selectTYPE="[retropiemenu] gamlist.xml Refresh"
+	# Confirm Uninstall
+	confREFRESH=$(dialog --stdout --no-collapse --title "     [retropiemenu] gamlist.xml Refresh     " \
+		--ok-label OK --cancel-label Back \
+		--menu "Refresh gamelist.xml if Experiencing [Assertion mType == FOLDER failed]" 25 75 20 \
+		1 "><  $selectTYPE  ><" \
+		2 "Back to Main Menu")
+	# Refresh Confirmed - Otherwise Back to Main Menu
+	if [ "$confREFRESH" == '1' ]; then impGAMELIST; fi
 	mainMENU
 fi
 
@@ -548,8 +579,8 @@ if [ ! -d main-imp/configs-imp ]; then
 fi
 
 # Check for the Most Important Setup Directories and Files [gamelist]
-if [ ! -f main-imp/gamelist.imp ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+if [ ! -f $gamelistIMP ]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [$gamelistIMP] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
 	mainMENU
 fi
 
@@ -717,6 +748,14 @@ if [ "$bashrcCHECK" == '0' ]; then
 	# Replace pkill mpg123
 	sudo sed -i s+'pkill mpg123'+'bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
 else
+	# Replace # RETROPIE PROFILE END - IF [.bashrc] did NOT Contain '# RETROPIE PROFILE END'  it will after this
+	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
+	echo '# RETROPIE PROFILE END' >> ~/.bashrc
+fi
+
+# [IMP] might NOT have been added IF [.bashrc] did NOT Contain '# RETROPIE PROFILE END'  - Final check
+IMPbashrcCHECK=$(cat ~/.bashrc | grep -q 'stop.sh continue' ; echo $?)
+if [ "$IMPbashrcCHECK" == '1' ]; then
 	# Replace # RETROPIE PROFILE END
 	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
 	echo '# RETROPIE PROFILE END' >> ~/.bashrc
@@ -790,24 +829,29 @@ fi
 cp main-imp/configs-all/retropiemenu.sh /opt/retropie/configs/all/
 
 # [gamelist.xml] Modifications for retropiemenu OPT
-if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml ]; then	
+if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml ]; then
 	# Parse all lines Except </gameList>
 	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
 	
-	# Rebuild retropiemenu gamelist.xml with [IMP]
+	# Rebuild retropiemenu gamelist.xml
 	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
-	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# [gamelist.xml] might NOT be properly formatted - Make it so
+	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
+	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
+	
+	# Rebuild retropiemenu gamelist.xml with [IMP]
+	cat $gamelistIMP >> main-imp/gamelist.xml
 	
 	# Backup es_systems.cfg if not exist already
-	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then sudo mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
+	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
 	
 	# Replace retropiemenu gamelist.xml with [IMP]
-	cp main-imp/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
+	mv main-imp/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1
-	# rm main-imp/gamelist.imp
-	rm main-imp/gamelist.xml
+	rm main-imp/gamelist.h1 > /dev/null 2>&1
+	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
 # [gamelist.xml] Modifications for retropiemenu rpMenu
@@ -815,20 +859,25 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	# Parse all lines Except </gameList>
 	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
 	
-	# Rebuild retropiemenu gamelist.xml with [IMP]
+	# Rebuild retropiemenu gamelist.xml
 	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
-	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# [gamelist.xml] might NOT be properly formatted - Make it so
+	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
+	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
+	
+	# Rebuild retropiemenu gamelist.xml with [IMP]
+	cat $gamelistIMP >> main-imp/gamelist.xml
 	
 	# Backup gamelist.xml if not exist already
-	if [ ! -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then sudo mv ~/RetroPie/retropiemenu/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; fi
+	if [ ! -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then mv ~/RetroPie/retropiemenu/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; fi
 	
 	# Replace retropiemenu gamelist.xml with [IMP]
-	cp main-imp/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml
+	mv main-imp/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1
-	# rm main-imp/gamelist.imp
-	rm main-imp/gamelist.xml
+	rm main-imp/gamelist.h1 > /dev/null 2>&1
+	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
 # Copy icon files to retropiemenu
@@ -837,10 +886,10 @@ cp main-imp/icons/imp/* ~/RetroPie/retropiemenu/icons/
 if [ ! -f ~/RetroPie/retropiemenu/icons/backgroundmusic.png ]; then cp main-imp/icons/imp/impmusicdir.png ~/RetroPie/retropiemenu/icons/backgroundmusic.png; fi
 if [ ! -f ~/RetroPie/retropiemenu/icons/jukebox.png ]; then cp main-imp/icons/imp/impmusicdir.png ~/RetroPie/retropiemenu/icons/jukebox.png; fi
 
-# Put something in [BGMdir]
-if [ ! -f "$musicDIR/CCCool.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/CCCool.mp3" > /dev/null 2>&1; fi
-if [ ! -f "$BGMdir/A-SIDE/e1m2.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
-if [ ! -f "$BGMdir/B-SIDE/ddtblu.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/ddtblu.mp3" > /dev/null 2>&1; fi
+# Put something in [musicDIR] [BGMdir]
+if [ ! -f "$musicDIR/MMMenu.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/MMMenu.mp3" > /dev/null 2>&1; fi
+if [ ! -f "$BGMdir/A-SIDE/e1m1.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m1.mp3" > /dev/null 2>&1; fi
+if [ ! -f "$BGMdir/B-SIDE/e1m2.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
 
 # Replace [/home/pi] with current User [$homeDIR] in Playlist - This may Not be a pi
 homeDIR=~/
@@ -996,7 +1045,7 @@ if [[ ! "$installFLAG" == 'offline' ]]; then
 fi
 
 if [ "$installFLAG" == 'somafm' ]; then
-	# Get .PLS from SomaFM 202111
+	# Get .PLS from SomaFM 202112
 	# [IMP] has been Listening to SomaFM since 2006 (NO AFFILIATION)
 	# Please DONATE if you ENJOY SomaFM
 	if [ ! -d "$musicDIR/SomaFM" ]; then mkdir "$musicDIR/SomaFM"; fi
@@ -1039,6 +1088,11 @@ if [ "$installFLAG" == 'somafm' ]; then
 	if [ ! -f "$musicDIR/SomaFM/jollysoul.pls" ]; then wget --no-check-certificate https://somafm.com/jollysoul.pls -P "$musicDIR/SomaFM"; fi
 	if [ ! -f "$musicDIR/SomaFM/xmasinfrisko.pls" ]; then wget --no-check-certificate https://somafm.com/xmasinfrisko.pls -P "$musicDIR/SomaFM"; fi
 	if [ ! -f "$musicDIR/SomaFM/specials.pls" ]; then wget --no-check-certificate https://somafm.com/specials.pls -P "$musicDIR/SomaFM"; fi
+	if [ ! -f "$IMP/somafm-specials.sh" ]; then
+		cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
+		sudo chmod 755 $IMP/somafm-specials.sh
+		bash $IMP/somafm-specials.sh
+	fi
 	
 	# Copy SomaFM icon files to retropiemenu
 	cp main-imp/icons/somafm/*.png ~/RetroPie/retropiemenu/icons/
@@ -1212,9 +1266,6 @@ rm -d $IMP/ 2>/dev/null
 
 # Remove [IMP] Icons from retropiemenu
 rm ~/RetroPie/retropiemenu/icons/imp.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impmcccool.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impbgmddtblu.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impbgme1m2.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impbgmdira.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impbgmdirb.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impbgmdirs.png 2>/dev/null
@@ -1314,6 +1365,8 @@ rm ~/RetroPie/retropiemenu/icons/jollysoul-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/xmasinfrisko-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/xmasrocks-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/specials-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/deptstorechristmas-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/doomed-400.jpg 2>/dev/null
 
 # Remove SLAYRadio
 rm $musicROMS/SLAYRadio/*.m3u 2>/dev/null
@@ -1412,7 +1465,9 @@ confMPG123=$(dialog --stdout --no-collapse --title "  Select mpg123 Install Meth
 	5 " [make install] mpg123-1.25.10 [Offline]" \
 	6 " [make install] mpg123-1.20.1" \
 	7 " [make install] mpg123-1.20.1  [Offline]" \
-	8 " UNINSTALL mpg123-1.2.x.y")
+	8 " UNINSTALL mpg123-1.2.x.y" \
+	9 " [KILL] ES/Pegasus/AM [Recommended before make install]")
+	
 # mpg123 Manual Uninstall Confirmed - Otherwise Back to Main Menu
 if [ "$confMPG123" == '8' ]; then
 	confUNmpg123=$(dialog --stdout --no-collapse --title "               UNINSTALL [mpg123-1.2.x.y]               " \
@@ -1434,6 +1489,12 @@ if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
 	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
 	if [ "$confMPG123" == '7' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
+	if [ "$confMPG123" == '9' ]; then
+		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
+		mpg123MENU
+	fi
 	
 	confINmpg123=$(dialog --stdout --no-collapse --title "               CONFIRM $mpg123SELECT               " \
 		--ok-label OK --cancel-label Back \
@@ -1622,6 +1683,112 @@ fi
 # Finished Install
 dialog --no-collapse --title " * [mpg123] Uninstall COMPLETE *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
 mainMENU
+}
+
+impGAMELIST()
+{
+
+# Check if IMP Installed
+if [ ! -d "$IMP" ]; then
+	dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+	mainMENU
+fi
+
+# Check for the Most Important Setup Directories and Files [gamelist*]
+if [ ! -f main-imp/gamelist.imp ]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+	mainMENU
+fi
+
+if [ "$installFLAG" == 'offline' ]; then
+	# Check for the Most Important Setup Directories and Files [gamelist*]
+	if [ ! -f main-imp/gamelist.offline ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+		mainMENU
+	fi
+fi
+
+if [ "$installFLAG" == 'somafm' ]; then
+	# Check for the Most Important Setup Directories and Files [gamelist*]
+	if [ ! -f main-imp/icons/somafm/gamelist.somafm ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+		mainMENU
+	fi
+fi
+
+# Restore gamelist.xml OPT if Backup is found
+if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then
+    mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
+fi
+
+# Restore gamelist.xml retropiemenu if Backup is found
+if [ -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then
+    mv ~/RetroPie/retropiemenu/gamelist.xml.b4imp ~/RetroPie/retropiemenu/gamelist.xml
+fi
+
+# [gamelist.xml] Modifications for retropiemenu OPT
+if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml ]; then
+	# Parse all lines Except </gameList>
+	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
+	
+	# Rebuild retropiemenu gamelist.xml
+	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	
+	# [gamelist.xml] might NOT be properly formatted - Make it so
+	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
+	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
+	
+	# Rebuild retropiemenu gamelist.xml with [IMP]
+	cat $gamelistIMP >> main-imp/gamelist.xml
+	
+	# Backup es_systems.cfg if not exist already
+	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
+	
+	# Replace retropiemenu gamelist.xml with [IMP]
+	mv main-imp/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
+	
+	# Clean up tmp files
+	rm main-imp/gamelist.h1 > /dev/null 2>&1
+	rm main-imp/gamelist.xml > /dev/null 2>&1
+fi
+
+# [gamelist.xml] Modifications for retropiemenu rpMenu
+if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then	
+	# Parse all lines Except </gameList>
+	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
+	
+	# Rebuild retropiemenu gamelist.xml
+	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	
+	# [gamelist.xml] might NOT be properly formatted - Make it so
+	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
+	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
+	
+	# Rebuild retropiemenu gamelist.xml with [IMP]
+	cat $gamelistIMP >> main-imp/gamelist.xml
+	
+	# Backup gamelist.xml if not exist already
+	if [ ! -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then mv ~/RetroPie/retropiemenu/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; fi
+	
+	# Replace retropiemenu gamelist.xml with [IMP]
+	mv main-imp/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml
+	
+	# Clean up tmp files
+	rm main-imp/gamelist.h1 > /dev/null 2>&1
+	rm main-imp/gamelist.xml > /dev/null 2>&1
+fi
+
+# Finished Refresh - Confirm Reboot
+GAMELISTconfREBOOT=$(dialog --stdout --no-collapse --title " $selectTYPE *COMPLETE*" \
+	--ok-label OK --cancel-label EXIT \
+	--menu "$impLOGO $GAMELISTimpFINISHREF" 25 75 20 \
+	1 "REBOOT" \
+	2 "EXIT")
+# Reboot Confirm - Otherwise Exit
+if [ "$GAMELISTconfREBOOT" == '1' ]; then tput reset && sudo reboot; fi
+
+tput reset
+exit 0
 }
 
 # DISCLAIMER
