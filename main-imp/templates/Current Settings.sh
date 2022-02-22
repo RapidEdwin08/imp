@@ -1,6 +1,4 @@
 #!/bin/bash
-# Supreme Build V2 RéGaLaD/WDG (PiZero 20180827) has a bug where [RetroPie-Setup] does Not have Joypad Support
-# THIS AUTO-TIMEOUT SCRIPT DOES NOT REQUIRE INPUT TO CLOSE
 tput reset
 blue='\033[0;34m'
 RED='\033[0;31m'
@@ -25,6 +23,8 @@ http_setting=$(cat $IMPSettings/http-server.flag)
 http_port=$(cat $IMPSettings/http-server.port)
 infinite_mode=$(cat $IMPSettings/infinite.flag)
 lite_mode=$(cat $IMPSettings/lite.flag)
+randomizer_mode=$(cat $IMPSettings/randomizer.flag)
+startupsong_mode=$(cat $IMPSettings/startupsong.flag)
 
 if [ $aside_music == "1" ]; then aside_music=${GREEN}"ON "; else aside_music=${RED}"OFF"; fi
 if [ $bside_music == "1" ]; then bside_music=${GREEN}"ON "; else bside_music=${RED}"OFF"; fi
@@ -36,6 +36,8 @@ if [ $fade_out == "1" ]; then fade_out=${GREEN}"ON "; else fade_out=${RED}"OFF";
 if [ $http_setting == "1" ]; then http_setting=${GREEN}"ON "; else http_setting=${RED}"OFF"; fi
 if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"ON "; else infinite_mode=${RED}"OFF"; fi
 if [ $lite_mode == "1" ]; then lite_mode=${GREEN}"ON "; else lite_mode=${RED}"OFF"; fi
+if [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ON "; else randomizer_mode=${RED}"OFF"; fi
+if [ $startupsong_mode == "1" ]; then startupsong_mode=${GREEN}"ON "; else startupsong_mode=${RED}"OFF"; fi
 
 currentIP=$(hostname -I)
 echo $currentIP:$http_port > $IMPSettings/current.ip
@@ -76,11 +78,11 @@ echo -e "         ${RED}P${YEL}layer          .:-:.'''        ${RED}v${YEL}$vers
 echo -e "${NC} ,-------------------------------------------------------.               "
 echo -e " |    INFINITE Mode:   $infinite_mode${NC}  |     Music @Startup:   $music_start${NC}  | "
 echo -e " |        LITE Mode:   $lite_mode${NC}  |     DELAY @Startup:   $delay_startup${NC}  | "
-echo -e " |       BGM A-SIDE:   $aside_music${NC}  |    Music OVER Game:   $music_over_game${NC}  | "
-echo -e " |       BGM B-SIDE:   $bside_music${NC}  |  Volume FADE @Game:   $fade_out${NC}  | "
-echo -e " |      HTTP Server:   $http_setting${NC}  |    DELAY @Game End:   $delay_playback${NC}  | "
+echo -e " |  RANDOMIZER Mode:   $randomizer_mode${NC}  |    Music OVER Game:   $music_over_game${NC}  | "
+echo -e " | BGM SIDE  A: $aside_music${NC} B: $bside_music${NC}  |  Volume FADE @Game:   $fade_out${NC}  | "
+echo -e " | PLAY STARTUP SONG:  $startupsong_mode${NC}  |    DELAY @Game End:   $delay_playback${NC}  | "
 echo " \`-------------------------------------------------------'  "
-echo -e "     Address: ${blue}[${YEL}http://$currentHTTP${blue}]${NC} [$http_server${NC}]"
+echo -e " http.server: [$http_setting${NC}] ${blue}[${YEL}http://$currentHTTP${blue}]${NC} [$http_server${NC}]"
 echo -e "       Music Folder: ${YEL}$musicROMS${NC}"
 echo -n "9.."
 sleep 1
