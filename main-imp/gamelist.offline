@@ -111,6 +111,24 @@
 		<image>./icons/impinfiniteoff.png</image>
 	</game>
 	<game>
+		<path>./imp/Settings/Music Randomizer [On].sh</path>
+		<name>Music Randomizer [On]</name>
+		<desc>[ENABLE]:  Music Randomizer
+ ~/RetroPie/roms/music/*
+ ~/RetroPie/roms/music/bgm/A-SIDE/*
+ ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
+		<image>./icons/imprandomizeron.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Music Randomizer [Off].sh</path>
+		<name>Music Randomizer [Off]</name>
+		<desc>[DISABLE]:  Music Randomizer
+ ~/RetroPie/roms/music/*
+ ~/RetroPie/roms/music/bgm/A-SIDE/*
+ ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
+		<image>./icons/imprandomizeroff.png</image>
+	</game>
+	<game>
 		<path>./imp/Settings/BGM Settings</path>
 		<name>{BGM Settings}</name>
 		<desc>[IMP] Integrated Music Player Settings.</desc>
@@ -265,6 +283,20 @@
 		<name>Music At Startup [Off]</name>
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impsettingmusicoff.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Play Startup Song [On].sh</path>
+		<name>Play Startup Song [On]</name>
+		<desc>[ENABLE]:  Play Startup Song at B00T
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impsettingstartupsongon.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Play Startup Song [Off].sh</path>
+		<name>Play Startup Song [Off]</name>
+		<desc>[DISABLE]:  Play Startup Song at B00T
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impsettingstartupsongoff.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/Startup Settings/[000] Delay At Startup.sh</path>
@@ -458,6 +490,13 @@
 		<desc>[IMP] Background Music.
  ~/RetroPie/roms/music/bgm</desc>
 		<image>./icons/impbgmdirs.png</image>
+	</game>
+	<game>
+		<path>./imp/music/bgm/startup.mp3</path>
+		<name>&lt;Startup Song&gt;</name>
+		<desc>[IMP] Startup Song.
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impstartupsong.png</image>
 	</game>
 	<game>
 		<path>./imp/music/bgm/A-SIDE</path>
