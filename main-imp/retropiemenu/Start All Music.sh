@@ -21,7 +21,7 @@ cat /dev/null > $IMPPlaylist/shuffle
 find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/abc
 
 # Add all MP3s from musicROMS SUB-directories to Playlist Recursive
-find "$musicDIR"/*/ -iname "*.mp3" > $IMPPlaylist/shuffle
+find "$musicDIR"/*/ -iname "*.mp3" | grep -v 'imp/music/bgm/startup.mp3' > $IMPPlaylist/shuffle
 
 # Remove BGM A-SIDE/B-SIDE MP3s from musicROMS SUB-directories According to BGM Settings
 if [ "$(cat $IMPSettings/a-side.flag)" == '0' ]; then

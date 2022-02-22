@@ -11,6 +11,11 @@ else
 	currentTRACK=/dev/shm/current-track
 	trackTIME=$(grep '>*+' /dev/shm/current-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1)
 fi
+# Startup Song
+if [ -f /dev/shm/startup-track ]; then
+	currentTRACK=/dev/shm/startup-track
+	trackTIME=$(grep '>*+' /dev/shm/startup-track | tail -1 | sed -n -e 's/^.*> //p' |awk '{print $2}' | cut -d '.' -f 1)
+fi
 
 trackFILE=$(grep -iE 'Playing MPEG stream' $currentTRACK | cut -b 28-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
 trackTITLE=$(grep -iE 'Title:' $currentTRACK)
