@@ -111,6 +111,24 @@
 		<image>./icons/impinfiniteoff.png</image>
 	</game>
 	<game>
+		<path>./imp/Settings/Music Randomizer [On].sh</path>
+		<name>Music Randomizer [On]</name>
+		<desc>[ENABLE]:  Music Randomizer
+ ~/RetroPie/roms/music/*
+ ~/RetroPie/roms/music/bgm/A-SIDE/*
+ ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
+		<image>./icons/imprandomizeron.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Music Randomizer [Off].sh</path>
+		<name>Music Randomizer [Off]</name>
+		<desc>[DISABLE]:  Music Randomizer
+ ~/RetroPie/roms/music/*
+ ~/RetroPie/roms/music/bgm/A-SIDE/*
+ ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
+		<image>./icons/imprandomizeroff.png</image>
+	</game>
+	<game>
 		<path>./imp/Settings/BGM Settings</path>
 		<name>{BGM Settings}</name>
 		<desc>[IMP] Integrated Music Player Settings.</desc>
@@ -265,6 +283,20 @@
 		<name>Music At Startup [Off]</name>
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impsettingmusicoff.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Play Startup Song [On].sh</path>
+		<name>Play Startup Song [On]</name>
+		<desc>[ENABLE]:  Play Startup Song at B00T
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impsettingstartupsongon.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Play Startup Song [Off].sh</path>
+		<name>Play Startup Song [Off]</name>
+		<desc>[DISABLE]:  Play Startup Song at B00T
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impsettingstartupsongoff.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/Startup Settings/[000] Delay At Startup.sh</path>
@@ -460,6 +492,13 @@
 		<image>./icons/impbgmdirs.png</image>
 	</game>
 	<game>
+		<path>./imp/music/bgm/startup.mp3</path>
+		<name>&lt;Startup Song&gt;</name>
+		<desc>[IMP] Startup Song.
+ ~/RetroPie/roms/music/bgm/startup.mp3</desc>
+		<image>./icons/impstartupsong.png</image>
+	</game>
+	<game>
 		<path>./imp/music/bgm/A-SIDE</path>
 		<name># A-SIDE #</name>
 		<desc>[IMP] Background Music.
@@ -495,6 +534,18 @@
 		<image>./icons/jukebox.png</image>
 	</game>
 	<game>
+		<path>./imp/music/Mp3RadioFM</path>
+		<name>[Mp3Radio.FM]</name>
+		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
+		<image>./icons/mp3radiofm.png</image>
+	</game>
+	<game>
+		<path>./imp/music/Mp3RadioFM/mp3radio.pls</path>
+		<name>Main Channel</name>
+		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
+		<image>./icons/mp3radiofm.png</image>
+	</game>
+	<game>
 		<path>./imp/music/SLAYRadio</path>
 		<name>[SLAYRadio]</name>
 		<desc>[slayradio.org]: SLAY Radio is an internet-based radio station, transmitting from Gothenburg (Göteborg) in Sweden... </desc>
@@ -505,6 +556,54 @@
 		<name>SLAYRadio</name>
 		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
 		<image>./icons/slayradio.png</image>
+	</game>
+	<game>
+		<path>./imp/music/NightrideFM</path>
+		<name>[Nightride.FM]</name>
+		<desc>[nightride.fm] Nightride FM is an independent synthwave radio station and online music community, taking its name from the fake GTA:V radio station announced by Kavinsky.</desc>
+		<image>./icons/nightridefm.png</image>
+	</game>
+	<game>
+		<path>./imp/music/NightrideFM/NightrideFM-x6.pls</path>
+		<name>Nightride.FM</name>
+		<desc>Nightride.FM, ChillSynth.FM, SpaceSynth.FM, DarkSynth, HorrorSynth, EBSM...</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC</path>
+		<name>[Rainwave.CC]</name>
+		<desc>[rainwave.cc] Rainwave is an interactive radio website that allows users to request, rate, and vote for songs in real time. The site hosts five separate radio streams and focuses completely on video game music. Rainwave is a free service, funded primarily by Robert &quot;LiquidRain&quot; McAuley, and supplemented by user donations.</desc>
+		<image>./icons/rainwavecc.png</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC/1.mp3.m3u</path>
+		<name>Game</name>
+		<desc>RainwaveCC: Game</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC/2.mp3.m3u</path>
+		<name>OC Remix</name>
+		<desc>RainwaveCC: OC Remix</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC/3.mp3.m3u</path>
+		<name>Covers</name>
+		<desc>RainwaveCC: Covers</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC/4.mp3.m3u</path>
+		<name>ChipTune</name>
+		<desc>RainwaveCC: ChipTune</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/RainwaveCC/5.mp3.m3u</path>
+		<name>All</name>
+		<desc>RainwaveCC: All</desc>
+		<image>./icons/rainwave.png</image>
 	</game>
 	<game>
 		<path>./imp/music/SomaFM</path>
@@ -546,7 +645,7 @@
 		<path>./imp/music/SomaFM/defcon.pls</path>
 		<name>DEF CON Radio</name>
 		<desc>DEF CON Radio: DEF CON is one of the world's largest annual hacker conventions, held every year in Las Vegas, Nevada. Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream from San Francisco, hosted by the DJs who entertain the DEF CON 26 chill room this year in Vegas.</desc>
-		<image>./icons/defcon-400.jpg</image>
+		<image>./icons/defcon400.png</image>
 	</game>
 	<game>
 		<path>./imp/music/SomaFM/digitalis.pls</path>
@@ -737,21 +836,10 @@
 	<game>
 		<path>./imp/music/SomaFM/specials.pls</path>
 		<name>[SomaFM Special]</name>
-		<desc>SomaFM Special (Holiday):
+		<desc>SomaFM Special:
+ Now featuring Tiki Time, Bossa Beyond, Surf Report & More.
  [DOOMED] Halloween Sountrack that runs October until November 15th.
  [Department Store Christmas] Holiday Sountrack that runs after November 15th until 1st week in January.</desc>
 		<image>./icons/specials-400.jpg</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM</path>
-		<name>[Mp3Radio.FM]</name>
-		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM/mp3radio.pls</path>
-		<name>Main Channel</name>
-		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
-		<image>./icons/mp3radiofm.png</image>
 	</game>
 </gameList>
