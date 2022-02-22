@@ -26,31 +26,28 @@ if [[ $(amixer | grep "Simple mixer control" ) == *"Speaker"* ]]; then alsaCURRE
 if [[ $(amixer | grep "Simple mixer control" ) == *"Digital"* ]]; then alsaCURRENT="Digital"; fi
 if [[ $(amixer | grep "Simple mixer control" ) == *"Analogue"* ]]; then alsaCURRENT="Analogue"; fi
 
-# Determine how to Parse amixer output for volume - /dB/ or /Left:/ depending on Version of the OS (2021-11)
-volumePARSE='/dB/ { print $2 }'
-if [[ $(awk -F"[][]" "$volumePARSE" <(amixer sget $alsaCURRENT) ) == '' ]]; then volumePARSE='/Left:/ { print $2 }'; fi
+# Parse amixer output for volume - /dB/ or /Left:/ depending on Version of the OS
+# awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)
+# awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)
 
-# Obtain current Volume Setting before fade
-currentVOL=$(awk -F"[][]" "$volumePARSE" <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+# Obtain current Volume Setting before fade out - '/dB/
+currentVOL=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
 
-# Current Volume Test - Result Expected if ERROR - amixer: Unable to find simple control 
+# Obtain current Volume Setting before fade out - '/Left:/
+if [[ $currentVOL == '' ]]; then
+	currentVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+fi
+
+# Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == *"Unable to find simple control"* || $currentVOL == '' ]]; then
 		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade Out..."
-		pkill -STOP mpg123 > /dev/null 2>&1
+		pkill -STOP mpg123
 		exit 0
 fi
 
-# Volume Set Test - Result Expected if ERROR - amixer: Unable to find simple control 
-volSETtest=$(amixer --quiet set "$alsaCURRENT" "$currentVOL"%)
-if [[ $volSETtest == *"Unable to find simple control"* ]]; then
-		echo "Unable to ADJUST Volume. Skipping Fade ..."
-		pkill -STOP mpg123 > /dev/null 2>&1
-		exit 0
-fi
-
-# If [volume.last] is anything other than BLANK the Volume Fade In [run-onend.sh] Script COULD STILL BE RUNNING
+# If the last value is anything other than blank then the Volume Fade In [run-onend.sh] Script is Still Running
 if [[ ! "$(cat $IMPSettings/volume.last)" == '' ]]; then
-	# kill instances of [run-onend.sh] scripts - prevents Tug of War with Volume Fade In/Out
+	# kill instances of run-onend.sh scripts - prevents tug of war with Volume Fade In/Out
 	PIDonEND=$(ps -eaf | grep "run-onend.sh" | awk '{print $2}')
 	kill $PIDonEND > /dev/null 2>&1
 	
@@ -58,22 +55,38 @@ if [[ ! "$(cat $IMPSettings/volume.last)" == '' ]]; then
 	amixer --quiet set "$alsaCURRENT" "$currentVOL"%
 fi
 
-# Set Initial Dynamic Volume to check while decreasing volume
-dynamicVOL=$(awk -F"[][]" "$volumePARSE" <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+# set Dynamic Volume to check while decreasing volume - '/dB/
+dynamicVOL=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+if [[ $dynamicVOL == '' ]]; then
+	# set Dynamic Volume to check while decreasing volume - '/Left:/
+	dynamicVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+fi
+
+# Result Expected if ERROR - amixer: Unable to find simple control 
+if [[ $dynamicVOL == *"Unable to find simple control"* || $dynamicVOL == '' ]]; then
+		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
+		pkill -STOP mpg123
+		exit 0
+fi
 
 # Increase Volume until Dynamic Volume reaches previously obtained Current Volume
 while [ $dynamicVOL -gt 0 ]; do
 	# Decrease Alsa Volume
+	# amixer -q -c 0 sset "$alsaCURRENT" 1db- unmet no cap # NOT Working with Headphone
 	((dynamicVOL=dynamicVOL-1))
 	amixer --quiet set "$alsaCURRENT" "$dynamicVOL"%
 	# set Dynamic Volume to check while decreasing volume - '/dB/
-	dynamicVOL=$(awk -F"[][]" "$volumePARSE" <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
-	# sleep 0.02 # Adds longer wait when loading ROMs
+	dynamicVOL=$(awk -F"[][]" '/dB/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+	if [[ $dynamicVOL == '' ]]; then
+		# set Dynamic Volume to check while decreasing volume - '/Left:/
+		dynamicVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget $alsaCURRENT) | cut -d '%' -f 1 )
+	fi
+	sleep 0.02
 done
 
 # Stop/Pause player after Volume 0 - allow time for mpg123 to stop
 pkill -STOP mpg123
-sleep 0.1
+sleep 0.2
 
 # set Volume back to Original setting after Fade
 amixer --quiet set $alsaCURRENT $currentVOL%
