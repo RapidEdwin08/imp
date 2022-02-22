@@ -15,6 +15,8 @@ if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
 else
 	currentTRACK=/dev/shm/current-track
 fi
+musicDIR=~/RetroPie/retropiemenu/imp/music
+BGMdir="$musicDIR/bgm"
 
 # Full Stop
 bash $IMP/stop.sh
@@ -56,8 +58,8 @@ fi
 # Last track played Identified - Rebuild ABC Playlist with Last Track played First
 echo $previousTRACK > $IMPPlaylist/init
 # Parse all lines after and before Last Track played
-grep -FA $LINEcount "$previousTRACK" $IMPPlaylist/abc | grep -Fv "$previousTRACK" >> $IMPPlaylist/init
-grep -FB $LINEcount "$previousTRACK" $IMPPlaylist/abc | grep -Fv "$previousTRACK" >> $IMPPlaylist/init
+grep -FA $LINEcount "$previousTRACK" $IMPPlaylist/abc | grep -Fv "$previousTRACK" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
+grep -FB $LINEcount "$previousTRACK" $IMPPlaylist/abc | grep -Fv "$previousTRACK" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 
 # Rebuild ABC Playlist with updated 0rder
 cat $IMPPlaylist/init > $IMPPlaylist/abc
@@ -65,8 +67,8 @@ cat $IMPPlaylist/init > $IMPPlaylist/abc
 # Last track played Identified - Rebuild Shuffle Playlist with Last Track played First
 echo $previousTRACK > $IMPPlaylist/init
 # Parse all lines after and before Last Track played
-grep -FA $LINEcount "$previousTRACK" $IMPPlaylist/shuffle | grep -Fv "$previousTRACK" >> $IMPPlaylist/init
-grep -FB $LINEcount "$previousTRACK" $IMPPlaylist/shuffle | grep -Fv "$previousTRACK" >> $IMPPlaylist/init
+grep -FA $LINEcount "$previousTRACK" $IMPPlaylist/shuffle | grep -Fv "$previousTRACK" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
+grep -FB $LINEcount "$previousTRACK" $IMPPlaylist/shuffle | grep -Fv "$previousTRACK" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 
 # Rebuild Shuffle Playlist with updated 0rder
 cat $IMPPlaylist/init > $IMPPlaylist/shuffle

@@ -12,6 +12,13 @@ fi
 # Disable Livewire if Not already
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
 
+# IF startupsong enabled but music at startup is disabled then SKIP Playlist Rebuild
+if [ $(cat $IMPSettings/startupsong.play) == "2" ]; then
+	# Skip the Playlist sorting
+	bash "$IMP/mpg123loop.sh" &
+	exit 0
+fi
+
 # Continue mpg123 if coming from a Paused state
 result=`pgrep mpg123`
 if [[ "$result" == '' ]]; then
@@ -91,8 +98,8 @@ else
 	# Last track played Identified - Rebuild ABC Playlists with Last Track played First
 	echo $PLfirst > $IMPPlaylist/init
 	# Parse all lines after and before Last Track played
-	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" >> $IMPPlaylist/init
-	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" >> $IMPPlaylist/init
+	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
+	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 	
 	# Rebuild ABC Playlist with updated 0rder
 	cat $IMPPlaylist/init > $IMPPlaylist/abc
@@ -100,8 +107,8 @@ else
 	# Last track played Identified - Rebuild Shuffle Playlists with Last Track played First
 	echo $PLfirst > $IMPPlaylist/init
 	# Parse all lines after and before Last Track played
-	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" >> $IMPPlaylist/init
-	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" >> $IMPPlaylist/init
+	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
+	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 	
 	# Rebuild Shuffle Playlist with updated 0rder
 	cat $IMPPlaylist/init > $IMPPlaylist/shuffle

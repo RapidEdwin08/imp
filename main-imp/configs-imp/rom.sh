@@ -17,10 +17,6 @@ BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
 
-# Check for [IMP] Files/Folders Linked to [retropiemenu] [gamelist.xml]
-# Create Files/Folders If Needed to Prevent ERROR [Assertion `mType == FLODER' failed]
-bash "$IMP/rpmenucheck.sh" > /dev/null 2>&1
-
 # Stop instances of mpg123 
 bash "$IMP/stop.sh" > /dev/null 2>&1
 
@@ -40,8 +36,9 @@ if [[ "$mp3BASE" == *".pls" || "$mp3BASE" == *".m3u" ]]; then
 	
 	# *ISSUE* - https not working with mpg123 - main: [src/mpg123.c:708] error: Cannot open https://...-mp3: File access error. (code 22)
 	# Recently Internet Radio Stations are updating thier stream servers to SSL TLSv1.3...
-	# Replace [https://] with [http://] in playlist to overcome mpg123 error
-	sudo sed -i s+'https://'+'http://'+ $IMPPlaylist/init
+	# Replace [https://] with [http://] and *Remove [:443]* in playlist to overcome mpg123 error
+	sed -i s+'https://'+'http://'+ $IMPPlaylist/init
+	sed -i s+':443'+''+ $IMPPlaylist/init
 	
 	# Obtain First Track
 	PLfirst=$(head -n 1 $IMPPlaylist/init)
@@ -54,12 +51,12 @@ else
 		# Obtain First Track
 		PLfirst=$(find "$musicDIR" -maxdepth 1 -type f -iname "$mp3BASE" )
 		# Add Remaining MP3s from the musicDIR directory to Playlist Non-Recursive
-		find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" >> $IMPPlaylist/abc
+		find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
 	else
 		# Obtain First Track
 		PLfirst=$(find "$mp3DIR" -maxdepth 1 -type f -iname "$mp3BASE" )
 		# Add Remaining MP3s from selected MP3-ROM directory to Playlist Non-Recursive
-		find "$mp3DIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" >> $IMPPlaylist/abc
+		find "$mp3DIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
 	fi
 
 	# Sort init playlist

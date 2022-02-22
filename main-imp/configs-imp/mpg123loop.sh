@@ -10,6 +10,10 @@ if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
 else
 	currentTRACK=/dev/shm/current-track
 fi
+musicDIR=~/RetroPie/retropiemenu/imp/music
+BGMdir="$musicDIR/bgm"
+startupMP3="$BGMdir/startup.mp3"
+startupTRACK=/dev/shm/startup-track
 
 # [$IMP/mpg123loop.sh] runs with -continue -k to Continue from Last Frame Position pulled from [$currentTRACK] - Does NOT apply to HTTP
 # If [$IMP/stop.sh] called with NO Argument - Start from the beginning by Setting Last Position > 0000+0000  00:00. > [$currentTRACK]
@@ -45,13 +49,27 @@ fi
 # Disable Livewire if Not already
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
 
+# [startupsong.play] - IF [1] Play [startup.mp3]
+if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "1" ]; then
+	echo '0' > $IMPSettings/startupsong.play
+	mpg123 -v -f "$playerVOL" "$startupMP3" > $startupTRACK 2>&1
+	rm $startupTRACK
+fi
+# [startupsong.play] - IF [2] Play [startup.mp3] then EXIT - music startup flag [0]
+if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "2" ]; then
+	echo '0' > $IMPSettings/startupsong.play
+	mpg123 -v -f "$playerVOL" "$startupMP3" > $startupTRACK 2>&1
+	rm $startupTRACK
+	exit 0
+fi
+
 # [IMP] FULL MODE - Always Logging while Playing - Full Features
 if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
 	# Play INFINITE Loop all songs in Playlist  iMP
 	while [ $(cat $IMPSettings/music-switch.flag) == "1" ]; do
 		if [ "$httpSTREAM" == '0' ]; then
 			# mpg123 withOUT -v to Limit the verbosity level If HTTP Stream - Limits Log file size of Long Streams - Frame numbers can not be used to Continue a Stream
-			while read line; do mpg123 -f $playerVOL "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST
+			while read line; do mpg123 -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST
 		else
 			# mpg123 WITH - v to Increase the verbosity level and obtain the frame numbers
 			# --continue -k to Continue from Last Frame Position from [$currentTRACK]
@@ -64,7 +82,7 @@ else
 	# Play all songs in Playlist
 	if [ "$httpSTREAM" == '0' ]; then
 		# mpg123 withOUT -v to Limit the verbosity level If HTTP Stream - Limits Log file size of Long Streams - Frame numbers can not be used to Continue a Stream
-		while read line; do mpg123 -f $playerVOL "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST &
+		while read line; do mpg123 -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST &
 		exit 0
 	else
 		# mpg123 WITH - v to Increase the verbosity level and obtain the frame numbers

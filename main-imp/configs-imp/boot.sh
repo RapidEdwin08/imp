@@ -20,8 +20,8 @@ if [ -f "$IMP/somafm-specials.sh" ]; then bash $IMP/somafm-specials.sh; fi
 # Start HTTP Server if flag 1 - Used at Startup
 if [ $(cat $IMPSettings/http-server.flag) == "1" ]; then sleep 5 && bash "$IMP/httpon.sh"; fi &
 
-# Exit if music startup flag 0
-if [ $(cat $IMPSettings/music-startup.flag) == "0" ]; then exit 0; fi
+# Exit if music startup flag 0 and startupsong flag 0
+if [ $(cat $IMPSettings/music-startup.flag) == "0" ] && [ $(cat $IMPSettings/startupsong.flag) == "0" ]; then exit 0; fi
 
 # Delay at Startup
 sleep $(cat $IMPSettings/delay-startup.flag)
@@ -32,6 +32,23 @@ pkill -KILL mpg123 > /dev/null 2>&1
 
 # Disable Livewire if Not already
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
+
+# [startupsong.play] - Checked by [mpg123loop.sh] - IF [2] Play [startup.mp3] then EXIT - SKIP Playlist Rebuild
+if [ $(cat $IMPSettings/music-startup.flag) == "0" ] && [ $(cat $IMPSettings/startupsong.flag) == "1" ]; then
+	echo '2' > $IMPSettings/startupsong.play
+	bash "$IMP/play.sh" &
+	exit 0
+fi
+
+# [startupsong.play] - Checked by [mpg123loop.sh] - IF [1] Play [startup.mp3] then Playlist
+if [ $(cat $IMPSettings/startupsong.flag) == "1" ]; then echo '1' > $IMPSettings/startupsong.play; fi
+
+# If Randomizer flag = 1 - Random Playlist
+if [ $(cat $IMPSettings/randomizer.flag) == "1" ]; then
+	bash "$IMP/randomizer.sh"
+	bash "$IMP/play.sh" &
+	exit 0
+fi
 
 # If any BGM flags 1 - Clear init playlist
 if [[ $(cat $IMPSettings/a-side.flag) == "1" || $(cat $IMPSettings/b-side.flag) == "1" ]]; then
