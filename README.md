@@ -70,8 +70,7 @@ It is RECOMMENDED to use the Default method of [apt-get install] for installing 
 
 ## [IMP] RETROPIE MENU
 
-Music Player [IMP]  
-
+**Music Player** [IMP]  
 Current Playlist  
 Previous Track  
 Play  
@@ -83,35 +82,37 @@ Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Sett
 Start BGM Music  
 Volume % [mpg123 Player Volume]  
 
-Music [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]  
+**Music** [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]  
 ~/RetroPie/roms/music [symbolic link to ~/RetroPie/retropiemenu/imp/music]  
 
-Settings  
+**Settings**  
 Current Settings  
 Lite Mode [Off/On]  
 Infinite Mode [Off/On]  
+Music Randomizer Mode [Off/On]  
 
-BGM Settings [*Will Override Playlist at Startup*]  
+**BGM Settings** [*Will Override Playlist at Startup*]  
 BGM A-Side [Off/On] ~/RetroPie/roms/music/bgm/A-SIDE/  
 BGM B-Side [Off/On] ~/RetroPie/roms/music/bgm/B-SIDE/  
 
-Game Settings  
+**Game Settings**  
 Music Over Games [Off/On]  
 Volume Fade at Games [Off/On]  
 Delay at Game End [seconds]  
 
-HTTP Server [Port:8080 You must STOP HTTP Server before you can START it on Another Directory]  
+**HTTP Server** [Port:8080 You must STOP HTTP Server before you can START it on Another Directory]  
 HTTP Server [Log]  
 HTTP Server [On] Music Directory  
 HTTP Server [On] ROMS Directory  
 HTTP Server [Off]  
 
-Startup Settings  
+**Startup Settings**  
 Music at Startup [Off/On]  
 Delay at Startup [seconds]  
+Play Startup Song [Off/On] ~/RetroPie/roms/music/bgm/startup.mp3  
+NOTE: [startup.mp3] is Ignored in Playlist Creation  
 
-## IMPORTANT
-
+## PLAY MODES  
 LITE MODE:  
 [IMP] Writes to File for it's Features, such as forming Playlists when Starting Music, Recall Last Track/Position, Previous Track  
 [IMP] Constantly Writes the mpg123 output to a Log File to obtain Info needed for these Features  
@@ -129,21 +130,42 @@ However, Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manual
 bash /opt/retropie/configs/imp/stop.sh
 ```
 
-EMULATIONSTATION FAILS TO LOAD [Assertion mType == FOLDER failed]:  
+RANDOMIZER MODE:  
+[IMP] will Set Shuffle Mode 0N and Create Random Playlists based on the Content in the Music Directories  
+Potential Random Playlist Directory Combinations:  
+- Music Directory
+- Music Directory + BGM A-SIDE  
+- Music Directory + BGM B-SIDE  
+- Music Directory + BGM A-SIDE + B-SIDE  
+- BGM A-SIDE  
+- BGM B-SIDE  
+- BGM A-SIDE + B-SIDE  
+
+## IMPORTANT
+
+**[RP/ES] Utilities**:  
+** EMULATIONSTATION FAILS TO LOAD [Assertion mType == FOLDER failed]**  
 [IMP] uses the RetroPie Menu as it's {System} in ES Instead of adding a Custom {System} to [es_systems.cfg]  
 PROs: avoids clogging up the "All Games" and "Favorites" Collections with MP3s (instead of ROMs)  
-CONs: it can lead to Issues if the [gamelist.xml] is Referencing non-existent Folders/Files or Corrupted (Similar to ScummVM)  
-A scenario where ES may Fail to Load is IF [parse XML gamelist only] is "OFF" + there are NO MP3s in the Dedicated Music Folders  
+CONs: it can lead to Issues if the [gamelist.xml] and/or [es_systems.cfg] is Referencing non-existent Folders/Files or Corrupted (Similar to ScummVM)  
+
+Scenarios where ES may Fail to Load:  
+- IF [parse XML gamelist only] is "OFF" + there are NO MP3s in the Dedicated Music Folders  
+- IF RetroPie is Updated leading to es_systems.cfg to lose the MP3/PLS/M3U extenstions needed for [IMP]  
+
 [IMP] will attempt to keep the Music folders Populated Automatically to prevent this Issue  
-In addition, a [retropiemenu gamlist.xml Refresh] 0ption is 0ffered in [IMP] SETUP  
-It will essentially Restore your [retropiemenu gamelist.xml] to the State it was in after a Fresh Install of [IMP]  
-[retropiemenu gamlist.xml Refresh] is accessible using the Same Install Command (gamelist.xml used Varies with Install Flag):  
+[IMP] also offers **[RP/ES] Utilities** which can:  
+- Restore [es_systems.cfg] extenstions to include MP3/PLS/M3Us needed for [IMP]  
+- Restore [gamelist.xml] to the State it was in after a Fresh Install of [IMP]  
+
+If using **Windows (Samba) Shares** and [../roms/music] is N0T accessible, **[RP/ES] Utilities** Include [smb.conf] Update:  
+- Add/Restore Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]  
+
+NOTE: A **Windows (Samba) Share** for [~/RetroPie/retropiemenu/imp/music] is Added at Insall if [smb.conf] is present  
+
+**[RP/ES] Utilities** are available in the [IMP] INSTALLER using the Same Setup Command:  
 ```bash
 cd ~/imp && ./imp_setup.sh
-```
-~ OR ~
-```bash
-cd ~/imp && ./imp_setup.sh offline
 ```
 
 ## License

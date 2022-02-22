@@ -92,15 +92,23 @@ echo
 echo "         NOTE: [UNINSTALL] of [IMP] does NOT REMOVE [mpg123]  "
 )
 
-GAMELISTimpFINISHREF=$(
+IMPesFIXref=$(
 echo
-echo "               # retropiemenu [gamelist.xml] Reference #"
+echo "                          [es_systems.cfg]"
+echo "                         /etc/emulationstation "
+echo "             /opt/retropie/configs/all/emulationstation/ "
 echo
-echo "                        ~/RetroPie/retropiemenu "
+#echo '                Modifications to [es_systems.cfg]'
+echo '    <extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U </extension>'
+echo '<command>bash /opt/retropie/configs/all/retropiemenu.sh %ROM%</command>'
+echo
+echo "                            [gamelist.xml]"
+echo "                       ~/RetroPie/retropiemenu "
 echo "     /opt/retropie/configs/all/emulationstation/gamelists/retropie "
 echo
-echo "               *** [REBOOT] or [RESTART ES] Recommended ***"
-echo
+echo "                              [smb.conf]"
+echo "                         /etc/samba/smb.conf "
+echo "           path = "/home/$USER/RetroPie/retropiemenu/imp/music""
 )
 
 gamelistIMP=main-imp/gamelist.imp
@@ -111,7 +119,7 @@ customIMPREF=$(cat ~/imp/main-imp/templates/README)
 IMPstandard="[STANDARD] IMP (Recommended)"
 IMPcustom="[CUSTOM] IMP"
 IMPmpg123="[mpg123] Utilities"
-IMPgamelistRP="[retropiemenu] gamlist.xml Refresh"
+IMPesUTILS="[RP/ES]  Utilities"
 
 mainMENU()
 {
@@ -132,7 +140,7 @@ installTYPE=$(dialog --stdout --no-collapse --title "  $internetSTATUS" \
 	1 "$IMPstandard" \
 	2 "$IMPcustom" \
 	3 "$IMPmpg123" \
-	4 "$IMPgamelistRP" \
+	4 "$IMPesUTILS" \
 	5 "Uninstall [IMP]")
 tput reset
 
@@ -153,18 +161,10 @@ if [ "$installTYPE" == '5' ]; then
 	mainMENU
 fi
 
-# Refresh retropiemenu gamelist.xml
+# [ES] Utilities
 if [ "$installTYPE" == '4' ]; then
-	selectTYPE="[retropiemenu] gamlist.xml Refresh"
-	# Confirm Uninstall
-	confREFRESH=$(dialog --stdout --no-collapse --title "     [retropiemenu] gamlist.xml Refresh     " \
-		--ok-label OK --cancel-label Back \
-		--menu "Refresh gamelist.xml if Experiencing [Assertion mType == FOLDER failed]" 25 75 20 \
-		1 "><  $selectTYPE  ><" \
-		2 "Back to Main Menu")
-	# Refresh Confirmed - Otherwise Back to Main Menu
-	if [ "$confREFRESH" == '1' ]; then impGAMELIST; fi
-	mainMENU
+	selectTYPE="$IMPesUTILS"
+	ESutilityMENU
 fi
 
 # mpg123 Manual Install
@@ -890,6 +890,7 @@ if [ ! -f ~/RetroPie/retropiemenu/icons/jukebox.png ]; then cp main-imp/icons/im
 if [ ! -f "$musicDIR/MMMenu.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/MMMenu.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$BGMdir/A-SIDE/e1m1.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m1.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$BGMdir/B-SIDE/e1m2.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
+if [ ! -f "$BGMdir/startup.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartupm0.png "$BGMdir/startup.mp3" > /dev/null 2>&1; fi
 
 # Replace [/home/pi] with current User [$homeDIR] in Playlist - This may Not be a pi
 homeDIR=~/
@@ -897,6 +898,29 @@ sed -i s+'/home/pi/'+"$homeDIR"+ $IMPPlaylist/init
 sed -i s+'/home/pi/'+"$homeDIR"+ $IMPPlaylist/abc
 sed -i s+'/home/pi/'+"$homeDIR"+ $IMPPlaylist/shuffle
 sed -i s+'/home/pi/'+"$homeDIR"+ $IMPPlaylist/current-track
+
+# Symbolic Link to [../roms/music] NOT Shared in Samba
+if [ -f /etc/samba/smb.conf ]; then
+	# Backup [/etc/samba/smb.conf] if not exist already
+	if [ ! -f /etc/samba/smb.conf.b4imp ]; then sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.b4imp 2>/dev/null; fi
+	
+	if [ ! "$(cat /etc/samba/smb.conf | grep -q "path = \"\/home\/$USER\/RetroPie\/retropiemenu\/imp\/music\"" ; echo $?)" == '0' ]; then
+		# ADD Samba Share to [~/RetroPie/retropiemenu/imp/music]
+		cat /etc/samba/smb.conf > /dev/shm/smb.conf
+		echo '[music]' >> /dev/shm/smb.conf
+		echo 'comment = music' >> /dev/shm/smb.conf
+		echo "path = \"/home/$USER/RetroPie/retropiemenu/imp/music\"" >> /dev/shm/smb.conf
+		echo 'writeable = yes' >> /dev/shm/smb.conf
+		echo 'guest ok = yes' >> /dev/shm/smb.conf
+		echo 'create mask = 0644' >> /dev/shm/smb.conf
+		echo 'directory mask = 0755' >> /dev/shm/smb.conf
+		echo "force user = $USER" >> /dev/shm/smb.conf
+		sudo mv /dev/shm/smb.conf /etc/samba/smb.conf
+		
+		# Restart [SMB]
+		# sudo systemctl restart smbd.service
+	fi
+fi
 
 # Standard Install
 if [ "$selectTYPE" == "$IMPstandard" ]; then
@@ -1033,15 +1057,56 @@ if [[ ! "$installFLAG" == 'offline' ]]; then
 	# Copy SLAYRadio icon files to retropiemenu
 	cp main-imp/icons/slayradio/slayradio.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/slayradio/slayradio-logo.png ~/RetroPie/retropiemenu/icons/
-fi
 
-if [[ ! "$installFLAG" == 'offline' ]]; then
 	# Get .PLS from MP3RadioFM 202111
 	if [ ! -d "$musicDIR/Mp3RadioFM" ]; then mkdir "$musicDIR/Mp3RadioFM"; fi
 	if [ ! -f "$musicDIR/Mp3RadioFM/mp3radio.pls" ]; then wget --no-check-certificate "https://epsilon.shoutca.st/tunein/mp3radio.pls" -P "$musicDIR/Mp3RadioFM"; fi
 
 	# Copy MP3RadioFM icon files to retropiemenu
 	cp main-imp/icons/mp3radiofm/mp3radiofm.png ~/RetroPie/retropiemenu/icons/
+	
+	# NightrideFM .pls (202202)
+	if [ ! -d "$musicDIR/NightrideFM" ]; then mkdir "$musicDIR/NightrideFM"; fi
+	if [ ! -f "$musicDIR/NightrideFM/NightrideFM-x6.pls" ]; then
+		# Manually Create NightrideFM .pls (202202)
+		echo '[playlist]' > "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'numberofentries=6' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File1=http://stream.nightride.fm/nightride.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title1=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File2=http://stream.nightride.fm/chillsynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title2=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File3=http://stream.nightride.fm/spacesynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title3=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File4=http://stream.nightride.fm/darksynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title4=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File5=http://stream.nightride.fm/horrorsynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title5=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'File6=http://stream.nightride.fm/ebsm.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title6=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo 'version=2' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+	fi
+	
+	# Copy NightrideFM icon files to retropiemenu
+	cp main-imp/icons/nightridefm/nightridefm.jpg ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/nightridefm/nightridefm.png ~/RetroPie/retropiemenu/icons/
+
+	# Get .m3u from Rainwave.CC Stations (202202)
+	# 1 Game # 2 OC Remix # 3 Covers # 4 ChipTune # 5 All
+	if [ ! -f "$musicDIR/RainwaveCC/1.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/1.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/RainwaveCC/2.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/2.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/RainwaveCC/3.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/3.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/RainwaveCC/4.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/4.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/RainwaveCC/5.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/5.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	
+	# Copy Rainwave.CC icon files to retropiemenu
+	cp main-imp/icons/rainwavecc/rainwave.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/rainwavecc/rainwavecc.png ~/RetroPie/retropiemenu/icons/
 fi
 
 if [ "$installFLAG" == 'somafm' ]; then
@@ -1121,6 +1186,13 @@ pkill -KILL mpg123
 
 # Turn Off HTTP Server - Cleans up $HTTPFolder/favicon.ico
 bash "$IMPMenuRP/Settings/HTTP Server Settings/HTTP Server [Off].sh"
+
+# Restore [smb.conf] if Backup is found
+if [ -f /etc/samba/smb.conf.b4imp ]; then
+    sudo mv /etc/samba/smb.conf.b4imp /etc/samba/smb.conf
+	# Restart [SMB]
+	# sudo systemctl restart smbd.service
+fi
 
 # Restore autostart.sh if Backup is found
 if [ -f /opt/retropie/configs/all/autostart.sh.b4imp ]; then
@@ -1284,6 +1356,8 @@ rm ~/RetroPie/retropiemenu/icons/impplaylist.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0ff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0n.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeroff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeron.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingadjust.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaon.png 2>/dev/null
@@ -1297,6 +1371,8 @@ rm ~/RetroPie/retropiemenu/icons/impsettingoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettings.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingscurrent.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingstartupsongoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingstartupsongon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impshuffleoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impshuffleon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartall.png 2>/dev/null
@@ -1305,6 +1381,8 @@ rm ~/RetroPie/retropiemenu/icons/impstartalla0b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla1b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla0b1.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla1b1.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impstartupm0.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impstartupsong.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartbgm.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png 2>/dev/null
@@ -1333,6 +1411,7 @@ rm ~/RetroPie/retropiemenu/icons/brfm-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/covers-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/deepspaceone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/defcon-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/defcon400.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/digitalis-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dronezone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dubstep-400.jpg 2>/dev/null
@@ -1378,6 +1457,18 @@ rm ~/RetroPie/retropiemenu/icons/slayradio-logo.png 2>/dev/null
 rm $musicROMS/Mp3RadioFM/*.pls 2>/dev/null
 rm -d $musicROMS/Mp3RadioFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/mp3radiofm.png 2>/dev/null
+
+# Remove NightrideFM
+rm $musicROMS/NightrideFM/*.pls 2>/dev/null
+rm -d $musicROMS/NightrideFM 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/nightridefm.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/nightridefm.png 2>/dev/null
+
+# Remove RainwaveCC
+rm $musicROMS/RainwaveCC/*.m3u 2>/dev/null
+rm -d $musicROMS/RainwaveCC 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/rainwave.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/rainwavecc.png 2>/dev/null
 
 # Clean up 0ther BGM DIRs 0nly if they are Symbolic Links
 if [ -d "$musicROMS/_bgm" ]; then
@@ -1685,25 +1776,115 @@ dialog --no-collapse --title " * [mpg123] Uninstall COMPLETE *" --ok-label CONTI
 mainMENU
 }
 
-impGAMELIST()
+ESutilityMENU()
 {
+# Confirm Utility
+pickUTILITY=$(dialog --stdout --no-collapse --title "     $IMPesUTILS     " \
+	--ok-label OK --cancel-label Back \
+	--menu "                #  [RP/ES] Utilities File Reference  # $IMPesFIXref" 25 75 20 \
+	1 " [es_systems.cfg] Repair" \
+	2 " [gamelist.xml] Refresh" \
+	3 " [smb.conf] Update" \
+	4 " [KILL] ES/Pegasus/AM" \
+	5 " [REBOOT]")
+	
+# Utility Confirmed - Otherwise Back to Main Menu
+if [ ! "$pickUTILITY" == '' ]; then
+	if [ "$pickUTILITY" == '1' ]; then
+		utilitySELECT='[es_systems.cfg] Repair'
+		utilityDESC=" Run [ES] Utilities if Experiencing [Assertion mType == FOLDER failed]"
+		utilityRUN=esSYSrepair
+	fi
+	if [ "$pickUTILITY" == '2' ]; then
+		utilitySELECT='[gamelist.xml] Refresh'
+		utilityDESC=" Restore RPMenu [gamelist.xml] File (Clean Entries P0ST [IMP] Install)"
+		utilityRUN=gamelistREFRESH
+	fi
+	if [ "$pickUTILITY" == '3' ]; then
+		utilitySELECT='[smb.conf] Update'
+		utilityDESC=" Add Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]"
+		utilityRUN=smbUPDATE
+	fi
+	if [ "$pickUTILITY" == '4' ]; then
+		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
+		ESutilityMENU
+	fi
+	if [ "$pickUTILITY" == '5' ]; then
+		utilitySELECT='REBOOT'
+		utilityDESC="       REBOOT "
+	fi
+	confUTILITY=$(dialog --stdout --no-collapse --title "$utilityDESC" \
+		--ok-label OK --cancel-label Back \
+		--menu "  ? ARE YOU SURE ?  " 25 75 20 \
+		1 "><  $utilitySELECT  ><" \
+		2 "Back to Menu")
+	
+	# Reboot Confirmed
+	if [ "$confUTILITY" == '1' ] && [ "$utilitySELECT" == 'REBOOT' ]; then tput reset && sudo reboot; fi
+	
+	# Check if IMP Installed
+	if [ ! -d "$IMP" ]; then
+		dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $IMPesFIXref"  25 75
+		mainMENU
+	fi
 
-# Check if IMP Installed
-if [ ! -d "$IMP" ]; then
-	dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
-	mainMENU
+	# Utility Confirmed - Otherwise Back to Main Menu
+	if [ "$confUTILITY" == '1' ]; then
+		if [ "$utilitySELECT" == 'REBOOT' ]; then sudo reboot; fi
+		$utilityRUN
+	fi
+	if [ "$confUTILITY" == '2' ]; then ESutilityMENU; fi
+	ESutilityMENU
 fi
+
+mainMENU
+}
+
+
+esSYSrepair()
+{
+tput reset
+
+# # v2022.02 Addition - Scenario where RetroPie is Updated and Removes [.mp3] support from <extension>
+# Check and Modify x2 Locations to keep parity: [/etc/emulationstation/es_systems.cfg] + [~/.emulationstation/es_systems.cfg]
+
+# Add [IMP] to es_systems.cfg ETC if Missing - Scenario RetroPie Updated
+if [ $(cat /etc/emulationstation/es_systems.cfg | grep -q "$EXTesSYSimp" ; echo $?) == '1' ]; then
+	# Replace retropiemenu es_systems.cfg with [IMP]
+	sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ /etc/emulationstation/es_systems.cfg
+	sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ /etc/emulationstation/es_systems.cfg
+	sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /etc/emulationstation/es_systems.cfg
+fi
+
+# Add [IMP] to es_systems.cfg OPT if Missing - Scenario RetroPie Updated
+if [ -f /opt/retropie/configs/all/emulationstation/es_systems.cfg ]; then
+	if [ $(cat /opt/retropie/configs/all/emulationstation/es_systems.cfg | grep -q "$EXTesSYSimp" ; echo $?) == '1' ]; then
+		# Replace retropiemenu es_systems.cfg with [IMP]
+		sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
+		sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
+		sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
+	fi
+fi
+
+finishUTILITY
+}
+
+gamelistREFRESH()
+{
+tput reset
 
 # Check for the Most Important Setup Directories and Files [gamelist*]
 if [ ! -f main-imp/gamelist.imp ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
 	mainMENU
 fi
 
 if [ "$installFLAG" == 'offline' ]; then
 	# Check for the Most Important Setup Directories and Files [gamelist*]
 	if [ ! -f main-imp/gamelist.offline ]; then
-		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
 		mainMENU
 	fi
 fi
@@ -1711,7 +1892,29 @@ fi
 if [ "$installFLAG" == 'somafm' ]; then
 	# Check for the Most Important Setup Directories and Files [gamelist*]
 	if [ ! -f main-imp/icons/somafm/gamelist.somafm ]; then
-		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $GAMELISTimpFINISHREF"  25 75
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
+		mainMENU
+	fi
+fi
+
+# Check for the Most Important Setup Directories and Files [gamelist*]
+if [ ! -f main-imp/gamelist.imp ]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
+	mainMENU
+fi
+
+if [ "$installFLAG" == 'offline' ]; then
+	# Check for the Most Important Setup Directories and Files [gamelist*]
+	if [ ! -f main-imp/gamelist.offline ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
+		mainMENU
+	fi
+fi
+
+if [ "$installFLAG" == 'somafm' ]; then
+	# Check for the Most Important Setup Directories and Files [gamelist*]
+	if [ ! -f main-imp/icons/somafm/gamelist.somafm ]; then
+		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
 		mainMENU
 	fi
 fi
@@ -1741,7 +1944,7 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	# Rebuild retropiemenu gamelist.xml with [IMP]
 	cat $gamelistIMP >> main-imp/gamelist.xml
 	
-	# Backup es_systems.cfg if not exist already
+	# Backup gamelist if not exist already
 	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
 	
 	# Replace retropiemenu gamelist.xml with [IMP]
@@ -1778,17 +1981,55 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
+finishUTILITY
+}
+
+smbUPDATE()
+{
+tput reset
+
+# Restore [smb.conf] if Backup is found
+if [ -f /etc/samba/smb.conf.b4imp ]; then sudo mv /etc/samba/smb.conf.b4imp /etc/samba/smb.conf; fi
+
+# Symbolic Link to [../roms/music] NOT Shared in Samba
+if [ -f /etc/samba/smb.conf ]; then
+	# Backup [/etc/samba/smb.conf] if not exist already
+	if [ ! -f /etc/samba/smb.conf.b4imp ]; then sudo cp /etc/samba/smb.conf /etc/samba/smb.conf.b4imp 2>/dev/null; fi
+	
+	if [ ! "$(cat /etc/samba/smb.conf | grep -q "path = \"\/home\/$USER\/RetroPie\/retropiemenu\/imp\/music\"" ; echo $?)" == '0' ]; then
+		# ADD Samba Share to [~/RetroPie/retropiemenu/imp/music]
+		cat /etc/samba/smb.conf > /dev/shm/smb.conf
+		echo '[music]' >> /dev/shm/smb.conf
+		echo 'comment = music' >> /dev/shm/smb.conf
+		echo "path = \"/home/$USER/RetroPie/retropiemenu/imp/music\"" >> /dev/shm/smb.conf
+		echo 'writeable = yes' >> /dev/shm/smb.conf
+		echo 'guest ok = yes' >> /dev/shm/smb.conf
+		echo 'create mask = 0644' >> /dev/shm/smb.conf
+		echo 'directory mask = 0755' >> /dev/shm/smb.conf
+		echo "force user = $USER" >> /dev/shm/smb.conf
+		sudo mv /dev/shm/smb.conf /etc/samba/smb.conf
+		
+		# Restart [SMB]
+		# sudo systemctl restart smbd.service
+	fi
+fi
+
+finishUTILITY
+}
+
+finishUTILITY()
+{
 # Finished Refresh - Confirm Reboot
-GAMELISTconfREBOOT=$(dialog --stdout --no-collapse --title " $selectTYPE *COMPLETE*" \
-	--ok-label OK --cancel-label EXIT \
-	--menu "$impLOGO $GAMELISTimpFINISHREF" 25 75 20 \
+UTILITYconfREBOOT=$(dialog --stdout --no-collapse --title " $selectTYPE *COMPLETE*" \
+	--ok-label OK --cancel-label MENU \
+	--menu "$IMPesFIXref" 25 75 20 \
 	1 "REBOOT" \
-	2 "EXIT")
+	2 "MENU")
 # Reboot Confirm - Otherwise Exit
-if [ "$GAMELISTconfREBOOT" == '1' ]; then tput reset && sudo reboot; fi
+if [ "$UTILITYconfREBOOT" == '1' ]; then tput reset && sudo reboot; fi
 
 tput reset
-exit 0
+mainMENU
 }
 
 # DISCLAIMER
@@ -1799,3 +2040,4 @@ mainMENU
 
 tput reset
 exit 0
+
