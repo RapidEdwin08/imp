@@ -23,21 +23,23 @@ cd ~/imp && ./imp_setup.sh offline
 ```
 
 If you are [Upgrading] to a Newer Version of IMP:  
-*UNINSTALL [IMP] FIRST using the SETUP Script CURRENTLY INSTALLED*  
-Then REMOVE (or BACKUP) the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newer Version of [IMP]  
+~~UNINSTALL [IMP] FIRST using the SETUP Script CURRENTLY INSTALLED~~  
+*Recommend UNINSTALL using v2022.02 or Newer to avoid issues with [es_systems.cfg]*  
+
+BACKUP the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newer Version of [IMP]:  
 ```bash
-cd ~/imp && ./imp_setup.sh #Proceed to Uninstall 0lder [IMP] First
 cd ~ #Change to Home Directory
 mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
 mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
 ```
 
-If you have any Issues REMOVING the [~/imp] Directory, try this Command [USE CAUTION]:  
+To REMOVE the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
 ```bash
 cd ~ #Change to Home Directory
-sudo rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
-sudo rm ~/imp-setup.tar.gz
+rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
+rm ~/imp-setup.tar.gz
 ```
+*You may need to use [sudo mv] or [sudo rm] if you used [make-install] mpg123 due to the [SOURCE] folder*  
 
 0THER BGMs ALREADY INSTALLED:  
 [IMP] will attempt to Disable (NOT Remove) the following BGMs Indiscriminately upon Install:  
