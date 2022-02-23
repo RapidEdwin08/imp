@@ -17,6 +17,23 @@ BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
 
+# Startup Song should Not interupt Current Playlist
+if [[ "$mp3ROM" == *"imp/music/bgm/startup.mp3" ]]; then
+	# Continue Playback after Startup Song
+	if [[ $(cat $IMPSettings/music-switch.flag) == "1" ]]; then
+		# Stop mpg123loop with continue parameter
+		bash "$IMP/stop.sh" continue > /dev/null 2>&1
+		echo '1' > $IMPSettings/startupsong.play
+		bash "$IMP/mpg123loop.sh" &
+		exit 0
+	else
+		# Exit Playback after Startup Song
+		echo '2' > $IMPSettings/startupsong.play
+		bash "$IMP/mpg123loop.sh" &
+		exit 0
+	fi
+fi
+
 # Stop instances of mpg123 
 bash "$IMP/stop.sh" > /dev/null 2>&1
 
