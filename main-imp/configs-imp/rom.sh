@@ -23,7 +23,7 @@ if [[ "$mp3ROM" == *"imp/music/bgm/startup.mp3" ]]; then
 	if [[ $(cat $IMPSettings/music-switch.flag) == "1" ]]; then
 		# Stop mpg123loop with continue parameter
 		bash "$IMP/stop.sh" continue > /dev/null 2>&1
-		echo '1' > $IMPSettings/startupsong.play
+		echo '3' > $IMPSettings/startupsong.play
 		bash "$IMP/mpg123loop.sh" &
 		exit 0
 	else
