@@ -62,6 +62,14 @@ if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "2" ]; then
 	rm $startupTRACK
 	exit 0
 fi
+# [startupsong.play] - IF [3] Play [startup.mp3] - Re0rganize Playlist around Current Playing Track and Continue
+if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "3" ]; then
+	echo '0' > $IMPSettings/startupsong.play
+	mpg123 -v -f "$playerVOL" "$startupMP3" > $startupTRACK 2>&1
+	rm $startupTRACK
+	bash "$IMP/play.sh" &
+	exit 0
+fi
 
 # [IMP] FULL MODE - Always Logging while Playing - Full Features
 if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
