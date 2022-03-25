@@ -124,30 +124,37 @@
 		<image>./icons/impsettings.png</image>
 	</folder>
 	<game>
-		<path>./imp/Settings/Randomizer Settings/Music Randomizer [0ff].sh</path>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [Off].sh</path>
 		<name>Music Randomizer [Off]</name>
-		<desc>[DISABLE]:  Music Randomizer
+		<desc>[DISABLE]:  Music Randomizer at Startup
  ~/RetroPie/roms/music/*</desc>
 		<image>./icons/imprandomizeroff.png</image>
 	</game>
 	<game>
-		<path>./imp/Settings/Randomizer Settings/Music Randomizer [ALL].sh</path>
-		<name>Music Randomizer {ALL}</name>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [On].sh</path>
+		<name>Music Randomizer [On]</name>
+		<desc>[ENABLE]:  Music Randomizer at Startup
+ ~/RetroPie/roms/music/*</desc>
+		<image>./icons/impstartrandomizer.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Randomizer Settings/Randomizer Mode [ALL].sh</path>
+		<name>Randomizer Mode {ALL}</name>
 		<desc>[ENABLE]:  Music Randomizer [ALL]
  ~/RetroPie/roms/music/*.MP3</desc>
 		<image>./icons/imprandomizerall.png</image>
 	</game>
 	<game>
-		<path>./imp/Settings/Randomizer Settings/Music Randomizer [BGM].sh</path>
-		<name>Music Randomizer {BGM}</name>
+		<path>./imp/Settings/Randomizer Settings/Randomizer Mode [BGM].sh</path>
+		<name>Randomizer Mode {BGM}</name>
 		<desc>[ENABLE]:  Music Randomizer [BGM]
  ~/RetroPie/roms/music/bgm/A-SIDE/*.MP3
  ~/RetroPie/roms/music/bgm/B-SIDE/*.MP3</desc>
 		<image>./icons/imprandomizerbgm.png</image>
 	</game>
 	<game>
-		<path>./imp/Settings/Randomizer Settings/Music Randomizer [PLS].sh</path>
-		<name>Music Randomizer {PLS}</name>
+		<path>./imp/Settings/Randomizer Settings/Randomizer Mode [PLS].sh</path>
+		<name>Randomizer Mode {PLS}</name>
 		<desc>[ENABLE]:  Music Randomizer [PLS]
  ~/RetroPie/roms/music/*.PLS
  ~/RetroPie/roms/music/*.M3U</desc>
