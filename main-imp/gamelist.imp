@@ -1,9 +1,9 @@
-	<game>
+	<folder>
 		<path>./imp</path>
 		<name>Music Player</name>
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/imp.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Previous Track.sh</path>
 		<name>&lt;&lt; Previous Track</name>
@@ -68,21 +68,28 @@
 		<image>./icons/impstartbgm.png</image>
 	</game>
 	<game>
+		<path>./imp/Start Randomizer.sh</path>
+		<name>Start Randomizer</name>
+		<desc>[IMP] Integrated Music Player
+ ~/RetroPie/roms/music/*</desc>
+		<image>./icons/impstartrandomizer.png</image>
+	</game>
+	<folder>
 		<path>./imp/music</path>
 		<name>[Music]</name>
 		<desc>[IMP] Integrated Music Player
  ~/RetroPie/roms/music</desc>
 		<image>./icons/impmusicdir.png</image>
-	</game>
-	<game>
+	</folder>
+	<folder>
 		<path>./imp/Settings</path>
 		<name>{Settings}</name>
 		<desc>[IMP] Integrated Music Player Settings.</desc>
 		<image>./icons/impsettings.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Settings/Current Settings.sh</path>
-		<name>Current Settings</name>
+		<name># Current Settings #</name>
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impsettingscurrent.png</image>
 	</game>
@@ -110,30 +117,48 @@
 		<desc>[DISABLE]: Infinite Repeat Mode.</desc>
 		<image>./icons/impinfiniteoff.png</image>
 	</game>
+	<folder>
+		<path>./imp/Settings/Randomizer Settings</path>
+		<name>{Randomizer Settings}</name>
+		<desc>[IMP] Randomizer Settings.</desc>
+		<image>./icons/impsettings.png</image>
+	</folder>
 	<game>
-		<path>./imp/Settings/Music Randomizer [On].sh</path>
-		<name>Music Randomizer [On]</name>
-		<desc>[ENABLE]:  Music Randomizer
- ~/RetroPie/roms/music/*
- ~/RetroPie/roms/music/bgm/A-SIDE/*
- ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
-		<image>./icons/imprandomizeron.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Music Randomizer [Off].sh</path>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [0ff].sh</path>
 		<name>Music Randomizer [Off]</name>
 		<desc>[DISABLE]:  Music Randomizer
- ~/RetroPie/roms/music/*
- ~/RetroPie/roms/music/bgm/A-SIDE/*
- ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
+ ~/RetroPie/roms/music/*</desc>
 		<image>./icons/imprandomizeroff.png</image>
 	</game>
 	<game>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [ALL].sh</path>
+		<name>Music Randomizer {ALL}</name>
+		<desc>[ENABLE]:  Music Randomizer [ALL]
+ ~/RetroPie/roms/music/*.MP3</desc>
+		<image>./icons/imprandomizerall.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [BGM].sh</path>
+		<name>Music Randomizer {BGM}</name>
+		<desc>[ENABLE]:  Music Randomizer [BGM]
+ ~/RetroPie/roms/music/bgm/A-SIDE/*.MP3
+ ~/RetroPie/roms/music/bgm/B-SIDE/*.MP3</desc>
+		<image>./icons/imprandomizerbgm.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Randomizer Settings/Music Randomizer [PLS].sh</path>
+		<name>Music Randomizer {PLS}</name>
+		<desc>[ENABLE]:  Music Randomizer [PLS]
+ ~/RetroPie/roms/music/*.PLS
+ ~/RetroPie/roms/music/*.M3U</desc>
+		<image>./icons/imprandomizerpls.png</image>
+	</game>
+	<folder>
 		<path>./imp/Settings/BGM Settings</path>
 		<name>{BGM Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
+		<desc>[IMP] BGM Settings.</desc>
 		<image>./icons/impsettings.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Settings/BGM Settings/BGM A-Side [On].sh</path>
 		<name>BGM A-Side [On]</name>
@@ -162,12 +187,12 @@
  ~/RetroPie/roms/music/bgm/B-SIDE</desc>
 		<image>./icons/impsettingbgmboff.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/Settings/Game Settings</path>
 		<name>{Game Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
+		<desc>[IMP] Game Settings.</desc>
 		<image>./icons/impsettings.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Settings/Game Settings/Music Over Games [On].sh</path>
 		<name>Music Over Games [On]</name>
@@ -234,12 +259,12 @@
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impsettingadjust.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/Settings/HTTP Server Settings</path>
 		<name>{HTTP Server}</name>
 		<desc>[IMP] http.server Settings.</desc>
 		<image>./icons/impsettings.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Settings/HTTP Server Settings/HTTP Server Log.sh</path>
 		<name>HTTP Server Log</name>
@@ -266,12 +291,12 @@
 		<desc>[DISABLE]: http.server </desc>
 		<image>./icons/imphttpoff.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/Settings/Startup Settings</path>
 		<name>{Startup Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
+		<desc>[IMP] Startup Settings.</desc>
 		<image>./icons/impsettings.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Settings/Startup Settings/Music At Startup [On].sh</path>
 		<name>Music At Startup [On]</name>
@@ -297,6 +322,18 @@
 		<desc>[DISABLE]:  Play Startup Song at B00T
  ~/RetroPie/roms/music/bgm/startup.mp3</desc>
 		<image>./icons/impsettingstartupsongoff.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Shuffle Playlist [On].sh</path>
+		<name>Shuffle Playlist [On]</name>
+		<desc>[ENABLE]:  Shuffle Current Playlist at B00T</desc>
+		<image>./icons/impsettingshufflebooton.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/Startup Settings/Shuffle Playlist [Off].sh</path>
+		<name>Shuffle Playlist [Off]</name>
+		<desc>[DISABLE]:  Shuffle Current Playlist at B00T</desc>
+		<image>./icons/impsettingshufflebootoff.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/Startup Settings/[000] Delay At Startup.sh</path>
@@ -412,12 +449,12 @@
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impsettingadjust.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/Volume</path>
 		<name>{Volume}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
+		<desc>[IMP] Integrated Music Player Volume.</desc>
 		<image>./icons/impvolume.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/Volume/[05] Player Volume.sh</path>
 		<name>[05] Player Volume</name>
@@ -484,13 +521,13 @@
 		<desc>[IMP] Integrated Music Player.</desc>
 		<image>./icons/impvolume100.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/music/bgm</path>
 		<name># BGM #</name>
 		<desc>[IMP] Background Music.
  ~/RetroPie/roms/music/bgm</desc>
 		<image>./icons/impbgmdirs.png</image>
-	</game>
+	</folder>
 	<game>
 		<path>./imp/music/bgm/startup.mp3</path>
 		<name>&lt;Startup Song&gt;</name>
@@ -498,111 +535,17 @@
  ~/RetroPie/roms/music/bgm/startup.mp3</desc>
 		<image>./icons/impstartupsong.png</image>
 	</game>
-	<game>
+	<folder>
 		<path>./imp/music/bgm/A-SIDE</path>
 		<name># A-SIDE #</name>
 		<desc>[IMP] Background Music.
  ~/RetroPie/roms/music/bgm/A-SIDE</desc>
 		<image>./icons/impbgmdira.png</image>
-	</game>
-	<game>
+	</folder>
+	<folder>
 		<path>./imp/music/bgm/B-SIDE</path>
 		<name># B-SIDE #</name>
 		<desc>[IMP] Background Music.
  ~/RetroPie/roms/music/bgm/B-SIDE</desc>
 		<image>./icons/impbgmdirb.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_bgm</path>
-		<name>_bgm</name>
-		<desc>_bgm
- ~/bgm</desc>
-		<image>./icons/backgroundmusic.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_backgroundmusic</path>
-		<name>_backgroundmusic</name>
-		<desc>_backgroundmusic
- ~/RetroPie/backgroundmusic</desc>
-		<image>./icons/backgroundmusic.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_jukebox_mp3</path>
-		<name>_jukebox_mp3</name>
-		<desc>_jukebox
- ~/RetroPie/roms/jukebox/mp3</desc>
-		<image>./icons/jukebox.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SLAYRadio</path>
-		<name>[SLAYRadio]</name>
-		<desc>[slayradio.org]: SLAY Radio is an internet-based radio station, transmitting from Gothenburg (Göteborg) in Sweden... </desc>
-		<image>./icons/slayradio-logo.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SLAYRadio/slayradio.128.m3u</path>
-		<name>SLAYRadio</name>
-		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
-		<image>./icons/slayradio.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM</path>
-		<name>[Mp3Radio.FM]</name>
-		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM/mp3radio.pls</path>
-		<name>Main Channel</name>
-		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/NightrideFM</path>
-		<name>[Nightride.FM]</name>
-		<desc>[nightride.fm] Nightride FM is an independent synthwave radio station and online music community, taking its name from the fake GTA:V radio station announced by Kavinsky.</desc>
-		<image>./icons/nightridefm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/NightrideFM/NightrideFM-x6.pls</path>
-		<name>Nightride.FM</name>
-		<desc>Nightride.FM, ChillSynth.FM, SpaceSynth.FM, DarkSynth, HorrorSynth, EBSM...</desc>
-		<image>./icons/nightridefm.jpg</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC</path>
-		<name>[Rainwave.CC]</name>
-		<desc>[rainwave.cc] Rainwave is an interactive radio website that allows users to request, rate, and vote for songs in real time. The site hosts five separate radio streams and focuses completely on video game music. Rainwave is a free service, funded primarily by Robert &quot;LiquidRain&quot; McAuley, and supplemented by user donations.</desc>
-		<image>./icons/rainwavecc.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/1.mp3.m3u</path>
-		<name>Game</name>
-		<desc>RainwaveCC: Game</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/2.mp3.m3u</path>
-		<name>OC Remix</name>
-		<desc>RainwaveCC: OC Remix</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/3.mp3.m3u</path>
-		<name>Covers</name>
-		<desc>RainwaveCC: Covers</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/4.mp3.m3u</path>
-		<name>ChipTune</name>
-		<desc>RainwaveCC: ChipTune</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/5.mp3.m3u</path>
-		<name>All</name>
-		<desc>RainwaveCC: All</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-</gameList>
+	</folder>

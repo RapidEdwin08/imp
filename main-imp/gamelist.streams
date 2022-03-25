@@ -1,0 +1,91 @@
+	<folder>
+		<path>./imp/music/streams</path>
+		<name>[Streams]</name>
+		<desc>Internet-based Radio Stations and Streams
+ ~/RetroPie/roms/music/streams/*</desc>
+		<image>./icons/impstreamsdir.png</image>
+	</folder>
+	<folder>
+		<path>./imp/music/streams/SLAYRadio</path>
+		<name>[SLAYRadio]</name>
+		<desc>[slayradio.org]: SLAY Radio is an internet-based radio station, transmitting from Gothenburg (Göteborg) in Sweden... </desc>
+		<image>./icons/slayradio-logo.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/streams/SLAYRadio/slayradio.128.m3u</path>
+		<name>SLAYRadio</name>
+		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
+		<image>./icons/slayradio.png</image>
+	</game>
+	<folder>
+		<path>./imp/music/streams/Mp3RadioFM</path>
+		<name>[Mp3Radio.FM]</name>
+		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
+		<image>./icons/mp3radiofm.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/streams/Mp3RadioFM/mp3radio.pls</path>
+		<name>Main Channel</name>
+		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
+		<image>./icons/mp3radiofm.png</image>
+	</game>
+	<folder>
+		<path>./imp/music/streams/NightrideFM</path>
+		<name>[Nightride.FM]</name>
+		<desc>[nightride.fm] Nightride FM is an independent synthwave radio station and online music community, taking its name from the fake GTA:V radio station announced by Kavinsky.</desc>
+		<image>./icons/nightridefm.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/streams/NightrideFM/NightrideFM-x6.pls</path>
+		<name>Nightride.FM</name>
+		<desc>Nightride.FM, ChillSynth.FM, SpaceSynth.FM, DarkSynth, HorrorSynth, EBSM...</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<folder>
+		<path>./imp/music/streams/RainwaveCC</path>
+		<name>[Rainwave.CC]</name>
+		<desc>[rainwave.cc] Rainwave is an interactive radio website that allows users to request, rate, and vote for songs in real time. The site hosts five separate radio streams and focuses completely on video game music. Rainwave is a free service, funded primarily by Robert &quot;LiquidRain&quot; McAuley, and supplemented by user donations.</desc>
+		<image>./icons/rainwavecc.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/streams/RainwaveCC/1.mp3.m3u</path>
+		<name>Game</name>
+		<desc>RainwaveCC: Game</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/RainwaveCC/2.mp3.m3u</path>
+		<name>OC Remix</name>
+		<desc>RainwaveCC: OC Remix</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/RainwaveCC/3.mp3.m3u</path>
+		<name>Covers</name>
+		<desc>RainwaveCC: Covers</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/RainwaveCC/4.mp3.m3u</path>
+		<name>ChipTune</name>
+		<desc>RainwaveCC: ChipTune</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/RainwaveCC/5.mp3.m3u</path>
+		<name>All</name>
+		<desc>RainwaveCC: All</desc>
+		<image>./icons/rainwave.png</image>
+	</game>
+	<folder>
+		<path>./imp/music/streams/DnBRadio</path>
+		<name>[DnBRadio]</name>
+		<desc>[dnbradio.com]: Established in 2003, dnbradio.com is one of the longest running dedicated drum and bass / jungle radio stations in existence. DNBRADIO has survived on donations for over 10 years! </desc>
+		<image>./icons/dnbradio0.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/streams/DnBRadio/hi.pls</path>
+		<name>DnBRadio [192k]</name>
+		<desc>DnBRadio 192k MP3 Stream: Recommended for High-speed connections.</desc>
+		<image>./icons/dnbradio.png</image>
+	</game>
