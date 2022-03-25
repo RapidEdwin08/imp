@@ -47,11 +47,11 @@ cat /dev/null > $IMPPlaylist/shuffle
 
 # Build INIT and ABC Playists - Parse .pls and .m3u files first
 if [[ "$mp3BASE" == *".pls" || "$mp3BASE" == *".m3u" ]]; then
-	# If .pls file Obtain All Lines that Begin with File#=
-	if [[ "$mp3BASE" == *".pls" ]]; then grep '^File' "$mp3ROM" | sed 's/.*=//' > $IMPPlaylist/init; fi
+	# If .pls file Obtain All Lines that Begin with File#=  - Remove [.acc] Streams from Playlist
+	if [[ "$mp3BASE" == *".pls" ]]; then grep '^File' "$mp3ROM" | sed 's/.*=//' | grep -vi ".aac" > $IMPPlaylist/init; fi
 	
-	# If .m3u file Obtain All Lines that Begin with http
-	if [[ "$mp3BASE" == *".m3u" ]]; then grep '^http' "$mp3ROM" > $IMPPlaylist/init; fi
+	# If .m3u file Obtain All Lines that Begin with http  - Remove [.acc] Streams from Playlist
+	if [[ "$mp3BASE" == *".m3u" ]]; then grep '^http' "$mp3ROM" | grep -vi ".aac" > $IMPPlaylist/init; fi
 	
 	# *ISSUE* - https not working with mpg123 - main: [src/mpg123.c:708] error: Cannot open https://...-mp3: File access error. (code 22)
 	# Recently Internet Radio Stations are updating thier stream servers to SSL TLSv1.3...
@@ -66,11 +66,11 @@ if [[ "$mp3BASE" == *".pls" || "$mp3BASE" == *".m3u" ]]; then
 	cat $IMPPlaylist/init > $IMPPlaylist/abc
 # 202203 Addition for Case senisitve PLS/M3U
 elif [[ "$mp3BASE" == *".PLS" || "$mp3BASE" == *".M3U" ]]; then
-	# If .pls file Obtain All Lines that Begin with File#=
-	if [[ "$mp3BASE" == *".PLS" ]]; then grep '^File' "$mp3ROM" | sed 's/.*=//' > $IMPPlaylist/init; fi
+	# If .pls file Obtain All Lines that Begin with File#= - Remove [.acc] Streams from Playlist
+	if [[ "$mp3BASE" == *".PLS" ]]; then grep '^File' "$mp3ROM" | sed 's/.*=//' | grep -vi ".aac" > $IMPPlaylist/init; fi
 	
-	# If .m3u file Obtain All Lines that Begin with http
-	if [[ "$mp3BASE" == *".M3U" ]]; then grep '^http' "$mp3ROM" > $IMPPlaylist/init; fi
+	# If .m3u file Obtain All Lines that Begin with http - Remove [.acc] Streams from Playlist
+	if [[ "$mp3BASE" == *".M3U" ]]; then grep '^http' "$mp3ROM" | grep -vi ".aac" > $IMPPlaylist/init; fi
 	
 	# *ISSUE* - https not working with mpg123 - main: [src/mpg123.c:708] error: Cannot open https://...-mp3: File access error. (code 22)
 	# Recently Internet Radio Stations are updating thier stream servers to SSL TLSv1.3...
