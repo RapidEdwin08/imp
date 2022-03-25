@@ -23,6 +23,7 @@ http_setting=$(cat $IMPSettings/http-server.flag)
 http_port=$(cat $IMPSettings/http-server.port)
 infinite_mode=$(cat $IMPSettings/infinite.flag)
 lite_mode=$(cat $IMPSettings/lite.flag)
+randomizer_boot=$(cat $IMPSettings/randomizerboot.flag)
 randomizer_mode=$(cat $IMPSettings/randomizer.flag)
 startupsong_mode=$(cat $IMPSettings/startupsong.flag)
 shuffleboot_mode=$(cat $IMPSettings/shuffleboot.flag)
@@ -37,12 +38,16 @@ if [ $fade_out == "1" ]; then fade_out=${GREEN}"ON "; else fade_out=${RED}"OFF";
 if [ $http_setting == "1" ]; then http_setting=${GREEN}"ON "; else http_setting=${RED}"OFF"; fi
 if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"ON "; else infinite_mode=${RED}"OFF"; fi
 if [ $lite_mode == "1" ]; then lite_mode=${GREEN}"ON "; else lite_mode=${RED}"OFF"; fi
-if [ $randomizer_mode == "0" ]; then randomizer_mode=${RED}"OFF"; fi
-if [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; fi
-if [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; fi
-if [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; fi
 if [ $startupsong_mode == "1" ]; then startupsong_mode=${GREEN}"ON "; else startupsong_mode=${RED}"OFF"; fi
 if [ $shuffleboot_mode == "1" ]; then shuffleboot_mode=${GREEN}"ON "; else shuffleboot_mode=${RED}"OFF"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${RED}"ALL"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${RED}"ALL"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${RED}"BGM"; fi
+if [ $randomizer_boot == "0" ] &&  [ $randomizer_mode == "3" ]; then randomizer_mode=${RED}"PLS"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${GREEN}"ALL"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; fi
 
 currentIP=$(hostname -I)
 echo $currentIP:$http_port > $IMPSettings/current.ip
