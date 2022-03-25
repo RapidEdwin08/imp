@@ -44,7 +44,7 @@ fi
 if [ $(cat $IMPSettings/startupsong.flag) == "1" ]; then echo '1' > $IMPSettings/startupsong.play; fi
 
 # If Randomizer flag NOT = 0 - Random Playlist
-if [ ! $(cat $IMPSettings/randomizer.flag) == "0" ]; then
+if [ ! $(cat $IMPSettings/randomizerboot.flag) == "0" ]; then
 	bash "$IMP/randomizer.sh" &
 	exit 0
 fi
