@@ -64,18 +64,37 @@ if [[ "$mp3BASE" == *".pls" || "$mp3BASE" == *".m3u" ]]; then
 	
 	# Rebuild .pls ABC Playlist - Maintain the .pls/.m3u List 0rder
 	cat $IMPPlaylist/init > $IMPPlaylist/abc
+# 202203 Addition for Case senisitve PLS/M3U
+elif [[ "$mp3BASE" == *".PLS" || "$mp3BASE" == *".M3U" ]]; then
+	# If .pls file Obtain All Lines that Begin with File#=
+	if [[ "$mp3BASE" == *".PLS" ]]; then grep '^File' "$mp3ROM" | sed 's/.*=//' > $IMPPlaylist/init; fi
+	
+	# If .m3u file Obtain All Lines that Begin with http
+	if [[ "$mp3BASE" == *".M3U" ]]; then grep '^http' "$mp3ROM" > $IMPPlaylist/init; fi
+	
+	# *ISSUE* - https not working with mpg123 - main: [src/mpg123.c:708] error: Cannot open https://...-mp3: File access error. (code 22)
+	# Recently Internet Radio Stations are updating thier stream servers to SSL TLSv1.3...
+	# Replace [https://] with [http://] and *Remove [:443]* in playlist to overcome mpg123 error
+	sed -i s+'https://'+'http://'+ $IMPPlaylist/init
+	sed -i s+':443'+''+ $IMPPlaylist/init
+	
+	# Obtain First Track
+	PLfirst=$(head -n 1 $IMPPlaylist/init)
+	
+	# Rebuild .pls ABC Playlist - Maintain the .pls/.m3u List 0rder
+	cat $IMPPlaylist/init > $IMPPlaylist/abc
 else	
 	# Build INIT and ABC Playists - Parse .mp3 files
 	if [ "$mp3DIR" == "$musicROMS" ]; then
 		# Obtain First Track
 		PLfirst=$(find "$musicDIR" -maxdepth 1 -type f -iname "$mp3BASE" )
 		# Add Remaining MP3s from the musicDIR directory to Playlist Non-Recursive
-		find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
+		find "$musicDIR" -maxdepth 1 -type f -iname "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
 	else
 		# Obtain First Track
 		PLfirst=$(find "$mp3DIR" -maxdepth 1 -type f -iname "$mp3BASE" )
 		# Add Remaining MP3s from selected MP3-ROM directory to Playlist Non-Recursive
-		find "$mp3DIR" -maxdepth 1 -type f -name "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
+		find "$mp3DIR" -maxdepth 1 -type f -iname "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
 	fi
 
 	# Sort init playlist

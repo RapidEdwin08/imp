@@ -16,7 +16,7 @@ echo "1" > $IMPSettings/music-switch.flag
 
 # Fade setting check determines action
 if [[ $(cat $IMPSettings/fade-out.flag) == "0" ]]; then
-	pkill -CONT mpg123
+	bash "$IMP/play.sh" > /dev/null 2>&1 #pkill -CONT mpg123
 	exit 0
 fi
 
@@ -44,7 +44,7 @@ fi
 # Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == *"Unable to find simple control"* || $currentVOL == '' ]]; then
 		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
-		pkill -CONT mpg123
+		bash "$IMP/play.sh" > /dev/null 2>&1 #pkill -CONT mpg123
 		exit 0
 fi
 
@@ -61,12 +61,12 @@ fi
 # Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $dynamicVOL == *"Unable to find simple control"* || $dynamicVOL == '' ]]; then
 		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
-		pkill -CONT mpg123
+		bash "$IMP/play.sh" > /dev/null 2>&1 #pkill -CONT mpg123
 		exit 0
 fi
 
 # Continue player
-pkill -CONT mpg123
+bash "$IMP/play.sh" > /dev/null 2>&1 #pkill -CONT mpg123
 
 # Increase Volume until Dynamic Volume reaches previously obtained Current Volume
 while [ $dynamicVOL -lt $currentVOL ]; do

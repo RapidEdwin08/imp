@@ -1,9 +1,11 @@
 #!/bin/bash
 # Check for [IMP] Files/Folders Linked to [retropiemenu] [gamelist.xml]
 # Create Files/Folders If Needed to Prevent ERROR Loading emulationstation:
+
 # ~/RetroPie-Setup/tmp/build/emulationstation/es-app/src/FileData.cpp:218: void FileData::addChild(FileData*): Assertion `mType == FOLDER' failed.
-# Scenario where ES may Fail to Load is IF [parse XML gamelist only] is "OFF" + there are NO MP3s in the Dedicated Music Folders
-# Scenario where RetroPie is Updated and Removes [.mp3] support from <extension>
+#Scenarios where ES may Fail to Load:
+# IF RetroPie is Updated leading to [es_systems.cfg] to lose the MP3/PLS/M3U extenstions needed for [IMP]
+# IF [ParseGamelistOnly] is "ON" + there are Incorrect Tags or References to File Extensions in the [gamelist.xml]
 
 # musicDIR=$(readlink ~/RetroPie/retropiemenu/imp/music) # ES does not play well with Symbolic Links in [retropiemenu]
 musicDIR=~/RetroPie/retropiemenu/imp/music

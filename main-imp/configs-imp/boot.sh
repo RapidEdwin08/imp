@@ -43,32 +43,63 @@ fi
 # [startupsong.play] - Checked by [mpg123loop.sh] - IF [1] Play [startup.mp3] then Playlist
 if [ $(cat $IMPSettings/startupsong.flag) == "1" ]; then echo '1' > $IMPSettings/startupsong.play; fi
 
-# If Randomizer flag = 1 - Random Playlist
-if [ $(cat $IMPSettings/randomizer.flag) == "1" ]; then
-	bash "$IMP/randomizer.sh"
-	bash "$IMP/play.sh" &
+# If Randomizer flag NOT = 0 - Random Playlist
+if [ ! $(cat $IMPSettings/randomizer.flag) == "0" ]; then
+	bash "$IMP/randomizer.sh" &
 	exit 0
 fi
 
-# If any BGM flags 1 - Clear init playlist
+# If ANY BGM flags 1 - Create BGM Playlists
 if [[ $(cat $IMPSettings/a-side.flag) == "1" || $(cat $IMPSettings/b-side.flag) == "1" ]]; then
-	cat /dev/null > $IMPPlaylist/init
+	# If BGM A-SIDE flag 1 - Create Playlist
+	if [ $(cat $IMPSettings/a-side.flag) == "1" ]; then
+		# Output A-SIDE to init playlist
+		find $BGMa -iname "*.mp3" > /dev/shm/init
+		cat /dev/shm/init | sort -n > /dev/shm/abc
+		cat /dev/shm/init | sort --random-sort > /dev/shm/shuffle
+	fi
+	
+	# Append init playlist if BGM B-SIDE flag 1
+	if [ $(cat $IMPSettings/b-side.flag) == "1" ]; then
+		# Append B-SIDE to init playlist
+		find $BGMb -iname "*.mp3" >> /dev/shm/init
+		cat /dev/shm/init | sort -n > /dev/shm/abc
+		cat /dev/shm/init | sort --random-sort > /dev/shm/shuffle
+	fi
+	
+	# Escape the /\slashes/\ in the Paths
+	ESCmusicROMS=${musicROMS//\//\\/}
+	ESCmusicDIR=${musicDIR//\//\\/}
+	
+	# Replace rpMenu/music Path with roms/Music Path in Playlist files
+	sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/abc
+	sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/shuffle
+	sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/init
+	
+	# Compare New BGM Playlist with Current Playlist - Replace If Differences or NOT in accordance with BGM Flags
+	cat $IMPPlaylist/init | sort -n > /dev/shm/abc-current
+	if [ "$(diff /dev/shm/abc-current /dev/shm/abc)" == '' ]; then
+		# No need to replace if Same Playlist and in accordance with BGM Flags
+		rm /dev/shm/init
+		rm /dev/shm/abc
+		rm /dev/shm/abc-current
+		rm /dev/shm/shuffle
+	else
+		# Replace current playlist in accordance with BGM Flags
+		mv /dev/shm/init $IMPPlaylist/init
+		mv /dev/shm/abc $IMPPlaylist/abc
+		mv /dev/shm/shuffle $IMPPlaylist/shuffle
+		rm /dev/shm/abc-current
+	fi
 fi
 
-# Overwrite init playlist if BGM A-SIDE flag 1
-if [ $(cat $IMPSettings/a-side.flag) == "1" ]; then
-	# Output A-SIDE to init playlist
-	find $BGMa -iname "*.mp3" > $IMPPlaylist/init
-	cat $IMPPlaylist/init | sort -n > $IMPPlaylist/abc
-	cat $IMPPlaylist/init | sort --random-sort > $IMPPlaylist/shuffle
-fi
-
-# Append init playlist if BGM B-SIDE flag 1
-if [ $(cat $IMPSettings/b-side.flag) == "1" ]; then
-	# Append B-SIDE to init playlist
-	find $BGMb -iname "*.mp3" >> $IMPPlaylist/init
-	cat $IMPPlaylist/init | sort -n > $IMPPlaylist/abc
-	cat $IMPPlaylist/init | sort --random-sort > $IMPPlaylist/shuffle
+# If Shuffle @ B00T Flag 1 - Shuffle Current Playlist
+if [ $(cat $IMPSettings/shuffleboot.flag) == "1" ]; then
+	# Shuffle the Current Playlist
+	sort --random-sort $IMPPlaylist/init > $IMPPlaylist/shuffle
+	
+	# Turning SHUFFLE On
+	echo "1" > $IMPSettings/shuffle.flag
 fi
 
 # Start the Music Play Script

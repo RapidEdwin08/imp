@@ -11,7 +11,8 @@ fi
 
 # Settings Flags
 echo "0" > $IMPSettings/music-switch.flag
-echo "0" > $IMPSettings/pause.flag
+# Set [pause.flag] to [0] Unless called by Script [run-onstart/end] scripts [2]
+if [ ! $(cat $IMPSettings/pause.flag) == "2" ]; then echo "0" > $IMPSettings/pause.flag; fi
 
 # [$IMP/mpg123loop.sh] runs with -continue -k to Continue from Last Frame Position pulled from [$currentTRACK]
 # If [$IMP/stop.sh] called with ANY Argument - Continue track from Last Position by NOT Setting Last Position 0000+0000 

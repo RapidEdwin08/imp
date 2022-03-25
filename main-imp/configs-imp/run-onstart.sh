@@ -13,7 +13,7 @@ echo "0" > $IMPSettings/music-switch.flag
 
 # Fade setting determines action
 if [[ $(cat $IMPSettings/fade-out.flag) == "0" ]]; then
-	pkill -STOP mpg123
+	bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
 	exit 0
 fi
 
@@ -41,7 +41,7 @@ fi
 # Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == *"Unable to find simple control"* || $currentVOL == '' ]]; then
 		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade Out..."
-		pkill -STOP mpg123
+		bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
 		exit 0
 fi
 
@@ -65,7 +65,7 @@ fi
 # Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $dynamicVOL == *"Unable to find simple control"* || $dynamicVOL == '' ]]; then
 		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
-		pkill -STOP mpg123
+		bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
 		exit 0
 fi
 
@@ -85,7 +85,7 @@ while [ $dynamicVOL -gt 0 ]; do
 done
 
 # Stop/Pause player after Volume 0 - allow time for mpg123 to stop
-pkill -STOP mpg123
+bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
 sleep 0.2
 
 # set Volume back to Original setting after Fade
