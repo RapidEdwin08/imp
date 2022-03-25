@@ -7,7 +7,7 @@ Automates Playlists, Recalls Last Track/Position, Next/Previous Track, Fade, INF
 
 **Before you get started:**  
 - Recommend your Music File *Extensions* be either ALL *lower-case* or *UPPER-CASE* for IMP `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
-Results may vary using File Extensions such as`*.mP3*` or `*.Mp3*` or `*.pLs*` or `*.PlS*` since Linux is cAsE-sEnSiTiVe  
+Results may vary using File Extensions such as`*.mP3 .Mp3 .pLs .PlS .M3u .m3U*` since Linux is cAsE-sEnSiTiVe  
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].  
 
@@ -116,10 +116,10 @@ HTTP Server [On] ROMS Directory
 HTTP Server [Off]  
 
 **Randomizer Settings** [*Will Override Playlist at Startup*] {Icons Change to Reflect BGM Settings}  
-Randomizer [Off]  
-Randomizer [All]: Pick a Random [.MP3] Track and make that sub-folder the current playlist [*BGM Settings are Respected*]  
-Randomizer [BGM]: Pick a Random [.MP3] Track from [BGM] and make that sub-folder the current playlist  
-Randomizer [PLS]: Pick a Random [.PLS/.M3U] and make it the current playlist [*Will Override BGM Settings at Startup*]  
+Music Randomizer [Off/On]  
+Randomizer Mode [All]: Pick a Random [.MP3] Track and make that sub-folder the current playlist [*BGM Settings are Respected*]  
+Randomizer Mode [BGM]: Pick a Random [.MP3] Track from [BGM] and make that sub-folder the current playlist  
+Randomizer Mode [PLS]: Pick a Random [.PLS/.M3U] and make it the current playlist [*Will Override BGM Settings at Startup*]  
 
 **Startup Settings**  
 Music at Startup [Off/On]  
