@@ -1,840 +1,233 @@
-	<game>
-		<path>./imp</path>
-		<name>Music Player</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/imp.png</image>
-	</game>
-	<game>
-		<path>./imp/Previous Track.sh</path>
-		<name>&lt;&lt; Previous Track</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impprevious.png</image>
-	</game>
-	<game>
-		<path>./imp/Play.sh</path>
-		<name>&lt;&gt; Play</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impplay.png</image>
-	</game>
-	<game>
-		<path>./imp/Pause.sh</path>
-		<name>= Pause</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/imppause.png</image>
-	</game>
-	<game>
-		<path>./imp/Stop.sh</path>
-		<name>&gt;&lt; Stop</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impstop.png</image>
-	</game>
-	<game>
-		<path>./imp/Next Track.sh</path>
-		<name>&gt;&gt; Next Track</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impnext.png</image>
-	</game>
-	<game>
-		<path>./imp/Current Playlist.sh</path>
-		<name># Current Playlist #</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impplaylist.png</image>
-	</game>
-	<game>
-		<path>./imp/Shuffle On.sh</path>
-		<name>Shuffle On</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impshuffleon.png</image>
-	</game>
-	<game>
-		<path>./imp/Shuffle Off.sh</path>
-		<name>Shuffle Off</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impshuffleoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Start All Music.sh</path>
-		<name>Start All Music</name>
-		<desc>[IMP] Integrated Music Player
- ~/RetroPie/roms/music/*</desc>
-		<image>./icons/impstartall.png</image>
-	</game>
-	<game>
-		<path>./imp/Start BGM Music.sh</path>
-		<name>Start BGM Music</name>
-		<desc>[IMP] Integrated Music Player
- ~/RetroPie/roms/music/bgm/A-SIDE/*
- ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
-		<image>./icons/impstartbgm.png</image>
-	</game>
-	<game>
-		<path>./imp/music</path>
-		<name>[Music]</name>
-		<desc>[IMP] Integrated Music Player
- ~/RetroPie/roms/music</desc>
-		<image>./icons/impmusicdir.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings</path>
-		<name>{Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
-		<image>./icons/impsettings.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Current Settings.sh</path>
-		<name>Current Settings</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingscurrent.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/IMP Lite [On].sh</path>
-		<name>IMP Lite [On]</name>
-		<desc>[ENABLE]: IMP Lite Mode.</desc>
-		<image>./icons/impliteon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/IMP Lite [Off].sh</path>
-		<name>IMP Lite [Off]</name>
-		<desc>[DISABLE]: IMP Lite Mode.</desc>
-		<image>./icons/impliteoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Infinite IMP [On].sh</path>
-		<name>Infinite IMP [On]</name>
-		<desc>[ENABLE]: Infinite Repeat Mode.</desc>
-		<image>./icons/impinfiniteon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Infinite IMP [Off].sh</path>
-		<name>Infinite IMP [Off]</name>
-		<desc>[DISABLE]: Infinite Repeat Mode.</desc>
-		<image>./icons/impinfiniteoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Music Randomizer [On].sh</path>
-		<name>Music Randomizer [On]</name>
-		<desc>[ENABLE]:  Music Randomizer
- ~/RetroPie/roms/music/*
- ~/RetroPie/roms/music/bgm/A-SIDE/*
- ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
-		<image>./icons/imprandomizeron.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Music Randomizer [Off].sh</path>
-		<name>Music Randomizer [Off]</name>
-		<desc>[DISABLE]:  Music Randomizer
- ~/RetroPie/roms/music/*
- ~/RetroPie/roms/music/bgm/A-SIDE/*
- ~/RetroPie/roms/music/bgm/B-SIDE/*</desc>
-		<image>./icons/imprandomizeroff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/BGM Settings</path>
-		<name>{BGM Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
-		<image>./icons/impsettings.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/BGM Settings/BGM A-Side [On].sh</path>
-		<name>BGM A-Side [On]</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/A-SIDE</desc>
-		<image>./icons/impsettingbgmaon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/BGM Settings/BGM A-Side [Off].sh</path>
-		<name>BGM A-Side [Off]</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/A-SIDE</desc>
-		<image>./icons/impsettingbgmaoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/BGM Settings/BGM B-Side [On].sh</path>
-		<name>BGM B-Side [On]</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/B-SIDE</desc>
-		<image>./icons/impsettingbgmbon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/BGM Settings/BGM B-Side [Off].sh</path>
-		<name>BGM B-Side [Off]</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/B-SIDE</desc>
-		<image>./icons/impsettingbgmboff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings</path>
-		<name>{Game Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
-		<image>./icons/impsettings.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/Music Over Games [On].sh</path>
-		<name>Music Over Games [On]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingmusicon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/Music Over Games [Off].sh</path>
-		<name>Music Over Games [Off]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingmusicoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/Volume Fade At Game [On].sh</path>
-		<name>Volume Fade At Game [On]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingfadeon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/Volume Fade At Game [Off].sh</path>
-		<name>Volume Fade At Game [Off]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingfadeoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[00] Delay At Game End.sh</path>
-		<name>[00] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[05] Delay At Game End.sh</path>
-		<name>[05] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[10] Delay At Game End.sh</path>
-		<name>[10] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[15] Delay At Game End.sh</path>
-		<name>[15] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[20] Delay At Game End.sh</path>
-		<name>[20] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[25] Delay At Game End.sh</path>
-		<name>[25] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Game Settings/[30] Delay At Game End.sh</path>
-		<name>[30] Delay At Game End</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/HTTP Server Settings</path>
-		<name>{HTTP Server}</name>
-		<desc>[IMP] http.server Settings.</desc>
-		<image>./icons/impsettings.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/HTTP Server Settings/HTTP Server Log.sh</path>
-		<name>HTTP Server Log</name>
-		<desc>[LOG]: http.server</desc>
-		<image>./icons/imphttplog.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/HTTP Server Settings/HTTP Server Music [On].sh</path>
-		<name>HTTP Server Music [On]</name>
-		<desc>[ENABLE]: http.server
- ~/RetroPie/roms/music/*</desc>
-		<image>./icons/imphttpon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/HTTP Server Settings/HTTP Server Roms [On].sh</path>
-		<name>HTTP Server Roms [On]</name>
-		<desc>[ENABLE]: http.server
- ~/RetroPie/roms/*</desc>
-		<image>./icons/imphttpon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/HTTP Server Settings/HTTP Server [Off].sh</path>
-		<name>HTTP Server [Off]</name>
-		<desc>[DISABLE]: http.server </desc>
-		<image>./icons/imphttpoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings</path>
-		<name>{Startup Settings}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
-		<image>./icons/impsettings.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/Music At Startup [On].sh</path>
-		<name>Music At Startup [On]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingmusicon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/Music At Startup [Off].sh</path>
-		<name>Music At Startup [Off]</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingmusicoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/Play Startup Song [On].sh</path>
-		<name>Play Startup Song [On]</name>
-		<desc>[ENABLE]:  Play Startup Song at B00T
- ~/RetroPie/roms/music/bgm/startup.mp3</desc>
-		<image>./icons/impsettingstartupsongon.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/Play Startup Song [Off].sh</path>
-		<name>Play Startup Song [Off]</name>
-		<desc>[DISABLE]:  Play Startup Song at B00T
- ~/RetroPie/roms/music/bgm/startup.mp3</desc>
-		<image>./icons/impsettingstartupsongoff.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[000] Delay At Startup.sh</path>
-		<name>[000] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[005] Delay At Startup.sh</path>
-		<name>[005] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[010] Delay At Startup.sh</path>
-		<name>[010] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[015] Delay At Startup.sh</path>
-		<name>[015] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[020] Delay At Startup.sh</path>
-		<name>[020] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[025] Delay At Startup.sh</path>
-		<name>[025] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[030] Delay At Startup.sh</path>
-		<name>[030] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[035] Delay At Startup.sh</path>
-		<name>[035] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[040] Delay At Startup.sh</path>
-		<name>[040] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[045] Delay At Startup.sh</path>
-		<name>[045] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[050] Delay At Startup.sh</path>
-		<name>[050] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[055] Delay At Startup.sh</path>
-		<name>[055] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[060] Delay At Startup.sh</path>
-		<name>[060] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[070] Delay At Startup.sh</path>
-		<name>[070] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[080] Delay At Startup.sh</path>
-		<name>[080] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[090] Delay At Startup.sh</path>
-		<name>[090] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[100] Delay At Startup.sh</path>
-		<name>[100] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[110] Delay At Startup.sh</path>
-		<name>[110] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Settings/Startup Settings/[120] Delay At Startup.sh</path>
-		<name>[120] Delay At Startup</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impsettingadjust.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume</path>
-		<name>{Volume}</name>
-		<desc>[IMP] Integrated Music Player Settings.</desc>
-		<image>./icons/impvolume.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[05] Player Volume.sh</path>
-		<name>[05] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume05.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[10] Player Volume.sh</path>
-		<name>[10] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume10.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[20] Player Volume.sh</path>
-		<name>[20] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume20.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[30] Player Volume.sh</path>
-		<name>[30] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume30.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[40] Player Volume.sh</path>
-		<name>[40] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume40.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[50] Player Volume.sh</path>
-		<name>[50] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume50.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[60] Player Volume.sh</path>
-		<name>[60] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume60.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[70] Player Volume.sh</path>
-		<name>[70] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume70.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[80] Player Volume.sh</path>
-		<name>[80] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume80.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[90] Player Volume.sh</path>
-		<name>[90] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume90.png</image>
-	</game>
-	<game>
-		<path>./imp/Volume/[MAX] Player Volume.sh</path>
-		<name>[MAX] Player Volume</name>
-		<desc>[IMP] Integrated Music Player.</desc>
-		<image>./icons/impvolume100.png</image>
-	</game>
-	<game>
-		<path>./imp/music/bgm</path>
-		<name># BGM #</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm</desc>
-		<image>./icons/impbgmdirs.png</image>
-	</game>
-	<game>
-		<path>./imp/music/bgm/startup.mp3</path>
-		<name>&lt;Startup Song&gt;</name>
-		<desc>[IMP] Startup Song.
- ~/RetroPie/roms/music/bgm/startup.mp3</desc>
-		<image>./icons/impstartupsong.png</image>
-	</game>
-	<game>
-		<path>./imp/music/bgm/A-SIDE</path>
-		<name># A-SIDE #</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/A-SIDE</desc>
-		<image>./icons/impbgmdira.png</image>
-	</game>
-	<game>
-		<path>./imp/music/bgm/B-SIDE</path>
-		<name># B-SIDE #</name>
-		<desc>[IMP] Background Music.
- ~/RetroPie/roms/music/bgm/B-SIDE</desc>
-		<image>./icons/impbgmdirb.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_bgm</path>
-		<name>_bgm</name>
-		<desc>_bgm
- ~/bgm</desc>
-		<image>./icons/backgroundmusic.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_backgroundmusic</path>
-		<name>_backgroundmusic</name>
-		<desc>_backgroundmusic
- ~/RetroPie/backgroundmusic</desc>
-		<image>./icons/backgroundmusic.png</image>
-	</game>
-	<game>
-		<path>./imp/music/_jukebox_mp3</path>
-		<name>_jukebox_mp3</name>
-		<desc>_jukebox
- ~/RetroPie/roms/jukebox/mp3</desc>
-		<image>./icons/jukebox.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM</path>
-		<name>[Mp3Radio.FM]</name>
-		<desc>[mp3radio.fm]: MP3Radio.Fm is an Internet Radio Station based in Miami ...hosts live DJ sets, weekly radio shows with on air personalities, DJ’s, radio shows.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/Mp3RadioFM/mp3radio.pls</path>
-		<name>Main Channel</name>
-		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
-		<image>./icons/mp3radiofm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SLAYRadio</path>
-		<name>[SLAYRadio]</name>
-		<desc>[slayradio.org]: SLAY Radio is an internet-based radio station, transmitting from Gothenburg (Göteborg) in Sweden... </desc>
-		<image>./icons/slayradio-logo.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SLAYRadio/slayradio.128.m3u</path>
-		<name>SLAYRadio</name>
-		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
-		<image>./icons/slayradio.png</image>
-	</game>
-	<game>
-		<path>./imp/music/NightrideFM</path>
-		<name>[Nightride.FM]</name>
-		<desc>[nightride.fm] Nightride FM is an independent synthwave radio station and online music community, taking its name from the fake GTA:V radio station announced by Kavinsky.</desc>
-		<image>./icons/nightridefm.png</image>
-	</game>
-	<game>
-		<path>./imp/music/NightrideFM/NightrideFM-x6.pls</path>
-		<name>Nightride.FM</name>
-		<desc>Nightride.FM, ChillSynth.FM, SpaceSynth.FM, DarkSynth, HorrorSynth, EBSM...</desc>
-		<image>./icons/nightridefm.jpg</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC</path>
-		<name>[Rainwave.CC]</name>
-		<desc>[rainwave.cc] Rainwave is an interactive radio website that allows users to request, rate, and vote for songs in real time. The site hosts five separate radio streams and focuses completely on video game music. Rainwave is a free service, funded primarily by Robert &quot;LiquidRain&quot; McAuley, and supplemented by user donations.</desc>
-		<image>./icons/rainwavecc.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/1.mp3.m3u</path>
-		<name>Game</name>
-		<desc>RainwaveCC: Game</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/2.mp3.m3u</path>
-		<name>OC Remix</name>
-		<desc>RainwaveCC: OC Remix</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/3.mp3.m3u</path>
-		<name>Covers</name>
-		<desc>RainwaveCC: Covers</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/4.mp3.m3u</path>
-		<name>ChipTune</name>
-		<desc>RainwaveCC: ChipTune</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/RainwaveCC/5.mp3.m3u</path>
-		<name>All</name>
-		<desc>RainwaveCC: All</desc>
-		<image>./icons/rainwave.png</image>
-	</game>
-	<game>
-		<path>./imp/music/SomaFM</path>
+	<folder>
+		<path>./imp/music/streams/SomaFM</path>
 		<name>[SomaFM]</name>
 		<desc>[somafm.com]: Over 30 unique channels of listener-supported, commercial-free, underground/alternative radio broadcasting to the world. All music hand-picked by SomaFM's award-winning DJs and music directors. Your support keeps SomaFM on the air! If you Enjoy SomaFM Please make a donation...</desc>
 		<image>./icons/somafm.png</image>
-	</game>
+	</folder>
 	<game>
-		<path>./imp/music/SomaFM/beatblender.pls</path>
+		<path>./imp/music/streams/SomaFM/beatblender.pls</path>
 		<name>Beat Blender</name>
 		<desc>Beat Blender: A late night blend of deep-house and downtempo chill.</desc>
 		<image>./icons/beatblender-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/bootliquor.pls</path>
+		<path>./imp/music/streams/SomaFM/bootliquor.pls</path>
 		<name>Boot Liquor</name>
 		<desc>Boot Liquor: Americana Roots music for Cowhands, Cowpokes and Cowtippers.</desc>
 		<image>./icons/bootliquor-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/brfm.pls</path>
+		<path>./imp/music/streams/SomaFM/brfm.pls</path>
 		<name>Black Rock FM</name>
 		<desc>Black Rock FM: From the Playa to the world, for the annual Burning Man festival.</desc>
 		<image>./icons/brfm-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/covers.pls</path>
+		<path>./imp/music/streams/SomaFM/covers.pls</path>
 		<name>Covers</name>
 		<desc>Covers: Just covers. Songs you know by artists you don't. We've got you covered.</desc>
 		<image>./icons/covers-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/deepspaceone.pls</path>
+		<path>./imp/music/streams/SomaFM/deepspaceone.pls</path>
 		<name>Deep Space One</name>
 		<desc>Deep Space One: Deep ambient electronic, experimental and space music. For inner and outer space exploration.</desc>
 		<image>./icons/deepspaceone-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/defcon.pls</path>
+		<path>./imp/music/streams/SomaFM/defcon.pls</path>
 		<name>DEF CON Radio</name>
 		<desc>DEF CON Radio: DEF CON is one of the world's largest annual hacker conventions, held every year in Las Vegas, Nevada. Since 2013, SomaFM has provided the music for the DEF CON Chill room. That theme continues with SomaFM broadcasting this special year-round stream from San Francisco, hosted by the DJs who entertain the DEF CON 26 chill room this year in Vegas.</desc>
 		<image>./icons/defcon400.png</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/digitalis.pls</path>
+		<path>./imp/music/streams/SomaFM/digitalis.pls</path>
 		<name>Digitalis</name>
 		<desc>Digitalis: Digitally affected analog rock to calm the agitated heart.</desc>
 		<image>./icons/digitalis-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/dronezone.pls</path>
+		<path>./imp/music/streams/SomaFM/dronezone.pls</path>
 		<name>Drone Zone</name>
 		<desc>Drone Zone: Served best chilled, safe with most medications. Atmospheric textures with minimal beats.</desc>
 		<image>./icons/dronezone-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/dubstep.pls</path>
+		<path>./imp/music/streams/SomaFM/dubstep.pls</path>
 		<name>Dub Step Beyond</name>
 		<desc>Dub Step Beyond: Dubstep, Dub and Deep Bass. May damage speakers at high volume.</desc>
 		<image>./icons/dubstep-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/fluid.pls</path>
+		<path>./imp/music/streams/SomaFM/fluid.pls</path>
 		<name>Fluid</name>
 		<desc>Fluid: Drown in the electronic sound of instrumental hiphop, future soul and liquid trap.</desc>
 		<image>./icons/fluid-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/folkfwd.pls</path>
+		<path>./imp/music/streams/SomaFM/folkfwd.pls</path>
 		<name>Folk Forward</name>
 		<desc>Folk Forward: Contemporary indie folk music. Sometimes softer, sometimes a little harder, but always authentic. A modern take on classic folk music, with occasional appearances by the classic masters.</desc>
 		<image>./icons/folkfwd-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/groovesalad.pls</path>
+		<path>./imp/music/streams/SomaFM/groovesalad.pls</path>
 		<name>Groove Salad</name>
 		<desc>Groove Salad: A nicely chilled plate of ambient/downtempo beats and grooves.</desc>
 		<image>./icons/groovesalad-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/gsclassic.pls</path>
+		<path>./imp/music/streams/SomaFM/gsclassic.pls</path>
 		<name>Groove Salad Classic</name>
 		<desc>Groove Salad Classic: The classic (early 2000s) version of a nicely chilled plate of ambient/downtempo beats and grooves.</desc>
 		<image>./icons/gsclassic400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/illstreet.pls</path>
+		<path>./imp/music/streams/SomaFM/illstreet.pls</path>
 		<name>Illinois Street Lounge</name>
 		<desc>Illinois Street Lounge: Classic bachelor pad, playful exotica and vintage music of tomorrow.</desc>
 		<image>./icons/illstreet-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/indiepop.pls</path>
+		<path>./imp/music/streams/SomaFM/indiepop.pls</path>
 		<name>Indie Pop Rocks</name>
 		<desc>Indie Pop Rocks: New and classic favorite indie pop tracks.</desc>
 		<image>./icons/indiepop-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/lush.pls</path>
+		<path>./imp/music/streams/SomaFM/lush.pls</path>
 		<name>Lush</name>
 		<desc>Lush: Sensuous and mellow female vocals, many with an electronic influence.</desc>
 		<image>./icons/lush-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/metal.pls</path>
+		<path>./imp/music/streams/SomaFM/metal.pls</path>
 		<name>Metal Detector</name>
 		<desc>Metal Detector: From black to doom, prog to sludge, thrash to post, stoner to crossover, punk to industrial.</desc>
 		<image>./icons/metal-400.png</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/missioncontrol.pls</path>
+		<path>./imp/music/streams/SomaFM/missioncontrol.pls</path>
 		<name>Mission Control</name>
 		<desc>Mission Control: Celebrate Space! A mix of ambient and experimental music mixed with the historical sounds of the space program.</desc>
 		<image>./icons/missioncontrol-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/n5md.pls</path>
+		<path>./imp/music/streams/SomaFM/n5md.pls</path>
 		<name>n5MD Radio</name>
 		<desc>n5MD Radio: n5MD is an independent record label based in Oakland, California, primarily releasing electronic music focusing on melody and emotion as well as compatible genres such as shoegaze, post-rock, IDM and electro-acoustic.</desc>
 		<image>./icons/n5md-400.png</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/poptron.pls</path>
+		<path>./imp/music/streams/SomaFM/poptron.pls</path>
 		<name>PopTron</name>
 		<desc>PopTron:  Indie dance rock. Less guitars, more synths. Catchy electro-pop songs from artists like Cut Copy, Datarock, MGMT and Hot Chip. You can't help but like it.</desc>
 		<image>./icons/poptron-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/reggae.pls</path>
+		<path>./imp/music/streams/SomaFM/reggae.pls</path>
 		<name>Heavyweight Reggae</name>
 		<desc>Heavyweight Reggae: Reggae, Ska, Rocksteady classic and deep tracks.</desc>
 		<image>./icons/reggae400.png</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/secretagent.pls</path>
+		<path>./imp/music/streams/SomaFM/secretagent.pls</path>
 		<name>Secret Agent</name>
 		<desc>Secret Agent: The soundtrack for your stylish, mysterious, dangerous life. For Spies and PIs too!</desc>
 		<image>./icons/secretagent-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/7soul.pls</path>
+		<path>./imp/music/streams/SomaFM/7soul.pls</path>
 		<name>Seven Inch Soul</name>
 		<desc>Seven Inch Soul: Vintage soul tracks from the original 45 RPM vinyl.</desc>
 		<image>./icons/7soul-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/seventies.pls</path>
+		<path>./imp/music/streams/SomaFM/seventies.pls</path>
 		<name>Left Coast 70s</name>
 		<desc>Left Coast 70s: Mellow album rock from the Seventies. Yacht not required.</desc>
 		<image>./icons/seventies400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/live.pls</path>
+		<path>./imp/music/streams/SomaFM/live.pls</path>
 		<name>SomaFM Live</name>
 		<desc>SomaFM Live:  Live special events and re-broadcasts of previous live streams.</desc>
 		<image>./icons/live-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/sonicuniverse.pls</path>
+		<path>./imp/music/streams/SomaFM/sonicuniverse.pls</path>
 		<name>Sonic Universe</name>
 		<desc>Sonic Universe: Transcending the world of jazz with eclectic, avant-garde takes on tradition.</desc>
 		<image>./icons/sonicuniverse-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/spacestation.pls</path>
+		<path>./imp/music/streams/SomaFM/spacestation.pls</path>
 		<name>Space Station Soma</name>
 		<desc>Space Station Soma: Tune in, turn on, space out. Spaced-out ambient and mid-tempo electronica.</desc>
 		<image>./icons/spacestation-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/suburbsofgoa.pls</path>
+		<path>./imp/music/streams/SomaFM/suburbsofgoa.pls</path>
 		<name>Suburbs of Goa</name>
 		<desc>Suburbs of Goa: Desi-influenced Asian world beats and beyond.</desc>
 		<image>./icons/suburbsofgoa-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/synphaera.pls</path>
+		<path>./imp/music/streams/SomaFM/synphaera.pls</path>
 		<name>Synphaera Radio</name>
 		<desc>Synphaera Radio: Featuring the music from an independent record label focused on modern electronic ambient and space music.</desc>
 		<image>./icons/synphaera400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/thetrip.pls</path>
+		<path>./imp/music/streams/SomaFM/thetrip.pls</path>
 		<name>The Trip</name>
 		<desc>The Trip: Progressive house / trance. Tip top tunes.</desc>
 		<image>./icons/thetrip-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/thistle.pls</path>
+		<path>./imp/music/streams/SomaFM/thistle.pls</path>
 		<name>ThistleRadio</name>
 		<desc>ThistleRadio: Exploring music from Celtic roots and branches.</desc>
 		<image>./icons/thistle-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/u80s.pls</path>
+		<path>./imp/music/streams/SomaFM/u80s.pls</path>
 		<name>Underground 80s</name>
 		<desc>Underground 80s: Early 80s UK Synthpop and a bit of New Wave. </desc>
 		<image>./icons/u80s-400.png</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/vaporwaves.pls</path>
+		<path>./imp/music/streams/SomaFM/vaporwaves.pls</path>
 		<name>Vaporwaves</name>
 		<desc>Vaporwaves: All Vaporwave. All the time. </desc>
 		<image>./icons/vaporwaves-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/christmas.pls</path>
+		<path>./imp/music/streams/SomaFM/christmas.pls</path>
 		<name>[Christmas Lounge]</name>
 		<desc>Christmas Lounge: Chilled holiday grooves and classic winter lounge tracks. (Kid and Parent safe!).</desc>
 		<image>./icons/christmas-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/xmasrocks.pls</path>
+		<path>./imp/music/streams/SomaFM/xmasrocks.pls</path>
 		<name>[Christmas Rocks!]</name>
 		<desc>Christmas Rocks!: Have your self an indie/alternative holiday season!</desc>
 		<image>./icons/xmasrocks-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/jollysoul.pls</path>
+		<path>./imp/music/streams/SomaFM/jollysoul.pls</path>
 		<name>[Jolly Ol' Soul]</name>
 		<desc>Jolly Ol' Soul: Mix of classic soul holiday tracks. Some extremely rare, some holiday standards, but all of it combines to make a special holiday soul experience.</desc>
 		<image>./icons/jollysoul-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/xmasinfrisko.pls</path>
+		<path>./imp/music/streams/SomaFM/xmasinfrisko.pls</path>
 		<name>[Xmas in Frisko]</name>
 		<desc>Xmas in Frisko: SomaFM's wacky and eclectic holiday mix. Not for the easily offended.</desc>
 		<image>./icons/xmasinfrisko-400.jpg</image>
 	</game>
 	<game>
-		<path>./imp/music/SomaFM/specials.pls</path>
+		<path>./imp/music/streams/SomaFM/specials.pls</path>
 		<name>[SomaFM Special]</name>
 		<desc>SomaFM Special:
  Now featuring Tiki Time, Bossa Beyond, Surf Report & More.
@@ -842,4 +235,3 @@
  [Department Store Christmas] Holiday Sountrack that runs after November 15th until 1st week in January.</desc>
 		<image>./icons/specials-400.jpg</image>
 	</game>
-</gameList>
