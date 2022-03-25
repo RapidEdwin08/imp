@@ -18,10 +18,10 @@ cat /dev/null > $IMPPlaylist/abc
 cat /dev/null > $IMPPlaylist/shuffle
 
 # Add all MP3s from BGM A-SIDE directory to Playlist Non-Recursive
-find "$BGMa" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/abc
+find "$BGMa" -maxdepth 1 -type f -iname "*.mp3" > $IMPPlaylist/abc
 
 # Add all MP3s from BGM B-SIDE directory to Playlist Non-Recursive
-find "$BGMb" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/shuffle
+find "$BGMb" -maxdepth 1 -type f -iname "*.mp3" > $IMPPlaylist/shuffle
 
 # Sort INIT playlist with desired 0rder
 cat $IMPPlaylist/abc | sort -n > $IMPPlaylist/init

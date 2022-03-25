@@ -18,7 +18,7 @@ cat /dev/null > $IMPPlaylist/abc
 cat /dev/null > $IMPPlaylist/shuffle
 
 # Add all MP3s from musicROMS directory to Playlist Non-Recursive
-find "$musicDIR" -maxdepth 1 -type f -name "*.mp3" > $IMPPlaylist/abc
+find "$musicDIR" -maxdepth 1 -type f -iname "*.mp3" > $IMPPlaylist/abc
 
 # Add all MP3s from musicROMS SUB-directories to Playlist Recursive
 find "$musicDIR"/*/ -iname "*.mp3" | grep -v 'imp/music/bgm/startup.mp3' > $IMPPlaylist/shuffle
