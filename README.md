@@ -5,6 +5,12 @@ Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files 
 Automates Playlists, Recalls Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
 (No OGG Support) [Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.  
 
+**Before you get started:**  
+- Recommend your Music File *Extensions* be either ALL *lower-case* or *UPPER-CASE* for IMP `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
+Results may vary using File Extensions such as`*.mP3*` or `*.Mp3*` or `*.pLs*` or `*.PlS*` since Linux is cAsE-sEnSiTiVe  
+- Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
+If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].  
+
 ## INSTALLATION
 
 ```bash
@@ -82,6 +88,7 @@ Next Track
 Shuffle Off/On  
 Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}  
 Start BGM Music  
+Start Randomizer [*BGM Settings are Respected*] {Icon Changes to Reflect Randomizer Settings}  
 Volume % [mpg123 Player Volume]  
 
 **Music** [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]  
@@ -91,7 +98,7 @@ Volume % [mpg123 Player Volume]
 Current Settings  
 Lite Mode [Off/On]  
 Infinite Mode [Off/On]  
-Music Randomizer Mode [Off/On]  
+Music Randomizer Mode [Off/ALL/BGM]  
 
 **BGM Settings** [*Will Override Playlist at Startup*]  
 BGM A-Side [Off/On] ~/RetroPie/roms/music/bgm/A-SIDE/  
@@ -108,14 +115,21 @@ HTTP Server [On] Music Directory
 HTTP Server [On] ROMS Directory  
 HTTP Server [Off]  
 
+**Randomizer Settings** [*Will Override Playlist at Startup*] {Icons Change to Reflect BGM Settings}  
+Randomizer [Off]  
+Randomizer [All]: Pick a Random [.MP3] Track and make that sub-folder the current playlist [*BGM Settings are Respected*]  
+Randomizer [BGM]: Pick a Random [.MP3] Track from [BGM] and make that sub-folder the current playlist  
+Randomizer [PLS]: Pick a Random [.PLS/.M3U] and make it the current playlist [*Will Override BGM Settings at Startup*]  
+
 **Startup Settings**  
 Music at Startup [Off/On]  
 Delay at Startup [seconds]  
+Shuffle Playlist [Off/On]  
 Play Startup Song [Off/On] ~/RetroPie/roms/music/bgm/startup.mp3  
 NOTE: [startup.mp3] is Ignored in Playlist Creation  
 
 ## PLAY MODES  
-LITE MODE:  
+LITE MODE: [Good for L0NG Tracks, May be N0T Recommended for SD-Cards]  
 [IMP] Writes to File for it's Features, such as forming Playlists when Starting Music, Recall Last Track/Position, Previous Track  
 [IMP] Constantly Writes the mpg123 output to a Log File to obtain Info needed for these Features  
 Constantly writing to a File while Playing Music may NOT be Ideal Depending on the OS Storage type (SD Card)  
@@ -132,43 +146,31 @@ However, Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manual
 bash /opt/retropie/configs/imp/stop.sh
 ```
 
-RANDOMIZER MODE:  
-[IMP] will Set Shuffle Mode 0N and Create Random Playlists based on the Content in the Music Directories  
-Potential Random Playlist Directory Combinations:  
-- Music Directory
-- Music Directory + BGM A-SIDE  
-- Music Directory + BGM B-SIDE  
-- Music Directory + BGM A-SIDE + B-SIDE  
-- BGM A-SIDE  
-- BGM B-SIDE  
-- BGM A-SIDE + B-SIDE  
-
 ## IMPORTANT
 
-**[RP/ES] Utilities**:  
 ** EMULATIONSTATION FAILS TO LOAD [Assertion mType == FOLDER failed]**  
-[IMP] uses the RetroPie Menu as it's {System} in ES Instead of adding a Custom {System} to [es_systems.cfg]  
-PROs: avoids clogging up the "All Games" and "Favorites" Collections with MP3s (instead of ROMs)  
-CONs: it can lead to Issues if the [gamelist.xml] and/or [es_systems.cfg] is Referencing non-existent Folders/Files or Corrupted (Similar to ScummVM)  
+[IMP] uses the *RetroPie Menu* as it's {System} in ES Instead of adding a Custom {System} to [es_systems.cfg]  
+**PROs:** avoids clogging up the "All Games" and "Favorites" Collections with MP3s (instead of ROMs)  
+**CONs:** it can lead to Issues if the `[gamelist.xml]` is Corrupted and/or `[es_systems.cfg]` Contains References to File Extensions that are usually NOT in the System by Default (Similar to ScummVM)  
 
-Scenarios where ES may Fail to Load:  
-- IF [parse XML gamelist only] is "OFF" + there are NO MP3s in the Dedicated Music Folders  
-- IF RetroPie is Updated leading to es_systems.cfg to lose the MP3/PLS/M3U extenstions needed for [IMP]  
-
-[IMP] will attempt to keep the Music folders Populated Automatically to prevent this Issue  
-[IMP] also offers **[RP/ES] Utilities** which can:  
-- Restore [es_systems.cfg] extenstions to include MP3/PLS/M3Us needed for [IMP]  
-- Restore [gamelist.xml] to the State it was in after a Fresh Install of [IMP]  
-
-If using **Windows (Samba) Shares** and [../roms/music] is N0T accessible, **[RP/ES] Utilities** Include [smb.conf] Update:  
-- Add/Restore Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]  
-
-NOTE: A **Windows (Samba) Share** for [~/RetroPie/retropiemenu/imp/music] is Added at Insall if [smb.conf] is present  
+**Scenarios where ES may Fail to Load**:  
+- `IF RetroPie is Updated leading to [es_systems.cfg] to lose the MP3/PLS/M3U extenstions needed for [IMP]`  
+   *IMP now performs a check at B00T for these extenstions to avoid this issue*  
+- `IF [ParseGamelistOnly] is "ON" + there are Incorrect Tags or References to File Extensions in the [gamelist.xml]`  
+   *Example*:  Incorrect ~`*<game>*`~ Tags for Sub-directories in [gamelist.xml] where the **Correct Tag** should be `*<folder>*`  
 
 **[RP/ES] Utilities** are available in the [IMP] INSTALLER using the Same Setup Command:  
 ```bash
 cd ~/imp && ./imp_setup.sh
 ```
+
+**[RP/ES] Utilities**:  
+- [ParseGamelistOnly] OFF  
+- [es_systems.cfg] Repair to Fix MP3/PLS/M3Us extenstions needed for [IMP]  
+- [gamelist.xml] Refresh to the State it was in after a Fresh Install of [IMP]  
+- [smb.conf] Update to Add/Restore Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]  
+   For use if **Windows (Samba) Shares** are Enabled and `[../roms/music]` is N0T accessible  
+   NOTE:  A **Windows (Samba) Share** for `[~/RetroPie/retropiemenu/imp/music]` is Added at Insall if `[smb.conf]` is present  
 
 ## License
 [GNU](https://www.gnu.org/licenses/gpl-3.0.en.html)

@@ -70,7 +70,7 @@ mpg123FILEREF=$(
 echo
 echo "                    # [mpg123] Install Utilities #"
 echo "                        ~/imp/main-imp/offline"
-echo "                        [mpg123-1.29.0.tar.bz2]"
+echo "                        [mpg123-1.29.3.tar.bz2]"
 echo "                        [mpg123-1.25.10.tar.bz2]"
 echo "                        [mpg123-1.20.1.tar.bz2]"
 echo
@@ -110,10 +110,6 @@ echo "                              [smb.conf]"
 echo "                         /etc/samba/smb.conf "
 echo "           path = "/home/$USER/RetroPie/retropiemenu/imp/music""
 )
-
-gamelistIMP=main-imp/gamelist.imp
-if [ "$installFLAG" == 'offline' ]; then gamelistIMP=main-imp/gamelist.offline; fi
-if [ "$installFLAG" == 'somafm' ]; then gamelistIMP=main-imp/icons/somafm/gamelist.somafm; fi
 
 customIMPREF=$(cat ~/imp/main-imp/templates/README)
 IMPstandard="[STANDARD] IMP (Recommended)"
@@ -579,8 +575,8 @@ if [ ! -d main-imp/configs-imp ]; then
 fi
 
 # Check for the Most Important Setup Directories and Files [gamelist]
-if [ ! -f $gamelistIMP ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [$gamelistIMP] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+if [ ! -f main-imp/gamelist.imp ]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
 	mainMENU
 fi
 
@@ -676,6 +672,7 @@ if [ ! -d "$IMPMenuRP/Settings" ]; then mkdir "$IMPMenuRP/Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/BGM Settings" ]; then mkdir "$IMPMenuRP/Settings/BGM Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Game Settings" ]; then mkdir "$IMPMenuRP/Settings/Game Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/HTTP Server Settings" ]; then mkdir "$IMPMenuRP/Settings/HTTP Server Settings"; fi
+if [ ! -d "$IMPMenuRP/Settings/Randomizer Settings" ]; then mkdir "$IMPMenuRP/Settings/Randomizer Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Startup Settings" ]; then mkdir "$IMPMenuRP/Settings/Startup Settings"; fi
 if [ ! -d "$IMPMenuRP/Volume" ]; then mkdir "$IMPMenuRP/Volume"; fi
 
@@ -831,17 +828,24 @@ cp main-imp/configs-all/retropiemenu.sh /opt/retropie/configs/all/
 # [gamelist.xml] Modifications for retropiemenu OPT
 if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml ]; then
 	# Parse all lines Except </gameList>
-	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
-	
-	# Rebuild retropiemenu gamelist.xml
-	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.xml
 	
 	# [gamelist.xml] might NOT be properly formatted - Make it so
 	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
 	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
-	cat $gamelistIMP >> main-imp/gamelist.xml
+	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add Internet Radio Station Entries to gamelist.xml
+	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	
+	# Add SomaFM Entries to gamelist.xml
+	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	
+	# Add the Finishing Line to gamelist.xml
+	# echo $'\n</gameList>' >> main-imp/gamelist.xml
+	echo '</gameList>' >> main-imp/gamelist.xml
 	
 	# Backup es_systems.cfg if not exist already
 	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
@@ -850,24 +854,30 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	mv main-imp/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1 > /dev/null 2>&1
 	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
 # [gamelist.xml] Modifications for retropiemenu rpMenu
 if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then	
 	# Parse all lines Except </gameList>
-	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
-	
-	# Rebuild retropiemenu gamelist.xml
-	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.xml
 	
 	# [gamelist.xml] might NOT be properly formatted - Make it so
 	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
 	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
-	cat $gamelistIMP >> main-imp/gamelist.xml
+	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add Internet Radio Station Entries to gamelist.xml
+	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	
+	# Add SomaFM Entries to gamelist.xml
+	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	
+	# Add the Finishing Line to gamelist.xml
+	# echo $'\n</gameList>' >> main-imp/gamelist.xml
+	echo '</gameList>' >> main-imp/gamelist.xml
 	
 	# Backup gamelist.xml if not exist already
 	if [ ! -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then mv ~/RetroPie/retropiemenu/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; fi
@@ -876,7 +886,6 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	mv main-imp/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1 > /dev/null 2>&1
 	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
@@ -1050,46 +1059,49 @@ fi
 fi
 
 if [[ ! "$installFLAG" == 'offline' ]]; then
+	# Create Streams Sub-directory
+	if [ ! -d "$musicDIR/streams" ]; then mkdir "$musicDIR/streams"; fi
+	
 	# Get .M3U from SLAYRadio 202111
-	if [ ! -d "$musicDIR/SLAYRadio" ]; then mkdir "$musicDIR/SLAYRadio"; fi
-	if [ ! -f "$musicDIR/SLAYRadio/slayradio.128.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u -P "$musicDIR/SLAYRadio"; fi
+	if [ ! -d "$musicDIR/streams/SLAYRadio" ]; then mkdir "$musicDIR/streams/SLAYRadio"; fi
+	if [ ! -f "$musicDIR/streams/SLAYRadio/slayradio.128.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u -P "$musicDIR/streams/SLAYRadio"; fi
 
 	# Copy SLAYRadio icon files to retropiemenu
 	cp main-imp/icons/slayradio/slayradio.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/slayradio/slayradio-logo.png ~/RetroPie/retropiemenu/icons/
 
 	# Get .PLS from MP3RadioFM 202111
-	if [ ! -d "$musicDIR/Mp3RadioFM" ]; then mkdir "$musicDIR/Mp3RadioFM"; fi
-	if [ ! -f "$musicDIR/Mp3RadioFM/mp3radio.pls" ]; then wget --no-check-certificate "https://epsilon.shoutca.st/tunein/mp3radio.pls" -P "$musicDIR/Mp3RadioFM"; fi
+	if [ ! -d "$musicDIR/streams/Mp3RadioFM" ]; then mkdir "$musicDIR/streams/Mp3RadioFM"; fi
+	if [ ! -f "$musicDIR/streams/Mp3RadioFM/mp3radio.pls" ]; then wget --no-check-certificate "https://epsilon.shoutca.st/tunein/mp3radio.pls" -P "$musicDIR/streams/Mp3RadioFM"; fi
 
 	# Copy MP3RadioFM icon files to retropiemenu
 	cp main-imp/icons/mp3radiofm/mp3radiofm.png ~/RetroPie/retropiemenu/icons/
 	
 	# NightrideFM .pls (202202)
-	if [ ! -d "$musicDIR/NightrideFM" ]; then mkdir "$musicDIR/NightrideFM"; fi
-	if [ ! -f "$musicDIR/NightrideFM/NightrideFM-x6.pls" ]; then
+	if [ ! -d "$musicDIR/streams/NightrideFM" ]; then mkdir "$musicDIR/streams/NightrideFM"; fi
+	if [ ! -f "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls" ]; then
 		# Manually Create NightrideFM .pls (202202)
-		echo '[playlist]' > "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'numberofentries=6' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File1=http://stream.nightride.fm/nightride.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title1=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File2=http://stream.nightride.fm/chillsynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title2=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File3=http://stream.nightride.fm/spacesynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title3=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File4=http://stream.nightride.fm/darksynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title4=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File5=http://stream.nightride.fm/horrorsynth.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title5=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'File6=http://stream.nightride.fm/ebsm.mp3' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title6=NightRide.FM Stream' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
-		echo 'version=2' >> "$musicDIR/NightrideFM/NightrideFM-x6.pls"
+		echo '[playlist]' > "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'numberofentries=6' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File1=http://stream.nightride.fm/nightride.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title1=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File2=http://stream.nightride.fm/chillsynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title2=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File3=http://stream.nightride.fm/spacesynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title3=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File4=http://stream.nightride.fm/darksynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title4=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File5=http://stream.nightride.fm/horrorsynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title5=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'File6=http://stream.nightride.fm/ebsm.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Title6=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+		echo 'version=2' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
 	fi
 	
 	# Copy NightrideFM icon files to retropiemenu
@@ -1098,61 +1110,69 @@ if [[ ! "$installFLAG" == 'offline' ]]; then
 
 	# Get .m3u from Rainwave.CC Stations (202202)
 	# 1 Game # 2 OC Remix # 3 Covers # 4 ChipTune # 5 All
-	if [ ! -f "$musicDIR/RainwaveCC/1.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/1.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
-	if [ ! -f "$musicDIR/RainwaveCC/2.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/2.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
-	if [ ! -f "$musicDIR/RainwaveCC/3.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/3.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
-	if [ ! -f "$musicDIR/RainwaveCC/4.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/4.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
-	if [ ! -f "$musicDIR/RainwaveCC/5.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/5.mp3.m3u -P "$musicDIR/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/streams/RainwaveCC/1.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/1.mp3.m3u -P "$musicDIR/streams/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/streams/RainwaveCC/2.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/2.mp3.m3u -P "$musicDIR/streams/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/streams/RainwaveCC/3.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/3.mp3.m3u -P "$musicDIR/streams/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/streams/RainwaveCC/4.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/4.mp3.m3u -P "$musicDIR/streams/RainwaveCC"; fi
+	if [ ! -f "$musicDIR/streams/RainwaveCC/5.mp3.m3u" ]; then wget --no-check-certificate https://rainwave.cc/tune_in/5.mp3.m3u -P "$musicDIR/streams/RainwaveCC"; fi
 	
 	# Copy Rainwave.CC icon files to retropiemenu
 	cp main-imp/icons/rainwavecc/rainwave.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/rainwavecc/rainwavecc.png ~/RetroPie/retropiemenu/icons/
+	
+	# Get .PLS from DnBRadio 202203
+	if [ ! -d "$musicDIR/streams/DnBRadio" ]; then mkdir "$musicDIR/streams/DnBRadio"; fi
+	if [ ! -f "$musicDIR/streams/DnBRadio/hi.pls" ]; then wget --no-check-certificate https://dnbradio.com/hi.pls -P "$musicDIR/streams/DnBRadio"; fi
+
+	# Copy DnBRadio icon files to retropiemenu
+	cp main-imp/icons/dnbradio/dnbradio.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/dnbradio/dnbradio0.png ~/RetroPie/retropiemenu/icons/
 fi
 
 if [ "$installFLAG" == 'somafm' ]; then
 	# Get .PLS from SomaFM 202112
 	# [IMP] has been Listening to SomaFM since 2006 (NO AFFILIATION)
 	# Please DONATE if you ENJOY SomaFM
-	if [ ! -d "$musicDIR/SomaFM" ]; then mkdir "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/7soul.pls" ]; then wget --no-check-certificate https://somafm.com/7soul.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/beatblender.pls" ]; then wget --no-check-certificate https://somafm.com/beatblender.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/bootliquor.pls" ]; then wget --no-check-certificate https://somafm.com/bootliquor.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/brfm.pls" ]; then wget --no-check-certificate https://somafm.com/brfm.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/covers.pls" ]; then wget --no-check-certificate https://somafm.com/covers.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/deepspaceone.pls" ]; then wget --no-check-certificate https://somafm.com/deepspaceone.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/defcon.pls" ]; then wget --no-check-certificate https://somafm.com/defcon.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/digitalis.pls" ]; then wget --no-check-certificate https://somafm.com/digitalis.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/dronezone.pls" ]; then wget --no-check-certificate https://somafm.com/dronezone.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/dubstep.pls" ]; then wget --no-check-certificate https://somafm.com/dubstep.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/fluid.pls" ]; then wget --no-check-certificate https://somafm.com/fluid.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/folkfwd.pls" ]; then wget --no-check-certificate https://somafm.com/folkfwd.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/groovesalad.pls" ]; then wget --no-check-certificate https://somafm.com/groovesalad.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/gsclassic.pls" ]; then wget --no-check-certificate https://somafm.com/gsclassic.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/illstreet.pls" ]; then wget --no-check-certificate https://somafm.com/illstreet.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/indiepop.pls" ]; then wget --no-check-certificate https://somafm.com/indiepop.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/live.pls" ]; then wget --no-check-certificate https://somafm.com/live.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/lush.pls" ]; then wget --no-check-certificate https://somafm.com/lush.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/metal.pls" ]; then wget --no-check-certificate https://somafm.com/metal.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/missioncontrol.pls" ]; then wget --no-check-certificate https://somafm.com/missioncontrol.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/n5md.pls" ]; then wget --no-check-certificate https://somafm.com/n5md.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/poptron.pls" ]; then wget --no-check-certificate https://somafm.com/poptron.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/reggae.pls" ]; then wget --no-check-certificate https://somafm.com/reggae.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/secretagent.pls" ]; then wget --no-check-certificate https://somafm.com/secretagent.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/seventies.pls" ]; then wget --no-check-certificate https://somafm.com/seventies.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/sonicuniverse.pls" ]; then wget --no-check-certificate https://somafm.com/sonicuniverse.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/spacestation.pls" ]; then wget --no-check-certificate https://somafm.com/spacestation.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/suburbsofgoa.pls" ]; then wget --no-check-certificate https://somafm.com/suburbsofgoa.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/synphaera.pls" ]; then wget --no-check-certificate https://somafm.com/synphaera.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/thetrip.pls" ]; then wget --no-check-certificate https://somafm.com/thetrip.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/thistle.pls" ]; then wget --no-check-certificate https://somafm.com/thistle.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/u80s.pls" ]; then wget --no-check-certificate https://somafm.com/u80s.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/vaporwaves.pls" ]; then wget --no-check-certificate https://somafm.com/vaporwaves.pls -P "$musicDIR/SomaFM"; fi
+	if [ ! -d "$musicDIR/streams/SomaFM" ]; then mkdir "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/7soul.pls" ]; then wget --no-check-certificate https://somafm.com/7soul.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/beatblender.pls" ]; then wget --no-check-certificate https://somafm.com/beatblender.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/bootliquor.pls" ]; then wget --no-check-certificate https://somafm.com/bootliquor.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/brfm.pls" ]; then wget --no-check-certificate https://somafm.com/brfm.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/covers.pls" ]; then wget --no-check-certificate https://somafm.com/covers.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/deepspaceone.pls" ]; then wget --no-check-certificate https://somafm.com/deepspaceone.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/defcon.pls" ]; then wget --no-check-certificate https://somafm.com/defcon.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/digitalis.pls" ]; then wget --no-check-certificate https://somafm.com/digitalis.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/dronezone.pls" ]; then wget --no-check-certificate https://somafm.com/dronezone.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/dubstep.pls" ]; then wget --no-check-certificate https://somafm.com/dubstep.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/fluid.pls" ]; then wget --no-check-certificate https://somafm.com/fluid.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/folkfwd.pls" ]; then wget --no-check-certificate https://somafm.com/folkfwd.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/groovesalad.pls" ]; then wget --no-check-certificate https://somafm.com/groovesalad.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/gsclassic.pls" ]; then wget --no-check-certificate https://somafm.com/gsclassic.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/illstreet.pls" ]; then wget --no-check-certificate https://somafm.com/illstreet.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/indiepop.pls" ]; then wget --no-check-certificate https://somafm.com/indiepop.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/live.pls" ]; then wget --no-check-certificate https://somafm.com/live.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/lush.pls" ]; then wget --no-check-certificate https://somafm.com/lush.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/metal.pls" ]; then wget --no-check-certificate https://somafm.com/metal.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/missioncontrol.pls" ]; then wget --no-check-certificate https://somafm.com/missioncontrol.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/n5md.pls" ]; then wget --no-check-certificate https://somafm.com/n5md.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/poptron.pls" ]; then wget --no-check-certificate https://somafm.com/poptron.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/reggae.pls" ]; then wget --no-check-certificate https://somafm.com/reggae.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/secretagent.pls" ]; then wget --no-check-certificate https://somafm.com/secretagent.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/seventies.pls" ]; then wget --no-check-certificate https://somafm.com/seventies.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/sonicuniverse.pls" ]; then wget --no-check-certificate https://somafm.com/sonicuniverse.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/spacestation.pls" ]; then wget --no-check-certificate https://somafm.com/spacestation.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/suburbsofgoa.pls" ]; then wget --no-check-certificate https://somafm.com/suburbsofgoa.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/synphaera.pls" ]; then wget --no-check-certificate https://somafm.com/synphaera.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/thetrip.pls" ]; then wget --no-check-certificate https://somafm.com/thetrip.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/thistle.pls" ]; then wget --no-check-certificate https://somafm.com/thistle.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/u80s.pls" ]; then wget --no-check-certificate https://somafm.com/u80s.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/vaporwaves.pls" ]; then wget --no-check-certificate https://somafm.com/vaporwaves.pls -P "$musicDIR/streams/SomaFM"; fi
 	# Seasonal SomaFM
-	if [ ! -f "$musicDIR/SomaFM/christmas.pls" ]; then wget --no-check-certificate https://somafm.com/christmas.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/xmasrocks.pls" ]; then wget --no-check-certificate https://somafm.com/xmasrocks.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/jollysoul.pls" ]; then wget --no-check-certificate https://somafm.com/jollysoul.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/xmasinfrisko.pls" ]; then wget --no-check-certificate https://somafm.com/xmasinfrisko.pls -P "$musicDIR/SomaFM"; fi
-	if [ ! -f "$musicDIR/SomaFM/specials.pls" ]; then wget --no-check-certificate https://somafm.com/specials.pls -P "$musicDIR/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/christmas.pls" ]; then wget --no-check-certificate https://somafm.com/christmas.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/xmasrocks.pls" ]; then wget --no-check-certificate https://somafm.com/xmasrocks.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/jollysoul.pls" ]; then wget --no-check-certificate https://somafm.com/jollysoul.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/xmasinfrisko.pls" ]; then wget --no-check-certificate https://somafm.com/xmasinfrisko.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/specials.pls" ]; then wget --no-check-certificate https://somafm.com/specials.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$IMP/somafm-specials.sh" ]; then
 		cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
 		sudo chmod 755 $IMP/somafm-specials.sh
@@ -1312,6 +1332,7 @@ rm $IMPMenuRP/Settings/*.sh
 rm $IMPMenuRP/Settings/BGM\ Settings/*.sh
 rm $IMPMenuRP/Settings/Game\ Settings/*.sh
 rm $IMPMenuRP/Settings/HTTP\ Server\ Settings/*.sh
+rm $IMPMenuRP/Settings/Randomizer\ Settings/*.sh
 rm $IMPMenuRP/Settings/Startup\ Settings/*.sh
 rm $IMPMenuRP/Volume/*.sh
 
@@ -1320,6 +1341,7 @@ rm $IMPMenuRP/Volume/*.sh
 rm -d $IMPMenuRP/Settings/BGM\ Settings/
 rm -d $IMPMenuRP/Settings/Game\ Settings/
 rm -d $IMPMenuRP/Settings/HTTP\ Server\ Settings/
+rm -d $IMPMenuRP/Settings/Randomizer\ Settings/
 rm -d $IMPMenuRP/Settings/Startup\ Settings/
 rm -d $IMPMenuRP/Settings/
 rm -d $IMPMenuRP/Volume/
@@ -1356,8 +1378,13 @@ rm ~/RetroPie/retropiemenu/icons/impplaylist.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0ff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0n.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizerall.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeralla0b0.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeralla0b1.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeralla1b0.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeralla1b1.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizerbgm.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizeroff.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/imprandomizeron.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingadjust.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaon.png 2>/dev/null
@@ -1367,6 +1394,8 @@ rm ~/RetroPie/retropiemenu/icons/impsettingfadeoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingfadeon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingmusicoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingmusicon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingshufflebootoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingshufflebooton.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettings.png 2>/dev/null
@@ -1403,6 +1432,8 @@ rm ~/RetroPie/retropiemenu/icons/impvolume100.png 2>/dev/null
 # Remove SomaFM
 rm $musicROMS/SomaFM/*.pls 2>/dev/null
 rm -d $musicROMS/SomaFM 2>/dev/null
+rm $musicROMS/streams/SomaFM/*.pls 2>/dev/null
+rm -d $musicROMS/streams/SomaFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/somafm.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/7soul-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/beatblender-400.jpg 2>/dev/null
@@ -1450,25 +1481,44 @@ rm ~/RetroPie/retropiemenu/icons/doomed-400.jpg 2>/dev/null
 # Remove SLAYRadio
 rm $musicROMS/SLAYRadio/*.m3u 2>/dev/null
 rm -d $musicROMS/SLAYRadio 2>/dev/null
+rm $musicROMS/streams/SLAYRadio/*.m3u 2>/dev/null
+rm -d $musicROMS/streams/SLAYRadio 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/slayradio.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/slayradio-logo.png 2>/dev/null
 
 # Remove MP3RadioFM
 rm $musicROMS/Mp3RadioFM/*.pls 2>/dev/null
 rm -d $musicROMS/Mp3RadioFM 2>/dev/null
+rm $musicROMS/streams/Mp3RadioFM/*.pls 2>/dev/null
+rm -d $musicROMS/streams/Mp3RadioFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/mp3radiofm.png 2>/dev/null
 
 # Remove NightrideFM
 rm $musicROMS/NightrideFM/*.pls 2>/dev/null
 rm -d $musicROMS/NightrideFM 2>/dev/null
+rm $musicROMS/streams/NightrideFM/*.pls 2>/dev/null
+rm -d $musicROMS/streams/NightrideFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/nightridefm.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/nightridefm.png 2>/dev/null
 
 # Remove RainwaveCC
 rm $musicROMS/RainwaveCC/*.m3u 2>/dev/null
 rm -d $musicROMS/RainwaveCC 2>/dev/null
+rm $musicROMS/streams/RainwaveCC/*.m3u 2>/dev/null
+rm -d $musicROMS/streams/RainwaveCC 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/rainwave.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/rainwavecc.png 2>/dev/null
+
+# Remove DnBRadio
+rm $musicROMS/DnBRadio/*.pls 2>/dev/null
+rm -d $musicROMS/DnBRadio 2>/dev/null
+rm $musicROMS/streams/DnBRadio/*.pls 2>/dev/null
+rm -d $musicROMS/streams/DnBRadio 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/dnbradio.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/dnbradio0.png 2>/dev/null
+
+# Remove Streams
+rm -d $musicROMS/streams 2>/dev/null
 
 # Clean up 0ther BGM DIRs 0nly if they are Symbolic Links
 if [ -d "$musicROMS/_bgm" ]; then
@@ -1528,9 +1578,11 @@ confREBOOT=$(dialog --stdout --no-collapse --title "*INSTALL* $selectTYPE *COMPL
 	--ok-label OK --cancel-label EXIT \
 	--menu "$impLOGO $impFINISHREF" 25 75 20 \
 	1 "REBOOT" \
-	2 "EXIT")
+	2 "Back to Menu" \
+	3 "EXIT")
 # Reboot Confirm - Otherwise Exit
 if [ "$confREBOOT" == '1' ]; then tput reset && sudo reboot; fi
+if [ "$confREBOOT" == '2' ]; then mainMENU; fi
 
 tput reset
 exit 0
@@ -1550,8 +1602,8 @@ confMPG123=$(dialog --stdout --no-collapse --title "  Select mpg123 Install Meth
 	--ok-label OK --cancel-label Back \
 	--menu "$mpg123FILEREF " 25 75 20 \
 	1 " [apt-get install] mpg123  [Recommended]" \
-	2 " [make install] mpg123-1.29.0" \
-	3 " [make install] mpg123-1.29.0  [Offline]" \
+	2 " [make install] mpg123-1.29.3" \
+	3 " [make install] mpg123-1.29.3  [Offline]" \
 	4 " [make install] mpg123-1.25.10" \
 	5 " [make install] mpg123-1.25.10 [Offline]" \
 	6 " [make install] mpg123-1.20.1" \
@@ -1574,8 +1626,8 @@ fi
 # mpg123 Manual Install Confirmed - Otherwise Back to Main Menu
 if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '1' ]; then mpg123SELECT='[apt-get install] mpg123'; fi
-	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.29.0'; fi
-	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.29.0  [Offline]' ; fi
+	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
+	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.29.3  [Offline]' ; fi
 	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.25.10'; fi
 	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
 	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
@@ -1614,12 +1666,12 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/imp/mpg123-1.29.0.tar.bz2 ]; then rm ~/imp/mpg123-1.29.0.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.29.0 ]; then
-	cd ~/imp/mpg123-1.29.0
+if [ -f ~/imp/mpg123-1.29.3.tar.bz2 ]; then rm ~/imp/mpg123-1.29.3.tar.bz2; fi
+if [ -d ~/imp/mpg123-1.29.3 ]; then
+	cd ~/imp/mpg123-1.29.3
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.29.0 -R
+	sudo rm ~/imp/mpg123-1.29.3 -R
 fi
 
 if [ -f ~/imp/mpg123-1.25.10.tar.bz2 ]; then rm ~/imp/mpg123-1.25.10.tar.bz2; fi
@@ -1644,30 +1696,30 @@ if [ "$confMPG123" == '1' ]; then
 fi
 
 if [ "$confMPG123" == '2' ]; then
-	# mpg123 v1.29.0 2021-09-05
-	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.0/mpg123-1.29.0.tar.bz2 -P ~/imp
-	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.0/mpg123-1.29.0.tar.bz2.sig ~/imp
-	tar -xvf mpg123-1.29.0.tar.bz2
-	cd ~/imp/mpg123-1.29.0
+	# mpg123 v1.29.3 2021-09-05
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2 -P ~/imp
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2.sig ~/imp
+	tar -xvf mpg123-1.29.3.tar.bz2
+	cd ~/imp/mpg123-1.29.3
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.29.0.tar.bz2
+	rm ~/imp/mpg123-1.29.3.tar.bz2
 fi
 
 if [ "$confMPG123" == '3' ]; then
 	# Check for the mpg123 Offline Installation File
-	if [ ! -f main-imp/offline/mpg123-1.29.0.tar.bz2]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.29.0.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+	if [ ! -f main-imp/offline/mpg123-1.29.3.tar.bz2]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.29.3.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
 	mainMENU
 	fi
 	
-	# mpg123 v1.29.0 2021-09-05 [Offline]
-	cp ~/imp/main-imp/offline/mpg123-1.29.0.tar.bz2 ~/imp
-	tar -xvf mpg123-1.29.0.tar.bz2
-	cd ~/imp/mpg123-1.29.0
+	# mpg123 v1.29.3 2021-12-11 [Offline]
+	cp ~/imp/main-imp/offline/mpg123-1.29.3.tar.bz2 ~/imp
+	tar -xvf mpg123-1.29.3.tar.bz2
+	cd ~/imp/mpg123-1.29.3
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.29.0.tar.bz2
+	rm ~/imp/mpg123-1.29.3.tar.bz2
 fi
 
 if [ "$confMPG123" == '4' ]; then
@@ -1750,12 +1802,12 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/imp/mpg123-1.29.0.tar.bz2 ]; then rm ~/imp/mpg123-1.29.0.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.29.0 ]; then
-	cd ~/imp/mpg123-1.29.0
+if [ -f ~/imp/mpg123-1.29.3.tar.bz2 ]; then rm ~/imp/mpg123-1.29.3.tar.bz2; fi
+if [ -d ~/imp/mpg123-1.29.3 ]; then
+	cd ~/imp/mpg123-1.29.3
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.29.0 -R
+	sudo rm ~/imp/mpg123-1.29.3 -R
 fi
 if [ -f ~/imp/mpg123-1.25.10.tar.bz2 ]; then rm ~/imp/mpg123-1.25.10.tar.bz2; fi
 if [ -d ~/imp/mpg123-1.25.10 ]; then
@@ -1782,36 +1834,39 @@ ESutilityMENU()
 pickUTILITY=$(dialog --stdout --no-collapse --title "     $IMPesUTILS     " \
 	--ok-label OK --cancel-label Back \
 	--menu "                #  [RP/ES] Utilities File Reference  # $IMPesFIXref" 25 75 20 \
-	1 " [es_systems.cfg] Repair" \
-	2 " [gamelist.xml] Refresh" \
-	3 " [smb.conf] Update" \
-	4 " [KILL] ES/Pegasus/AM" \
-	5 " [REBOOT]")
+	1 " [ParseGamelistOnly] OFF" \
+	2 " [es_systems.cfg] Repair" \
+	3 " [gamelist.xml] Refresh" \
+	4 " [smb.conf] Update" \
+	5 " [KILL] ES/Pegasus/AM" \
+	6 " [REBOOT]")
 	
 # Utility Confirmed - Otherwise Back to Main Menu
 if [ ! "$pickUTILITY" == '' ]; then
 	if [ "$pickUTILITY" == '1' ]; then
-		utilitySELECT='[es_systems.cfg] Repair'
-		utilityDESC=" Run [ES] Utilities if Experiencing [Assertion mType == FOLDER failed]"
-		utilityRUN=esSYSrepair
+		utilitySELECT='[ParseGamelistOnly] OFF'
+		utilityDESC=" [ParseGamelistOnly] OFF if Experiencing [Assertion mType == FOLDER failed]"
 	fi
 	if [ "$pickUTILITY" == '2' ]; then
+		utilitySELECT='[es_systems.cfg] Repair'
+		utilityDESC=" Fix Mising .MP3 Extensions if Experiencing [Assertion mType == * failed]"
+		utilityRUN=esSYSrepair
+	fi
+	if [ "$pickUTILITY" == '3' ]; then
 		utilitySELECT='[gamelist.xml] Refresh'
 		utilityDESC=" Restore RPMenu [gamelist.xml] File (Clean Entries P0ST [IMP] Install)"
 		utilityRUN=gamelistREFRESH
 	fi
-	if [ "$pickUTILITY" == '3' ]; then
+	if [ "$pickUTILITY" == '4' ]; then
 		utilitySELECT='[smb.conf] Update'
 		utilityDESC=" Add Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]"
 		utilityRUN=smbUPDATE
 	fi
-	if [ "$pickUTILITY" == '4' ]; then
-		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
-		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
-		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
-		ESutilityMENU
-	fi
 	if [ "$pickUTILITY" == '5' ]; then
+		utilitySELECT='[KILL] ES/Pegasus/AM'
+		utilityDESC="       [KILL] ES/Pegasus/AM "
+	fi
+	if [ "$pickUTILITY" == '6' ]; then
 		utilitySELECT='REBOOT'
 		utilityDESC="       REBOOT "
 	fi
@@ -1824,24 +1879,35 @@ if [ ! "$pickUTILITY" == '' ]; then
 	# Reboot Confirmed
 	if [ "$confUTILITY" == '1' ] && [ "$utilitySELECT" == 'REBOOT' ]; then tput reset && sudo reboot; fi
 	
-	# Check if IMP Installed
+	# # v2022.03 Addition - Scenario where Incorrect <game> Tag is used for a Sub-directory - Correct Tag should be <folder>
+	# Set ParseGamelistOnly to OFF
+	if [ "$confUTILITY" == '1' ] && [ "$utilitySELECT" == '[ParseGamelistOnly] OFF' ]; then
+		sed -i 's/\"ParseGamelistOnly\"\ value=\"true\"/\"ParseGamelistOnly\"\ value=\"false\"/g' /opt/retropie/configs/all/emulationstation/es_settings.cfg
+		finishUTILITY
+	fi
+	
+	# Kill ES/Pegasus/AM Confirmed
+	if [ "$utilitySELECT" == '[KILL] ES/Pegasus/AM' ]; then
+		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
+		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
+		finishUTILITY
+	fi
+	
+	# Check if IMP Installed before Running Remaining Utilities
 	if [ ! -d "$IMP" ]; then
 		dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $IMPesFIXref"  25 75
 		mainMENU
 	fi
 
 	# Utility Confirmed - Otherwise Back to Main Menu
-	if [ "$confUTILITY" == '1' ]; then
-		if [ "$utilitySELECT" == 'REBOOT' ]; then sudo reboot; fi
-		$utilityRUN
-	fi
+	if [ "$confUTILITY" == '1' ]; then $utilityRUN; fi
 	if [ "$confUTILITY" == '2' ]; then ESutilityMENU; fi
 	ESutilityMENU
 fi
 
 mainMENU
 }
-
 
 esSYSrepair()
 {
@@ -1932,17 +1998,24 @@ fi
 # [gamelist.xml] Modifications for retropiemenu OPT
 if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml ]; then
 	# Parse all lines Except </gameList>
-	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
-	
-	# Rebuild retropiemenu gamelist.xml
-	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	cat /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.xml
 	
 	# [gamelist.xml] might NOT be properly formatted - Make it so
 	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
 	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
-	cat $gamelistIMP >> main-imp/gamelist.xml
+	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add Internet Radio Station Entries to gamelist.xml
+	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	
+	# Add SomaFM Entries to gamelist.xml
+	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	
+	# Add the Finishing Line to gamelist.xml
+	# echo $'\n</gameList>' >> main-imp/gamelist.xml
+	echo '</gameList>' >> main-imp/gamelist.xml
 	
 	# Backup gamelist if not exist already
 	if [ ! -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then mv /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; fi
@@ -1951,24 +2024,30 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	mv main-imp/gamelist.xml /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1 > /dev/null 2>&1
 	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
 # [gamelist.xml] Modifications for retropiemenu rpMenu
 if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then	
 	# Parse all lines Except </gameList>
-	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.h1
-	
-	# Rebuild retropiemenu gamelist.xml
-	cat main-imp/gamelist.h1 > main-imp/gamelist.xml
+	cat ~/RetroPie/retropiemenu/gamelist.xml | grep -v "</gameList>" > main-imp/gamelist.xml
 	
 	# [gamelist.xml] might NOT be properly formatted - Make it so
 	if [ ! -f main-imp/gamelist.xml ]; then echo '<?xml version="1.0"?>' > main-imp/gamelist.xml; fi
 	if [ $(cat main-imp/gamelist.xml | grep -q '<gameList>' ; echo $?) == '1' ]; then echo $'\n<gameList>' >> main-imp/gamelist.xml; fi
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
-	cat $gamelistIMP >> main-imp/gamelist.xml
+	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add Internet Radio Station Entries to gamelist.xml
+	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	
+	# Add SomaFM Entries to gamelist.xml
+	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	
+	# Add the Finishing Line to gamelist.xml
+	# echo $'\n</gameList>' >> main-imp/gamelist.xml
+	echo '</gameList>' >> main-imp/gamelist.xml
 	
 	# Backup gamelist.xml if not exist already
 	if [ ! -f ~/RetroPie/retropiemenu/gamelist.xml.b4imp ]; then mv ~/RetroPie/retropiemenu/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; fi
@@ -1977,7 +2056,6 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	mv main-imp/gamelist.xml ~/RetroPie/retropiemenu/gamelist.xml
 	
 	# Clean up tmp files
-	rm main-imp/gamelist.h1 > /dev/null 2>&1
 	rm main-imp/gamelist.xml > /dev/null 2>&1
 fi
 
@@ -2020,16 +2098,16 @@ finishUTILITY
 finishUTILITY()
 {
 # Finished Refresh - Confirm Reboot
-UTILITYconfREBOOT=$(dialog --stdout --no-collapse --title " $selectTYPE *COMPLETE*" \
-	--ok-label OK --cancel-label MENU \
+UTILITYconfREBOOT=$(dialog --stdout --no-collapse --title " $utilitySELECT *COMPLETE*" \
+	--ok-label OK --cancel-label Back \
 	--menu "$IMPesFIXref" 25 75 20 \
-	1 "REBOOT" \
-	2 "MENU")
+	1 "Back to Menu" \
+	2 "REBOOT")
 # Reboot Confirm - Otherwise Exit
-if [ "$UTILITYconfREBOOT" == '1' ]; then tput reset && sudo reboot; fi
+if [ "$UTILITYconfREBOOT" == '2' ]; then tput reset && sudo reboot; fi
 
 tput reset
-mainMENU
+ESutilityMENU
 }
 
 # DISCLAIMER
