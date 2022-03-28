@@ -1,4 +1,5 @@
 # [IMP] for RetroPie
+![impplaylist.png](https://raw.githubusercontent.com/RapidEdwin08/imp/main/main-imp/icons/imp/impplaylist.png )  
 
 Based on every article you ever read about mpg123 scripts in RetroPie.  
 Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files like a ROM.  
