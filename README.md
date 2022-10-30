@@ -12,6 +12,12 @@ Results may vary using File Extensions such as`*.mP3 .Mp3 .pLs .PlS .M3u .m3U*` 
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].  
 
+**IMP Music Folders [v2022.10]:**  
+DEFAULT IMP Music Folder: *[..retropiemenu/imp/music]*  
+A *Symbolic Link* to *[..roms/music]* is Created Inside the Default IMP Music Folder *[..retropiemenu/imp/music]*  
+On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/imp/music]* *If it Exists*  
+On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropiemenu/music]*  
+
 ## INSTALLATION
 
 ```bash
@@ -21,17 +27,14 @@ sudo chmod 755 ~/imp/imp_setup.sh
 cd ~/imp && ./imp_setup.sh
 ```
 
-If you are Attempting an [0ffline] Install, you can to Start [imp_setup.sh] with the [offline] Parameter to bypass Internet Checks.  
-NOTE: You can Grab the [imp-setup.tar.gz] from Releases and Extract it manually on your Device  
-```bash
-tar xvzf imp-setup.tar.gz -C ~/
-sudo chmod 755 ~/imp/imp_setup.sh
-cd ~/imp && ./imp_setup.sh offline
-```
+**INSTALL FLAGS** *Determines the RetroPieMenu [gamelist.xml] used @Install/Refresh*  
+[STREAMS]  IMP + [mpg123] + [Streams]  
+[MINIMAL]  IMP + [mpg123]  
+[OFFLINE]  IMP 0nly  
 
-If you are [Upgrading] to a Newer Version of IMP:  
-~~UNINSTALL [IMP] FIRST using the SETUP Script CURRENTLY INSTALLED~~  
-*Recommend UNINSTALL using v2022.02 or Newer to avoid issues with [es_systems.cfg]*  
+**If you are [Upgrading] to a Newer Version of IMP:**  
+UNINSTALL [IMP] FIRST using the SETUP Script *CURRENTLY INSTALLED*  
+Then BACKUP or REMOVE the 0lder IMP Setup Folder/Files  
 
 BACKUP the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newer Version of [IMP]:  
 ```bash
@@ -46,7 +49,8 @@ cd ~ #Change to Home Directory
 rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
 rm ~/imp-setup.tar.gz
 ```
-*You may need to use [sudo mv] or [sudo rm] if you used [make-install] mpg123 due to the [SOURCE] folder*  
+~~*You may need to use [sudo mv] or [sudo rm] if you used [make-install] mpg123 due to the [SOURCE] folder*~~  
+v2022.10 now uses the home directory for building mpg123 from Source and Includes a Clean Source Option  
 
 0THER BGMs ALREADY INSTALLED:  
 [IMP] will attempt to Disable (NOT Remove) the following BGMs Indiscriminately upon Install:  
@@ -67,14 +71,14 @@ CUSTOM [IMP]:
 Selecting CUSTOM [IMP] will Create the Files Required for you in ~/imp/custom-imp  
 You are Expected to VERIFY the Scripts in [custom-imp] and MODIFY IF NEEDED  
 TEMPLATES are provided for Reference in: ~/imp/custom-imp/templates  
-A README is included in the Installer for more details on [custom-imp  
+A README is included in the Installer for more details on [custom-imp]  
 
 [mpg123] INSTALL UTILITIES:  
 [IMP] 0ffers a range of Alternative 0ptions for installing mpg123 if needed  
 This can be useful for 0lder RetroPie images with outdated repositories, or [0ffline] Installs  
-The [make-install] 0ptions Provided in the [IMP] Installer have been Configured For/Tested On [Pi Zero/W 1/2/3/4]  
+The [make-install] 0ptions Provided in the [IMP] Installer have been Configured For/Tested On [Pi Zero/2/W 1/2/3/4]  
 Selecting a [make-install] 0ption may take a while, and will require the [SOURCE] folder to Uninstall later  
-If you choose a [make-install] 0ption and want to UNINSTALL later, DO NOT DELETE any [~/imp/mpg123-1.x.y] Folders  
+If you choose a [make-install] 0ption and want to UNINSTALL later, DO NOT DELETE any [~/mpg123-1.x.y] Folders  
 It is RECOMMENDED to use the Default method of [apt-get install] for installing mpg123 if you can  
 
 ## [IMP] RETROPIE MENU
@@ -97,17 +101,23 @@ Volume % [mpg123 Player Volume]
 
 **Settings**  
 Current Settings  
+
+**General Settings**  
+Fade Volume Out-In [Off/On]  
 Lite Mode [Off/On]  
 Infinite Mode [Off/On]  
-Music Randomizer Mode [Off/ALL/BGM]  
 
 **BGM Settings** [*Will Override Playlist at Startup*]  
 BGM A-Side [Off/On] ~/RetroPie/roms/music/bgm/A-SIDE/  
 BGM B-Side [Off/On] ~/RetroPie/roms/music/bgm/B-SIDE/  
+Play Startup Song [Off/On] ~/RetroPie/roms/music/bgm/startup.mp3  
+Play Quit Song [Off/On] ~/RetroPie/roms/music/bgm/quit.mp3  
+*Both [startup.mp3/quit.mp3] are Ignored in Playlist Creation*  
+*Playing Either [startup.mp3/quit.mp3] will Not Interrupt the Current Playlist*  
 
 **Game Settings**  
 Music Over Games [Off/On]  
-Volume Fade at Games [Off/On]  
+Music Idle Over Games [Off/On] [*Respects Idle Volume Settings*]  
 Delay at Game End [seconds]  
 
 **HTTP Server** [Port:8080 You must STOP HTTP Server before you can START it on Another Directory]  
@@ -115,6 +125,17 @@ HTTP Server [Log]
 HTTP Server [On] Music Directory  
 HTTP Server [On] ROMS Directory  
 HTTP Server [Off]  
+
+**Idle Settings**  
+Idle at Screensaver [Off/Any/VideoOnly]  
+Idle IMP Behavior at Screensaver [Stop/AdjustVolume]  
+Stop IMP at Sleep [Off/On/+KillDisplay]  
+Idle IMP Volume % [Volume Level when Idle]  
+
+**OMX Monitor [BETA]**  
+ReadMe OMX Monitor [Infinite L00P Script to Idle IMP at omxplayer]  
+OMX Monitor [Off/On]  
+Remain Idle for [seconds]  
 
 **Randomizer Settings** [*Will Override Playlist at Startup*] {Icons Change to Reflect BGM Settings}  
 Music Randomizer [Off/On]  
@@ -124,25 +145,19 @@ Randomizer Mode [PLS]: Pick a Random [.PLS/.M3U] and make it the current playlis
 
 **Startup Settings**  
 Music at Startup [Off/On]  
-Delay at Startup [seconds]  
 Shuffle Playlist [Off/On]  
-Play Startup Song [Off/On] ~/RetroPie/roms/music/bgm/startup.mp3  
-NOTE: [startup.mp3] is Ignored in Playlist Creation  
+Delay at Startup [seconds]  
 
 ## PLAY MODES  
-LITE MODE: [Good for L0NG Tracks, May be N0T Recommended for SD-Cards]  
-[IMP] Writes to File for it's Features, such as forming Playlists when Starting Music, Recall Last Track/Position, Previous Track  
-[IMP] Constantly Writes the mpg123 output to a Log File to obtain Info needed for these Features  
-Constantly writing to a File while Playing Music may NOT be Ideal Depending on the OS Storage type (SD Card)  
-[IMP] 0ffers a LITE Mode for this reason, which Writes the mpg123 output to RAM Disk [tmpfs] instead for less features  
-It is RECOMMENDED to use LITE MODE if you are using an SD Card, or Enable [Overlay File System] after setting your BGM Playlist  
+LITE MODE [On]: Log to TMPFS (RAM), Track Position Reset @PowerOff [Recommended for SD-Cards]  
+LITE MODE [Off]: Log to File (Disk), Track Position Retained @PowerOff [**NOT** Recommended for SD-Cards]  
 
-INFINITE MODE:  
-[IMP] 0ffers an INFINITE Repeat Mode which is implemented by a scripted Infinite L00P of mpg123  
-For this reason, it is RECOMMENDED [IMP] always have MUSIC AVAILABLE to Play when using INFINITE Mode  
+INFINITE MODE [On]: Infinite L00P of Current Playlist  
+INFINITE MODE [Off]: Stop IMP after Finishing Current Playlist  
+**NOTE:** *It is RECOMMENDED [IMP] always have MUSIC AVAILABLE to Play when using INFINITE Mode  
 If you see the [HIGH TEMP ICON] at any point while attempting to Start Music - STOP [IMP]!  
 [IMP] will perform various Error checks Automatically to prevent an Infinite [Error] L00P  
-However, Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manually bash the Stop Script:  
+Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manually bash the Stop Script:*  
 ```bash
 bash /opt/retropie/configs/imp/stop.sh
 ```
@@ -160,7 +175,7 @@ bash /opt/retropie/configs/imp/stop.sh
 - `IF [ParseGamelistOnly] is "ON" + there are Incorrect Tags or References to File Extensions in the [gamelist.xml]`  
    *Example*:  Incorrect ~`*<game>*`~ Tags for Sub-directories in [gamelist.xml] where the **Correct Tag** should be `*<folder>*`  
 
-**[RP/ES] Utilities** are available in the [IMP] INSTALLER using the Same Setup Command:  
+**[RP/ES] + [PC/0ther] Utilities** are available in the [IMP] INSTALLER using the Same Setup Command:  
 ```bash
 cd ~/imp && ./imp_setup.sh
 ```
@@ -171,7 +186,11 @@ cd ~/imp && ./imp_setup.sh
 - [gamelist.xml] Refresh to the State it was in after a Fresh Install of [IMP]  
 - [smb.conf] Update to Add/Restore Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]  
    For use if **Windows (Samba) Shares** are Enabled and `[../roms/music]` is N0T accessible  
-   NOTE:  A **Windows (Samba) Share** for `[~/RetroPie/retropiemenu/imp/music]` is Added at Insall if `[smb.conf]` is present  
+   **NOTE:**  A **Windows (Samba) Share** for `[~/RetroPie/retropiemenu/imp/music]` is Added at Insall if `[smb.conf]` is present  
+
+**[PC/0ther] Utilities**:  
+- [Add/Remove] IMP [autostart.desktop] Shortcut to System Start  
+- [Add/Remove] IMP [Stop.sh] Script to Emulationstation Quit  
 
 ## License
 [GNU](https://www.gnu.org/licenses/gpl-3.0.en.html)
