@@ -4,7 +4,6 @@ IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 # musicDIR=$(readlink ~/RetroPie/retropiemenu/imp/music) # ES does not play well with Symbolic Links in [retropiemenu]
 musicDIR=~/RetroPie/retropiemenu/imp/music
-musicROMS=~/RetroPie/roms/music
 BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
@@ -31,15 +30,6 @@ cat $IMPPlaylist/shuffle | sort -n >> $IMPPlaylist/init
 cat $IMPPlaylist/init > $IMPPlaylist/abc
 cat $IMPPlaylist/init | sort --random-sort > $IMPPlaylist/shuffle
 	
-# Escape the /\slashes/\ in the Paths
-ESCmusicROMS=${musicROMS//\//\\/}
-ESCmusicDIR=${musicDIR//\//\\/}
-
-# Replace rpMenu/music Path with roms/Music Path in Playlist files
-sed -i s+$ESCmusicDIR+$ESCmusicROMS+ $IMPPlaylist/abc
-sed -i s+$ESCmusicDIR+$ESCmusicROMS+ $IMPPlaylist/shuffle
-sed -i s+$ESCmusicDIR+$ESCmusicROMS+ $IMPPlaylist/init
-
 # Start the Music Player Loop Script
 bash "$IMP/play.sh"
 exit 0
