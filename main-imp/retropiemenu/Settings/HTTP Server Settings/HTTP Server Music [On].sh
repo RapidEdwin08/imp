@@ -1,6 +1,6 @@
 #!/bin/bash
 # Specify directory to share and Port
-HTTPFolder=~/RetroPie/roms/music
+HTTPFolder=~/RetroPie/retropiemenu/imp/music
 HTTPPort=8080
 
 IMP=/opt/retropie/configs/imp
