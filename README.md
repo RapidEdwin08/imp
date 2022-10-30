@@ -85,6 +85,7 @@ It is RECOMMENDED to use the Default method of [apt-get install] for installing 
 
 **Music Player** [IMP]  
 Current Playlist  
+**./Music [~/RetroPie/retropiemenu/imp/music]**  
 Previous Track  
 Play  
 Pause  
@@ -94,10 +95,7 @@ Shuffle Off/On
 Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}  
 Start BGM Music  
 Start Randomizer [*BGM Settings are Respected*] {Icon Changes to Reflect Randomizer Settings}  
-Volume % [mpg123 Player Volume]  
-
-**Music** [Place MP3/PLS/M3U Files here to have Select and Play Abilities in ES]  
-~/RetroPie/roms/music [symbolic link to ~/RetroPie/retropiemenu/imp/music]  
+Volume % [mpg123 Player Volume]   
 
 **Settings**  
 Current Settings  
