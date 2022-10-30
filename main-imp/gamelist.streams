@@ -1,8 +1,8 @@
 	<folder>
 		<path>./imp/music/streams</path>
-		<name>[Streams]</name>
+		<name># Streams #</name>
 		<desc>Internet-based Radio Stations and Streams
- ~/RetroPie/roms/music/streams/*</desc>
+ ~/RetroPie/retropiemenu/imp/music/streams/*</desc>
 		<image>./icons/impstreamsdir.png</image>
 	</folder>
 	<folder>
@@ -13,8 +13,14 @@
 	</folder>
 	<game>
 		<path>./imp/music/streams/SLAYRadio/slayradio.128.m3u</path>
-		<name>SLAYRadio</name>
+		<name>SLAYRadio [128k]</name>
 		<desc>SLAYRadio: Quality >> High >> Mp3</desc>
+		<image>./icons/slayradio.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SLAYRadio/slayradio.56.m3u</path>
+		<name>SLAYRadio [56k]</name>
+		<desc>SLAYRadio: Quality >> Mid >> Mp3</desc>
 		<image>./icons/slayradio.png</image>
 	</game>
 	<folder>
@@ -25,9 +31,27 @@
 	</folder>
 	<game>
 		<path>./imp/music/streams/Mp3RadioFM/mp3radio.pls</path>
-		<name>Main Channel</name>
+		<name># MP3Radio.Fm [Main] #</name>
 		<desc>MP3Radio.Fm Main Channel: Playing hits 24/7 and Broadcasting Live Shows all week long.</desc>
 		<image>./icons/mp3radiofm.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/Mp3RadioFM/channel2.pls</path>
+		<name>Channel2</name>
+		<desc>MP3Radio.Fm Channel2: Best Djs Mixes from all around the world playing 24/7 (House, EDM, Dance)</desc>
+		<image>./icons/mp3radiofmch2.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/Mp3RadioFM/latino.pls</path>
+		<name>Latino</name>
+		<desc>MP3Radio.Fm Latino Channel: Si se escucha en Español, lo puedes bailar aquí! (Salsa, Merengue, Bachata, Reggaeton, Cubaton).</desc>
+		<image>./icons/mp3radiofmlatino.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/Mp3RadioFM/reload.pls</path>
+		<name>Reload Channel</name>
+		<desc>MP3Radio.Fm Reload Channel: CURATED MASHUPS and REMIXES FROM THE 70s / 80s and Today Hits!</desc>
+		<image>./icons/mp3radiofmreload.png</image>
 	</game>
 	<folder>
 		<path>./imp/music/streams/NightrideFM</path>
@@ -36,9 +60,39 @@
 		<image>./icons/nightridefm.png</image>
 	</folder>
 	<game>
-		<path>./imp/music/streams/NightrideFM/NightrideFM-x6.pls</path>
-		<name>Nightride.FM</name>
-		<desc>Nightride.FM, ChillSynth.FM, SpaceSynth.FM, DarkSynth, HorrorSynth, EBSM...</desc>
+		<path>./imp/music/streams/NightrideFM/NightrideFM.pls</path>
+		<name># Nightride.FM [Main] #</name>
+		<desc>Nightride.FM: Main</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/NightrideFM/ChillSynth.pls</path>
+		<name>ChillSynth</name>
+		<desc>Nightride.FM: ChillSynth</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/NightrideFM/SpaceSynth.pls</path>
+		<name>SpaceSynth</name>
+		<desc>Nightride.FM: SpaceSynth</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/NightrideFM/DarkSynth.pls</path>
+		<name>DarkSynth</name>
+		<desc>Nightride.FM: DarkSynth</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/NightrideFM/HorrorSynth.pls</path>
+		<name>HorrorSynth</name>
+		<desc>Nightride.FM: HorrorSynth</desc>
+		<image>./icons/nightridefm.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/NightrideFM/EBSM.pls</path>
+		<name>EBSM</name>
+		<desc>Nightride.FM: EBSM</desc>
 		<image>./icons/nightridefm.jpg</image>
 	</game>
 	<folder>
@@ -87,5 +141,11 @@
 		<path>./imp/music/streams/DnBRadio/hi.pls</path>
 		<name>DnBRadio [192k]</name>
 		<desc>DnBRadio 192k MP3 Stream: Recommended for High-speed connections.</desc>
+		<image>./icons/dnbradio.png</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/DnBRadio/lo.pls</path>
+		<name>DnBRadio [96k]</name>
+		<desc>DnBRadio 96k MP3 Stream: Recommended for mobile and low-bandwidth usage.</desc>
 		<image>./icons/dnbradio.png</image>
 	</game>
