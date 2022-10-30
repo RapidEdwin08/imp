@@ -1,6 +1,6 @@
 #!/bin/bash
 
-installFLAG=$1
+#installFLAG=$1
 versionIMP=$(cat ~/imp/VERSION)
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
@@ -15,7 +15,8 @@ BGMb="$musicDIR/bgm/B-SIDE"
 
 EXTesSYS='<extension>.rp .sh<\/extension>'
 EXTesSYSimp='<extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U<\/extension>'
-CMDesSYS='<command>sudo \/home\/pi\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
+#CMDesSYS='<command>sudo \/home\/pi\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
+CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>"
 CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
 CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<\/command>'
 
@@ -37,11 +38,16 @@ echo "                       '::.   -.------   .-:           "
 echo "                        :-   ':------:. '::.           "
 echo "                        =-'  .::-..-::-  ='            "
 echo "                             .::-.'-:--                "
-echo "                             '---. .-:'                "
-echo "              Integrated      '::-'..-'      by     "
-echo "              Music            .-- .--       RapidEdwin "
-echo "              Player          .:-:.'''       v$versionIMP  "
+echo "              Integrated     '---. .-:'      by        "
+echo "              Music           '::-'..-'      RapidEdwin "
+echo "              Player          .:-:.'''       v$versionIMP"
 echo "        ------------------------------------------------------- "
+)
+
+impINSTALLflagREF=$(
+echo
+echo "                         # INSTALL FLAGS #"
+echo "  Determines the RetroPieMenu [gamelist.xml] used @Install/Refresh"
 )
 
 impFILEREF=$(
@@ -56,9 +62,9 @@ echo "       [autostart.sh runcommand-onstart.sh runcommand-onend.sh]"
 impFINISHREF=$(
 echo
 echo "                       # MUSIC DIRECTORIES #"
-echo "                    $musicROMS"
-echo "              $musicROMS/bgm/A-SIDE"
-echo "              $musicROMS/bgm/B-SIDE"
+echo "                $musicDIR"
+echo "          $musicDIR/bgm/A-SIDE"
+echo "          $musicDIR/bgm/B-SIDE"
 echo
 # echo "           /etc/emulationstation/es_systems.cfg"
 # echo '         [.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U]'
@@ -70,6 +76,7 @@ mpg123FILEREF=$(
 echo
 echo "                    # [mpg123] Install Utilities #"
 echo "                        ~/imp/main-imp/offline"
+echo "                        [mpg123-1.30.2.tar.bz2]"
 echo "                        [mpg123-1.29.3.tar.bz2]"
 echo "                        [mpg123-1.25.10.tar.bz2]"
 echo "                        [mpg123-1.20.1.tar.bz2]"
@@ -82,11 +89,11 @@ echo "            *** [apt-get install] mpg123 [Recommended] ***"
 echo
 echo "[mpg123] Install Utilities can be Useful for [0ffline] Installs, or 0lder RetroPie images with 0utdated/Retired Repositories"
 echo
-echo "The [make-install] 0ptions Provided by the [IMP] Installer have been Configured For and Tested On [Pi Zero/W 1/2/3/4]"
+echo "The [make-install] 0ptions Provided by the [IMP] Installer have been Configured For and Tested On [Pi Zero/2/W 1/2/3/4]"
 echo
-echo "Selecting a [make-install] 0ption could take a while, and will Require the SOURCE [~/imp/mpg123-1.x.y] Folder to Uninstall [mpg123]"
+echo "Selecting a [make-install] 0ption could take a while, and will Require the SOURCE [~/mpg123-1.x.y] Folder to Uninstall [mpg123]"
 echo
-echo "*DO NOT DELETE* [~/imp/mpg123-1.x.y] Folders If you want to be able to UNINSTALL [mpg123] from here later"
+echo "*DO NOT DELETE* [~/mpg123-1.x.y] Folders If you want to be able to UNINSTALL [mpg123] from here later"
 echo
 echo
 echo "         NOTE: [UNINSTALL] of [IMP] does NOT REMOVE [mpg123]  "
@@ -111,14 +118,50 @@ echo "                         /etc/samba/smb.conf "
 echo "           path = "/home/$USER/RetroPie/retropiemenu/imp/music""
 )
 
+PCutilREF=$(
+echo ""
+echo "                         # FILE REFERENCES #"
+echo "                        ~/.config/autostart"
+echo "                   ~/.config/autostart/imp.desktop"
+echo ""
+echo "                    ~/emulationstation/scripts/quit"
+echo "              ~/emulationstation/scripts/quit/impstop.sh"
+echo ""
+)
+
+PCimpDESKTOP=$(
+echo '[Desktop Entry]
+Version=1.0
+Exec=/opt/retropie/configs/imp/boot.sh
+Name=IMP
+GenericName=IMP
+Comment=IMP
+Encoding=UTF-8
+Terminal=false
+Type=Application
+Icon=/usr/local/share/icons/retropie.svg
+Categories=Application;Game;'
+)
+
+PCimpDESKTOPref=$(
+echo ""
+echo ""
+echo "Contents of [~/.config/autostart/imp.desktop]:
+----------------------------------------------
+$PCimpDESKTOP
+---------------------------------------------- "
+)
+
 customIMPREF=$(cat ~/imp/main-imp/templates/README)
-IMPstandard="[STANDARD] IMP (Recommended)"
-IMPcustom="[CUSTOM] IMP"
+IMPstandard="[AUTO-INSTALL] (Recommended)"
+IMPcustom="[CUSTOM-INSTALL]"
 IMPmpg123="[mpg123] Utilities"
 IMPesUTILS="[RP/ES]  Utilities"
+IMPpcUTILS="[PC/0ther]  Utilities"
 
 mainMENU()
 {
+if [ "$installFLAG" == '' ]; then installFLAG=streams; fi
 # Check for Internet Connection - internetSTATUS Displayed on Main Menu
 wget -q --spider http://google.com
 if [ $? -eq 0 ]; then
@@ -132,19 +175,34 @@ fi
 tput reset
 installTYPE=$(dialog --stdout --no-collapse --title "  $internetSTATUS" \
 	--ok-label OK --cancel-label Exit \
-	--menu "     Choose Type of Install for Integrated Music Player [IMP]:" 25 75 20 \
+	--menu " Choose Type of Install for Integrated Music Player [IMP]: [$installFLAG]" 25 75 20 \
 	1 "$IMPstandard" \
 	2 "$IMPcustom" \
 	3 "$IMPmpg123" \
 	4 "$IMPesUTILS" \
-	5 "Uninstall [IMP]")
+	5 "$IMPpcUTILS" \
+	U "Uninstall [IMP]" \
+	R "Reboot")
 tput reset
 
 # If ESC then Exit
 if [ "$installTYPE" == '' ]; then exit 0; fi
 
+if [ "$installTYPE" == 'R' ]; then
+	selectTYPE="REBOOT"
+	# Confirm Uninstall
+	confREBOOT=$(dialog --stdout --no-collapse --title "               REBOOT               " \
+		--ok-label OK --cancel-label Back \
+		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
+		1 "><  $selectTYPE  ><" \
+		2 "Back to Main Menu")
+	# Uninstall Confirmed - Otherwise Back to Main Menu
+	if [ "$confREBOOT" == '1' ]; then tput reset; sudo reboot; fi
+	mainMENU
+fi
+
 # Uninstall
-if [ "$installTYPE" == '5' ]; then
+if [ "$installTYPE" == 'U' ]; then
 	selectTYPE="UNINSTALL [IMP]"
 	# Confirm Uninstall
 	confREMOVE=$(dialog --stdout --no-collapse --title "               UNINSTALL [IMP]               " \
@@ -161,6 +219,12 @@ fi
 if [ "$installTYPE" == '4' ]; then
 	selectTYPE="$IMPesUTILS"
 	ESutilityMENU
+fi
+
+# [PC] Utilities
+if [ "$installTYPE" == '5' ]; then
+	selectTYPE="$IMPpcUTILS"
+	PCutilityMENU
 fi
 
 # mpg123 Manual Install
@@ -475,7 +539,7 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME PRO BY THE SUPREME TEAM' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Pro (Pi4 20200401)"; fi
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME DUO BY THE SUPREME TEAM AND monkaBlyat.' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Duo (Unofficial) (Pi4B 20200104)"; fi
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME ULTRA V1 BY THE SUPREME TEAM' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Ultra V1 (Pi4 20210121)"; fi
-	if [ -d /opt/retropie/configs/all/emulationstation/themes/MB\ Custom\ Back\ to\ the\ Future\ Theme\ 2020-21/ ]; then detectTYPE="[MBM] BTTF PleasureParadise (Pi4 19851026)"; fi
+	#if [ -d /opt/retropie/configs/all/emulationstation/themes/MB\ Custom\ Back\ to\ the\ Future\ Theme\ 2020-21/ ]; then detectTYPE="[MBM] BTTF PleasureParadise (Pi4 19851026)"; fi
 	
 	# README Custom Install
 	dialog --no-collapse --title " $detectTYPE $piHW" --ok-label CONTINUE --msgbox "$customIMPREF"  25 75
@@ -491,8 +555,8 @@ if [[ $? -eq 0 || "$installFLAG" == 'offline' ]]; then
 	confINSTALL=$(dialog --stdout --no-collapse --title "  Internet Connection: [$confSTATUS]  " \
 		--ok-label OK --cancel-label Back \
 		--menu "                           ? ARE YOU SURE ?             " 25 75 20 \
-		1 "INSTALL $selectTYPE" \
-		2 "Choose Type of [IMP] Install")
+		1 "PROCEED $selectTYPE [$installFLAG]" \
+		2 "Back")
 	# Install Confirmed - Otherwise Back to Main Menu
 	if [ "$confINSTALL" == '1' ]; then impINSTALL; fi
 	mainMENU
@@ -597,7 +661,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh ]; then mv ~/Retro
 
 # Disable Livewire
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
-if [ -f /home/pi/RetroPie/retropiemenu/bgm-mute.sh ]; then mv /home/pi/RetroPie/retropiemenu/bgm-mute.sh /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp; fi
+if [ -f ~/RetroPie/retropiemenu/bgm-mute.sh ]; then mv ~/RetroPie/retropiemenu/bgm-mute.sh ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp; fi
 
 # Disable BGM Naprosnia
 sudo pkill -STOP audacious > /dev/null 2>&1
@@ -647,20 +711,22 @@ if [ -d "$musicROMS" ]; then
 		# If Symbolic Link - Remove current Link to [roms/music] - Create New Link to [retropiemenu/imp/music/romsLINK]
 		romsLINK=$(readlink "$musicROMS" | sed 's/.*\///' )
 		if [ ! -d "$musicDIR" ]; then mkdir "$musicDIR"; fi
-		if [ ! -d "$musicDIR" ]; then mkdir "$musicDIR/_$romsLINK"; fi
 		ln -s $(readlink "$musicROMS") "$musicDIR/_$romsLINK"
 		rm "$musicROMS"
-	else
-		# If NOT Symbolic Link Move [roms/music] Folder to [retropiemenu/imp/music]
-		mv "$musicROMS" "$musicDIR"
 	fi
 fi
+# Restore Previous IMP Install Music Folder IF Found
+if [ -d ~/RetroPie/retropiemenu/music ]; then mv ~/RetroPie/retropiemenu/music $musicDIR; fi
+
 # Create the [roms/music] Folder - Symbolic Link [retropiemenu/imp/music] to [roms/music]
 if [ ! -d "$musicDIR" ]; then mkdir "$musicDIR"; fi
-if [ ! -d "$musicROMS" ]; then ln -s "$musicDIR" "$musicROMS"; fi
+#if [ ! -d "$musicROMS" ]; then ln -s "$musicDIR" "$musicROMS"; fi
+if [ ! -d "$musicROMS" ]; then mkdir $musicROMS; fi
+if [ ! -d "$musicDIR/_roms_music" ]; then ln -s ~/RetroPie/roms/music "$musicDIR/_roms_music"; fi
+
 # Create Symbolic Links to 0ther Various Music Folders
-if [ -d ~/RetroPie/roms/jukebox/mp3 ] && [ ! -d "$musicROMS/_jukebox_mp3" ]; then ln -s ~/RetroPie/roms/jukebox/mp3 "$musicROMS/_jukebox_mp3"; fi
-if [ -d ~/bgm ] && [ ! -d "$musicROMS/_bgm" ]; then ln -s ~/bgm "$musicDIR/_bgm"; fi
+if [ -d ~/RetroPie/roms/jukebox/mp3 ] && [ ! -d "$musicDIR/_jukebox_mp3" ]; then ln -s ~/RetroPie/roms/jukebox/mp3 "$musicDIR/_jukebox_mp3"; fi
+if [ -d ~/bgm ] && [ ! -d "$musicDIR/_bgm" ]; then ln -s ~/bgm "$musicDIR/_bgm"; fi
 if [ -d ~/RetroPie/backgroundmusic_disable ]; then mv ~/RetroPie/backgroundmusic_disable ~/RetroPie/backgroundmusic; fi
 if [ -d ~/RetroPie/backgroundmusic ] && [ ! -d "$musicDIR/_backgroundmusic" ]; then ln -s ~/RetroPie/backgroundmusic "$musicDIR/_backgroundmusic"; fi
 # if [ -d ~/.attract/sounds ] && [ ! -d "$musicDIR/_AttractModeSounds" ]; then ln -s ~/.attract/sounds "$musicDIR/_AttractModeSounds"; fi
@@ -674,11 +740,14 @@ if [ ! -d "$IMPMenuRP/Settings/Game Settings" ]; then mkdir "$IMPMenuRP/Settings
 if [ ! -d "$IMPMenuRP/Settings/HTTP Server Settings" ]; then mkdir "$IMPMenuRP/Settings/HTTP Server Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Randomizer Settings" ]; then mkdir "$IMPMenuRP/Settings/Randomizer Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Startup Settings" ]; then mkdir "$IMPMenuRP/Settings/Startup Settings"; fi
+if [ ! -d "$IMPMenuRP/Settings/General Settings" ]; then mkdir "$IMPMenuRP/Settings/General Settings"; fi
+if [ ! -d "$IMPMenuRP/Settings/OMX Monitor" ]; then mkdir "$IMPMenuRP/Settings/OMX Monitor"; fi
 if [ ! -d "$IMPMenuRP/Volume" ]; then mkdir "$IMPMenuRP/Volume"; fi
 
 # Copy Files to configs
 cp -R main-imp/configs-imp/* "$IMP"
-sudo chmod 755 $IMP/*.sh
+sudo chmod 755 $IMP/*.sh 2>/dev/null
+sudo chmod 755 $IMP/*.py 2>/dev/null
 
 # Copy Files to retropiemenu
 cp -R main-imp/retropiemenu/* $IMPMenuRP
@@ -838,10 +907,10 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
 	# Add Internet Radio Station Entries to gamelist.xml
-	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
 	# Add SomaFM Entries to gamelist.xml
-	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
 	
 	# Add the Finishing Line to gamelist.xml
 	# echo $'\n</gameList>' >> main-imp/gamelist.xml
@@ -870,10 +939,10 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
 	# Add Internet Radio Station Entries to gamelist.xml
-	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
 	# Add SomaFM Entries to gamelist.xml
-	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
 	
 	# Add the Finishing Line to gamelist.xml
 	# echo $'\n</gameList>' >> main-imp/gamelist.xml
@@ -895,11 +964,13 @@ cp main-imp/icons/imp/* ~/RetroPie/retropiemenu/icons/
 if [ ! -f ~/RetroPie/retropiemenu/icons/backgroundmusic.png ]; then cp main-imp/icons/imp/impmusicdir.png ~/RetroPie/retropiemenu/icons/backgroundmusic.png; fi
 if [ ! -f ~/RetroPie/retropiemenu/icons/jukebox.png ]; then cp main-imp/icons/imp/impmusicdir.png ~/RetroPie/retropiemenu/icons/jukebox.png; fi
 
-# Put something in [musicDIR] [BGMdir]
+# Put something in [musicDIR] [BGMdir] [ROMsMusic]
+if [ ! -f "$musicDIR/_roms_music/Seppuku Station.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartallrm0.png "$musicDIR/_roms_music/Seppuku Station.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$musicDIR/MMMenu.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/MMMenu.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$BGMdir/A-SIDE/e1m1.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png "$musicDIR/bgm/A-SIDE/e1m1.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$BGMdir/B-SIDE/e1m2.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
 if [ ! -f "$BGMdir/startup.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartupm0.png "$BGMdir/startup.mp3" > /dev/null 2>&1; fi
+if [ ! -f "$BGMdir/quit.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impquitm0.png "$BGMdir/quit.mp3" > /dev/null 2>&1; fi
 
 # Replace [/home/pi] with current User [$homeDIR] in Playlist - This may Not be a pi
 homeDIR=~/
@@ -1058,50 +1129,112 @@ fi
 	fi
 fi
 
-if [[ ! "$installFLAG" == 'offline' ]]; then
+if [[ "$installFLAG" == 'streams' ]]; then
 	# Create Streams Sub-directory
 	if [ ! -d "$musicDIR/streams" ]; then mkdir "$musicDIR/streams"; fi
 	
-	# Get .M3U from SLAYRadio 202111
+	# Get .M3U from SLAYRadio 202210
 	if [ ! -d "$musicDIR/streams/SLAYRadio" ]; then mkdir "$musicDIR/streams/SLAYRadio"; fi
-	if [ ! -f "$musicDIR/streams/SLAYRadio/slayradio.128.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u -P "$musicDIR/streams/SLAYRadio"; fi
+	#if [ ! -f "$musicDIR/streams/SLAYRadio/slayradio.128.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/128kbps/slayradio.128.m3u -P "$musicDIR/streams/SLAYRadio"; fi
+	#if [ ! -f "$musicDIR/streams/SLAYRadio/slayradio.56.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/56kbps/slayradio.56.m3u -P "$musicDIR/streams/SLAYRadio"; fi
+	#if [ ! -f "$musicDIR/streams/SLAYRadio/slayradio.24.m3u" ]; then wget --no-check-certificate http://www.slayradio.org/tune_in.php/24kbps/slayradio.24.m3u -P "$musicDIR/streams/SLAYRadio"; fi
+	
+	# Issue with Emply LInes Preventing Playback on mpg123 - [src/streamdump.c:stream_parse_headers():246] error: no data at all from network resource
+	#cat "$musicDIR/streams/SLAYRadio/slayradio.128.m3u" | grep -v '^[[:space:]]*$' > /dev/shm/slayradio.128.m3u; mv /dev/shm/slayradio.128.m3u "$musicDIR/streams/SLAYRadio/slayradio.128.m3u" > /dev/null 2>&1
+	#cat "$musicDIR/streams/SLAYRadio/slayradio.56.m3u" | grep -v '^[[:space:]]*$' > /dev/shm/slayradio.56.m3u; mv /dev/shm/slayradio.56.m3u "$musicDIR/streams/SLAYRadio/slayradio.56.m3u" > /dev/null 2>&1
+	#cat "$musicDIR/streams/SLAYRadio/slayradio.24.m3u" | grep -v '^[[:space:]]*$' > /dev/shm/slayradio.24.m3u; mv /dev/shm/slayradio.24.m3u "$musicDIR/streams/SLAYRadio/slayradio.24.m3u" > /dev/null 2>&1
 
+	# Still Issues with SLAYRadio.m3u on mpg123-1.30.2
+	echo '#EXTINF:0, SLAY Radio - 128kbps, relay1 [shoutcast - elpost]' > "$musicDIR/streams/SLAYRadio/slayradio.128.m3u"
+	echo 'http://relay1.slayradio.org:8000' >> "$musicDIR/streams/SLAYRadio/slayradio.128.m3u"
+	echo '#EXTINF:0, SLAY Radio - 128kbps, relay2 [shoutcast - kork]' >> "$musicDIR/streams/SLAYRadio/slayradio.128.m3u"
+	echo 'http://relay2.slayradio.org:8000' >> "$musicDIR/streams/SLAYRadio/slayradio.128.m3u"
+	
+	echo '#EXTINF:0, SLAY Radio - 56kbps, relay1 [shoutcast - elpost]' > "$musicDIR/streams/SLAYRadio/slayradio.56.m3u"
+	echo 'http://relay1.slayradio.org:8100' >> "$musicDIR/streams/SLAYRadio/slayradio.56.m3u"
+	echo '#EXTINF:0, SLAY Radio - 56kbps, relay2 [shoutcast - kork]' >> "$musicDIR/streams/SLAYRadio/slayradio.56.m3u"
+	echo 'http://relay2.slayradio.org:8100' >> "$musicDIR/streams/SLAYRadio/slayradio.56.m3u"
+	
 	# Copy SLAYRadio icon files to retropiemenu
 	cp main-imp/icons/slayradio/slayradio.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/slayradio/slayradio-logo.png ~/RetroPie/retropiemenu/icons/
 
-	# Get .PLS from MP3RadioFM 202111
+	# Get .PLS from MP3RadioFM 202210
 	if [ ! -d "$musicDIR/streams/Mp3RadioFM" ]; then mkdir "$musicDIR/streams/Mp3RadioFM"; fi
 	if [ ! -f "$musicDIR/streams/Mp3RadioFM/mp3radio.pls" ]; then wget --no-check-certificate "https://epsilon.shoutca.st/tunein/mp3radio.pls" -P "$musicDIR/streams/Mp3RadioFM"; fi
-
+	
+	if [ ! -f "$musicDIR/streams/Mp3RadioFM/channel2.pls" ]; then wget --no-check-certificate "http://stream.zeno.fm/fb229wsc41zuv.pls" -P "$musicDIR/streams/Mp3RadioFM"; fi
+	mv "$musicDIR/streams/Mp3RadioFM/fb229wsc41zuv.pls" "$musicDIR/streams/Mp3RadioFM/channel2.pls"
+	
+	if [ ! -f "$musicDIR/streams/Mp3RadioFM/latino.pls" ]; then wget --no-check-certificate "http://stream.zeno.fm/z1fx56hfd2zuv.pls" -P "$musicDIR/streams/Mp3RadioFM"; fi
+	mv "$musicDIR/streams/Mp3RadioFM/z1fx56hfd2zuv.pls" "$musicDIR/streams/Mp3RadioFM/latino.pls"
+	
+	if [ ! -f "$musicDIR/streams/Mp3RadioFM/reload.pls" ]; then wget --no-check-certificate "http://stream.zeno.fm/t1qzd6vtta0uv.pls" -P "$musicDIR/streams/Mp3RadioFM"; fi
+	mv "$musicDIR/streams/Mp3RadioFM/t1qzd6vtta0uv.pls" "$musicDIR/streams/Mp3RadioFM/reload.pls"
+	
 	# Copy MP3RadioFM icon files to retropiemenu
 	cp main-imp/icons/mp3radiofm/mp3radiofm.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/mp3radiofm/mp3radiofmch2.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/mp3radiofm/mp3radiofmlatino.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/mp3radiofm/mp3radiofmreload.png ~/RetroPie/retropiemenu/icons/
 	
-	# NightrideFM .pls (202202)
+	# NightrideFM .pls (202210)
 	if [ ! -d "$musicDIR/streams/NightrideFM" ]; then mkdir "$musicDIR/streams/NightrideFM"; fi
-	if [ ! -f "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls" ]; then
-		# Manually Create NightrideFM .pls (202202)
-		echo '[playlist]' > "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'numberofentries=6' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File1=http://stream.nightride.fm/nightride.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title1=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File2=http://stream.nightride.fm/chillsynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title2=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File3=http://stream.nightride.fm/spacesynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title3=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File4=http://stream.nightride.fm/darksynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title4=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File5=http://stream.nightride.fm/horrorsynth.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title5=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'File6=http://stream.nightride.fm/ebsm.mp3' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Title6=NightRide.FM Stream' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'Length1=-1' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
-		echo 'version=2' >> "$musicDIR/streams/NightrideFM/NightrideFM-x6.pls"
+	
+	# Manually Create NightrideFM .pls (202210)
+	plsFILE="$musicDIR/streams/NightrideFM/NightrideFM.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/nightride.mp3' >> "$plsFILE"
+		echo 'Title1=NightRide.FM Main' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
+	fi
+	plsFILE="$musicDIR/streams/NightrideFM/ChillSynth.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/chillsynth.mp3' >> "$plsFILE"
+		echo 'Title1=ChillSynth Nightride.FM' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
+	fi
+	plsFILE="$musicDIR/streams/NightrideFM/SpaceSynth.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/spacesynth.mp3' >> "$plsFILE"
+		echo 'Title1=SpaceSynth Nightride.FM' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
+	fi
+	plsFILE="$musicDIR/streams/NightrideFM/DarkSynth.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/darksynth.mp3' >> "$plsFILE"
+		echo 'Title1=DarkSynth Nightride.FM' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
+	fi
+	plsFILE="$musicDIR/streams/NightrideFM/HorrorSynth.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/horrorsynth.mp3' >> "$plsFILE"
+		echo 'Title1=HorrorSynth Nightride.FM' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
+	fi
+	plsFILE="$musicDIR/streams/NightrideFM/EBSM.pls"
+	if [ ! -f "$plsFILE" ]; then
+		echo '[playlist]' > "$plsFILE"
+		echo 'numberofentries=1' >> "$plsFILE"
+		echo 'File1=http://stream.nightride.fm/ebsm.mp3' >> "$plsFILE"
+		echo 'Title1=EBSM Nightride.FM' >> "$plsFILE"
+		echo 'Length1=-1' >> "$plsFILE"
+		echo 'version=2' >> "$plsFILE"
 	fi
 	
 	# Copy NightrideFM icon files to retropiemenu
@@ -1120,16 +1253,17 @@ if [[ ! "$installFLAG" == 'offline' ]]; then
 	cp main-imp/icons/rainwavecc/rainwave.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/rainwavecc/rainwavecc.png ~/RetroPie/retropiemenu/icons/
 	
-	# Get .PLS from DnBRadio 202203
+	# Get .PLS from DnBRadio 202210
 	if [ ! -d "$musicDIR/streams/DnBRadio" ]; then mkdir "$musicDIR/streams/DnBRadio"; fi
 	if [ ! -f "$musicDIR/streams/DnBRadio/hi.pls" ]; then wget --no-check-certificate https://dnbradio.com/hi.pls -P "$musicDIR/streams/DnBRadio"; fi
+	if [ ! -f "$musicDIR/streams/DnBRadio/lo.pls" ]; then wget --no-check-certificate https://dnbradio.com/lo.pls -P "$musicDIR/streams/DnBRadio"; fi
 
-	# Copy DnBRadio icon files to retropiemenu
+	# Copy DnBRadio icon files to retropiemenu 202210
 	cp main-imp/icons/dnbradio/dnbradio.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/dnbradio/dnbradio0.png ~/RetroPie/retropiemenu/icons/
 fi
 
-if [ "$installFLAG" == 'somafm' ]; then
+if [ "$installFLAG" == 'streams' ]; then
 	# Get .PLS from SomaFM 202112
 	# [IMP] has been Listening to SomaFM since 2006 (NO AFFILIATION)
 	# Please DONATE if you ENJOY SomaFM
@@ -1173,16 +1307,59 @@ if [ "$installFLAG" == 'somafm' ]; then
 	if [ ! -f "$musicDIR/streams/SomaFM/jollysoul.pls" ]; then wget --no-check-certificate https://somafm.com/jollysoul.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/xmasinfrisko.pls" ]; then wget --no-check-certificate https://somafm.com/xmasinfrisko.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/specials.pls" ]; then wget --no-check-certificate https://somafm.com/specials.pls -P "$musicDIR/streams/SomaFM"; fi
+		
+	# Copy SomaFM icon files to retropiemenu
+	cp main-imp/icons/somafm/*.png ~/RetroPie/retropiemenu/icons/
+	cp main-imp/icons/somafm/*.jpg ~/RetroPie/retropiemenu/icons/
+	
 	if [ ! -f "$IMP/somafm-specials.sh" ]; then
 		cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
 		sudo chmod 755 $IMP/somafm-specials.sh
 		bash $IMP/somafm-specials.sh
 	fi
-	
-	# Copy SomaFM icon files to retropiemenu
-	cp main-imp/icons/somafm/*.png ~/RetroPie/retropiemenu/icons/
-	cp main-imp/icons/somafm/*.jpg ~/RetroPie/retropiemenu/icons/
 fi
+
+# Create ES Scripts Folder
+mkdir /opt/retropie/configs/all/emulationstation/scripts > /dev/null 2>&1
+
+# Enable Idle IMP @ScreenSaver RandomVideo 0nly
+mkdir /opt/retropie/configs/all/emulationstation/scripts/screensaver-start > /dev/null 2>&1
+echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+echo "screenSAVERsetting=\$(cat /opt/retropie/configs/all/emulationstation/es_settings.cfg | grep \"ScreenSaverBehavior\" | awk -F'=' '{print \$3}'| cut -c 2- | rev | cut -c 5- | rev)
+if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsetting\" == \"randomvideo\" ]; then exit 0; fi
+" >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+echo 'bash /opt/retropie/configs/imp/run-onstart.sh idle &
+exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+mkdir /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop > /dev/null 2>&1
+echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+echo "screenSAVERsetting=\$(cat /opt/retropie/configs/all/emulationstation/es_settings.cfg | grep \"ScreenSaverBehavior\" | awk -F'=' '{print \$3}'| cut -c 2- | rev | cut -c 5- | rev)
+if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsetting\" == \"randomvideo\" ]; then exit 0; fi
+" >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+echo 'bash /opt/retropie/configs/imp/run-onend.sh idle &
+exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+
+# Enable Idle IMP @ESSleep
+mkdir /opt/retropie/configs/all/emulationstation/scripts/sleep > /dev/null 2>&1
+echo '#!/bin/bash
+bash /opt/retropie/configs/imp/run-onstart.sh idle &
+exit 0' > /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh
+sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh
+mkdir /opt/retropie/configs/all/emulationstation/scripts/wake > /dev/null 2>&1
+echo '#!/bin/bash
+bash /opt/retropie/configs/imp/run-onend.sh idle &
+exit 0' > /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh
+sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh
+rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh > /dev/null 2>&1
+rm /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh > /dev/null 2>&1
+
+# Enable quit.mp3 IMP @ESQuit
+mkdir /opt/retropie/configs/all/emulationstation/scripts/quit > /dev/null 2>&1
+echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+echo 'mpg123 -f "$(cat /opt/retropie/configs/imp/settings/volume.flag)" "$HOME/RetroPie/retropiemenu/imp/music/bgm/quit.mp3" > /dev/null 2>&1' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
 
 impFINISH
 }
@@ -1193,7 +1370,7 @@ tput reset
 
 # Check if IMP Installed
 if [ ! -d "$IMP" ]; then
-	dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $impFILEREF"  25 75
+	dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "   INSTALL [IMP] FIRST?..."  25 75
 	mainMENU
 fi
 
@@ -1206,6 +1383,12 @@ pkill -KILL mpg123
 
 # Turn Off HTTP Server - Cleans up $HTTPFolder/favicon.ico
 bash "$IMPMenuRP/Settings/HTTP Server Settings/HTTP Server [Off].sh"
+
+# Stop 0mxmon
+rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
+PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
+kill $PIDplayloop > /dev/null 2>&1
+rm /dev/shm/0mxwaitstart.sh > /dev/null 2>&1
 
 # Restore [smb.conf] if Backup is found
 if [ -f /etc/samba/smb.conf.b4imp ]; then
@@ -1322,30 +1505,32 @@ if [ -f main-imp/configs-all/Pegasus-start.sh ]; then rm main-imp/configs-all/Pe
 # Restore [.bashrc]
 if [ -f ~/.bashrc.b4imp ]; then mv ~/.bashrc.b4imp ~/.bashrc; fi
 
-# Remove symbolic link to music from retropiemenu
-unlink $musicROMS
-mv $musicDIR $musicROMS
-
 # Remove [IMP] files from retropiemenu
-rm $IMPMenuRP/*.sh
-rm $IMPMenuRP/Settings/*.sh
-rm $IMPMenuRP/Settings/BGM\ Settings/*.sh
-rm $IMPMenuRP/Settings/Game\ Settings/*.sh
-rm $IMPMenuRP/Settings/HTTP\ Server\ Settings/*.sh
-rm $IMPMenuRP/Settings/Randomizer\ Settings/*.sh
-rm $IMPMenuRP/Settings/Startup\ Settings/*.sh
-rm $IMPMenuRP/Volume/*.sh
+rm $IMPMenuRP/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/BGM\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/Game\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/Idle\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/HTTP\ Server\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/Randomizer\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/Startup\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/General\ Settings/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/OMX\ Monitor/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Volume/*.sh > /dev/null 2>&1
 
 # Remove [IMP] Directories from retropiemenu
 # rm -R $IMPMenuRP
-rm -d $IMPMenuRP/Settings/BGM\ Settings/
-rm -d $IMPMenuRP/Settings/Game\ Settings/
-rm -d $IMPMenuRP/Settings/HTTP\ Server\ Settings/
-rm -d $IMPMenuRP/Settings/Randomizer\ Settings/
-rm -d $IMPMenuRP/Settings/Startup\ Settings/
-rm -d $IMPMenuRP/Settings/
-rm -d $IMPMenuRP/Volume/
-rm -d $IMPMenuRP/
+rm -d $IMPMenuRP/Settings/BGM\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/Game\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/Idle\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/HTTP\ Server\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/Randomizer\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/Startup\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/General\ Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/OMX\ Monitor/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Volume/ > /dev/null 2>&1
+# rm -d $IMPMenuRP/ > /dev/null 2>&1
 
 # Remove [IMP] files from /opt/retropie/configs/all
 rm $IMP/playlist/* 2>/dev/null
@@ -1357,6 +1542,34 @@ rm $IMP/* 2>/dev/null
 rm -d $IMP/playlist/ 2>/dev/null
 rm -d $IMP/settings/ 2>/dev/null
 rm -d $IMP/ 2>/dev/null
+
+# Disable Idle IMP @autostart
+rm ~/.config/autostart/imp.desktop > /dev/null 2>&1
+
+# Disable Idle IMP @ESquit
+rm /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+
+# Disable quit.mp3 @ESQuit
+rm /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+
+# Disable Idle IMP @ESSleep
+rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh > /dev/null 2>&1
+rm /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh > /dev/null 2>&1
+rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh > /dev/null 2>&1
+rm /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/sleep/ > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/wake/ > /dev/null 2>&1
+
+# Disable Idle IMP @ScreenSaver
+rm /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh > /dev/null 2>&1
+rm /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/ > /dev/null 2>&1
+rm -d /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/ > /dev/null 2>&1
+
+# Remove ES Scripts DIR - Will 0nly Remove IF Empty
+rm -d /opt/retropie/configs/all/emulationstation/scripts/ > /dev/null 2>&1
 
 # Remove [IMP] Icons from retropiemenu
 rm ~/RetroPie/retropiemenu/icons/imp.png 2>/dev/null
@@ -1385,6 +1598,7 @@ rm ~/RetroPie/retropiemenu/icons/imprandomizeralla1b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizeralla1b1.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizerbgm.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizeroff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impromsmusic.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingadjust.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmaon.png 2>/dev/null
@@ -1392,6 +1606,12 @@ rm ~/RetroPie/retropiemenu/icons/impsettingbgmboff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmbon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingfadeoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingfadeon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenonvid.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlesleepoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlesleepon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlesleeponkilldisplay.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingmusicoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingmusicon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingshufflebootoff.png 2>/dev/null
@@ -1406,6 +1626,7 @@ rm ~/RetroPie/retropiemenu/icons/impshuffleoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impshuffleon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartall.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartallm0.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impstartallrm0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla0b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla1b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartalla0b1.png 2>/dev/null
@@ -1428,12 +1649,24 @@ rm ~/RetroPie/retropiemenu/icons/impvolume70.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume80.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume90.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume100.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impquitsong.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impquitm0.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizeron.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imprandomizerpls.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impstartrandomizer.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impstreamsdir.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonreadme.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingquitsongoff.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingquitsongon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingidlestop.png 2>/dev/null
 
 # Remove SomaFM
-rm $musicROMS/SomaFM/*.pls 2>/dev/null
-rm -d $musicROMS/SomaFM 2>/dev/null
-rm $musicROMS/streams/SomaFM/*.pls 2>/dev/null
-rm -d $musicROMS/streams/SomaFM 2>/dev/null
+rm $musicDIR/SomaFM/*.pls 2>/dev/null
+rm -d $musicDIR/SomaFM 2>/dev/null
+rm $musicDIR/streams/SomaFM/*.pls 2>/dev/null
+rm -d $musicDIR/streams/SomaFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/somafm.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/7soul-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/beatblender-400.jpg 2>/dev/null
@@ -1479,63 +1712,76 @@ rm ~/RetroPie/retropiemenu/icons/deptstorechristmas-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/doomed-400.jpg 2>/dev/null
 
 # Remove SLAYRadio
-rm $musicROMS/SLAYRadio/*.m3u 2>/dev/null
-rm -d $musicROMS/SLAYRadio 2>/dev/null
-rm $musicROMS/streams/SLAYRadio/*.m3u 2>/dev/null
-rm -d $musicROMS/streams/SLAYRadio 2>/dev/null
+rm $musicDIR/SLAYRadio/*.m3u 2>/dev/null
+rm -d $musicDIR/SLAYRadio 2>/dev/null
+rm $musicDIR/streams/SLAYRadio/*.m3u 2>/dev/null
+rm -d $musicDIR/streams/SLAYRadio 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/slayradio.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/slayradio-logo.png 2>/dev/null
 
 # Remove MP3RadioFM
-rm $musicROMS/Mp3RadioFM/*.pls 2>/dev/null
-rm -d $musicROMS/Mp3RadioFM 2>/dev/null
-rm $musicROMS/streams/Mp3RadioFM/*.pls 2>/dev/null
-rm -d $musicROMS/streams/Mp3RadioFM 2>/dev/null
+rm $musicDIR/Mp3RadioFM/*.pls 2>/dev/null
+rm -d $musicDIR/Mp3RadioFM 2>/dev/null
+rm $musicDIR/streams/Mp3RadioFM/*.pls 2>/dev/null
+rm -d $musicDIR/streams/Mp3RadioFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/mp3radiofm.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/mp3radiofmch2.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/mp3radiofmlatino.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/mp3radiofmreload.png 2>/dev/null
 
 # Remove NightrideFM
-rm $musicROMS/NightrideFM/*.pls 2>/dev/null
-rm -d $musicROMS/NightrideFM 2>/dev/null
-rm $musicROMS/streams/NightrideFM/*.pls 2>/dev/null
-rm -d $musicROMS/streams/NightrideFM 2>/dev/null
+rm $musicDIR/NightrideFM/*.pls 2>/dev/null
+rm -d $musicDIR/NightrideFM 2>/dev/null
+rm $musicDIR/streams/NightrideFM/*.pls 2>/dev/null
+rm -d $musicDIR/streams/NightrideFM 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/nightridefm.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/nightridefm.png 2>/dev/null
 
 # Remove RainwaveCC
-rm $musicROMS/RainwaveCC/*.m3u 2>/dev/null
-rm -d $musicROMS/RainwaveCC 2>/dev/null
-rm $musicROMS/streams/RainwaveCC/*.m3u 2>/dev/null
-rm -d $musicROMS/streams/RainwaveCC 2>/dev/null
+rm $musicDIR/RainwaveCC/*.m3u 2>/dev/null
+rm -d $musicDIR/RainwaveCC 2>/dev/null
+rm $musicDIR/streams/RainwaveCC/*.m3u 2>/dev/null
+rm -d $musicDIR/streams/RainwaveCC 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/rainwave.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/rainwavecc.png 2>/dev/null
 
 # Remove DnBRadio
-rm $musicROMS/DnBRadio/*.pls 2>/dev/null
-rm -d $musicROMS/DnBRadio 2>/dev/null
-rm $musicROMS/streams/DnBRadio/*.pls 2>/dev/null
-rm -d $musicROMS/streams/DnBRadio 2>/dev/null
+rm $musicDIR/DnBRadio/*.pls 2>/dev/null
+rm -d $musicDIR/DnBRadio 2>/dev/null
+rm $musicDIR/streams/DnBRadio/*.pls 2>/dev/null
+rm -d $musicDIR/streams/DnBRadio 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dnbradio.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dnbradio0.png 2>/dev/null
 
 # Remove Streams
-rm -d $musicROMS/streams 2>/dev/null
+rm -d $musicDIR/streams 2>/dev/null
 
 # Clean up 0ther BGM DIRs 0nly if they are Symbolic Links
-if [ -d "$musicROMS/_bgm" ]; then
-	if [ ! $(readlink "$musicROMS/_bgm") == '' ]; then rm "$musicROMS/_bgm";	fi
+if [ -d "$musicDIR/_bgm" ]; then
+	if [ ! $(readlink "$musicDIR/_bgm") == '' ]; then rm "$musicDIR/_bgm";	fi
 fi
 
-if [ -d "$musicROMS/_backgroundmusic" ]; then
-	if [ ! $(readlink "$musicROMS/_backgroundmusic") == '' ]; then rm "$musicROMS/_backgroundmusic"; fi
+if [ -d "$musicDIR/_backgroundmusic" ]; then
+	if [ ! $(readlink "$musicDIR/_backgroundmusic") == '' ]; then rm "$musicDIR/_backgroundmusic"; fi
 fi
 
-if [ -d "$musicROMS/_jukebox_mp3" ]; then
-	if [ ! $(readlink "$musicROMS/_jukebox_mp3") == '' ]; then rm "$musicROMS/_jukebox_mp3"; fi
+if [ -d "$musicDIR/_jukebox_mp3" ]; then
+	if [ ! $(readlink "$musicDIR/_jukebox_mp3") == '' ]; then rm "$musicDIR/_jukebox_mp3"; fi
 fi
 
-if [ -d "$musicROMS/_AttractModeSounds" ]; then
-	if [ ! $(readlink "$musicROMS/_AttractModeSounds") == '' ]; then rm "$musicROMS/_AttractModeSounds"; fi
+if [ -d "$musicDIR/_AttractModeSounds" ]; then
+	if [ ! $(readlink "$musicDIR/_AttractModeSounds") == '' ]; then rm "$musicDIR/_AttractModeSounds"; fi
 fi
+
+# Final Remove imp + music from retropiemenu
+unlink "$musicDIR/_roms_music" 2>/dev/null
+unlink $musicROMS 2>/dev/null
+mkdir ~/RetroPie/roms/music 2>/dev/null
+mv $musicDIR/ ~/RetroPie/retropiemenu
+#rsync -a -f"+ */" -f"- *" ~/RetroPie/retropiemenu/imp/music/ ~/RetroPie/roms/music/
+#rsync -a --remove-source-files ~/RetroPie/retropiemenu/imp/music/ ~/RetroPie/roms/music/
+#rm $musicDIR -R -f
+rm -d $IMPMenuRP/
 
 # Enable 0ther BGMs Indiscriminately
 # Restore Various backgroundmusic scripts
@@ -1545,7 +1791,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh.b4imp ]; then mv ~
 
 # Enable Livewire
 if [ -f ~/.DisableMusic ]; then rm ~/.DisableMusic; fi
-if [ -f /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp ]; then mv /home/pi/RetroPie/retropiemenu/bgm-mute.sh.b4imp /home/pi/RetroPie/retropiemenu/bgm-mute.sh; fi
+if [ -f ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp ~/RetroPie/retropiemenu/bgm-mute.sh; fi
 
 # Enable BGM Naprosnia
 # if [ -f ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh 2>/dev/null; fi
@@ -1578,10 +1824,10 @@ confREBOOT=$(dialog --stdout --no-collapse --title "*INSTALL* $selectTYPE *COMPL
 	--ok-label OK --cancel-label EXIT \
 	--menu "$impLOGO $impFINISHREF" 25 75 20 \
 	1 "REBOOT" \
-	2 "Back to Menu" \
+	2 "BACK TO MENU" \
 	3 "EXIT")
 # Reboot Confirm - Otherwise Exit
-if [ "$confREBOOT" == '1' ]; then tput reset && sudo reboot; fi
+if [ "$confREBOOT" == '1' ]; then tput reset; sudo reboot; fi
 if [ "$confREBOOT" == '2' ]; then mainMENU; fi
 
 tput reset
@@ -1602,17 +1848,20 @@ confMPG123=$(dialog --stdout --no-collapse --title "  Select mpg123 Install Meth
 	--ok-label OK --cancel-label Back \
 	--menu "$mpg123FILEREF " 25 75 20 \
 	1 " [apt-get install] mpg123  [Recommended]" \
-	2 " [make install] mpg123-1.29.3" \
-	3 " [make install] mpg123-1.29.3  [Offline]" \
-	4 " [make install] mpg123-1.25.10" \
-	5 " [make install] mpg123-1.25.10 [Offline]" \
-	6 " [make install] mpg123-1.20.1" \
-	7 " [make install] mpg123-1.20.1  [Offline]" \
-	8 " UNINSTALL mpg123-1.2.x.y" \
-	9 " [KILL] ES/Pegasus/AM [Recommended before make install]")
+	2 " [make install] mpg123-1.30.2" \
+	3 " [make install] mpg123-1.30.2  [Offline]" \
+	4 " [make install] mpg123-1.29.3" \
+	5 " [make install] mpg123-1.29.3  [Offline]" \
+	6 " [make install] mpg123-1.25.10" \
+	7 " [make install] mpg123-1.25.10 [Offline]" \
+	8 " [make install] mpg123-1.20.1" \
+	9 " [make install] mpg123-1.20.1  [Offline]" \
+	U " UNINSTALL mpg123-1.2.x.y" \
+	C " CLEAN UP  mpg123-1.2.x.y SOURCE" \
+	X " [KILL] ES/Pegasus/AM [Recommended before make install]")
 	
 # mpg123 Manual Uninstall Confirmed - Otherwise Back to Main Menu
-if [ "$confMPG123" == '8' ]; then
+if [ "$confMPG123" == 'U' ]; then
 	confUNmpg123=$(dialog --stdout --no-collapse --title "               UNINSTALL [mpg123-1.2.x.y]               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
@@ -1623,19 +1872,59 @@ if [ "$confMPG123" == '8' ]; then
 	mpg123MENU
 fi
 
+# Clean mpg123 Source Files and FOlders
+if [ "$confMPG123" == 'C' ]; then
+	confCLNmpg123=$(dialog --stdout --no-collapse --title "               CLEAN UP  mpg123-1.2.x.y SOURCE               " \
+		--ok-label OK --cancel-label Back \
+		--menu "                          ? ARE YOU SURE ?                                 SOURCE: [$(ls -d1 ~/mpg123-*)]" 25 75 20 \
+		1 "><  CLEAN UP  mpg123-1.2.x.y SOURCE  ><" \
+		2 "Back to Menu")
+	# Clean Confirmed - Otherwise Back to Main Menu
+	if [ "$confCLNmpg123" == '1' ]; then 
+		# Clean mpg123 Source Files and Folders
+		if [ -f ~/mpg123-1.30.2.tar.bz2 ]; then rm ~/mpg123-1.30.2.tar.bz2; fi
+		if [ -d ~/mpg123-1.30.2 ]; then cd ~/imp; sudo rm ~/mpg123-1.30.2 -R; fi
+		
+		if [ -f ~/mpg123-1.29.3.tar.bz2 ]; then rm ~/mpg123-1.29.3.tar.bz2; fi
+		if [ -d ~/mpg123-1.29.3 ]; then cd ~/imp; sudo rm ~/mpg123-1.29.3 -R; fi
+		
+		if [ -f ~/mpg123-1.25.10.tar.bz2 ]; then rm ~/mpg123-1.25.10.tar.bz2; fi
+		if [ -d ~/mpg123-1.25.10 ]; then cd ~/imp; sudo rm ~/mpg123-1.25.10 -R; fi
+		
+		if [ -f ~/mpg123-1.20.1.tar.bz2 ]; then rm ~/mpg123-1.20.1.tar.bz2; fi
+		if [ -d ~/mpg123-1.20.1 ]; then cd ~/imp; sudo rm ~/mpg123-1.20.1 -R; fi
+		
+		# Finished Clean up
+		dialog --no-collapse --title " * CLEAN UP  mpg123-1.2.x.y SOURCE COMPLETE *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+	fi
+	mpg123MENU
+fi
+
 # mpg123 Manual Install Confirmed - Otherwise Back to Main Menu
 if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '1' ]; then mpg123SELECT='[apt-get install] mpg123'; fi
-	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
-	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.29.3  [Offline]' ; fi
-	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.25.10'; fi
-	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
-	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
-	if [ "$confMPG123" == '7' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
-	if [ "$confMPG123" == '9' ]; then
-		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
-		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
-		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
+	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.30.2'; fi
+	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.30.2  [Offline]' ; fi
+	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
+	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.29.3  [Offline]' ; fi
+	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.25.10'; fi
+	if [ "$confMPG123" == '7' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
+	if [ "$confMPG123" == '8' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
+	if [ "$confMPG123" == '9' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
+	if [ "$confMPG123" == 'X' ]; then
+		confKILLfe=$(dialog --stdout --no-collapse --title "               CONFIRM [KILL] ES/Pegasus/AM               " \
+		--ok-label OK --cancel-label Back \
+		--menu "  ? ARE YOU SURE ?  [Recommended before make install]  " 25 75 20 \
+		1 "><  [KILL] ES/Pegasus/AM ><" \
+		2 "Back to Menu")
+		
+		# Ininstall Confirmed - Otherwise Back to Main Menu
+		if [ "$confKILLfe" == '1' ]; then
+			kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
+			kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
+			kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
+			mpg123MENU
+		fi
 		mpg123MENU
 	fi
 	
@@ -1666,28 +1955,36 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/imp/mpg123-1.29.3.tar.bz2 ]; then rm ~/imp/mpg123-1.29.3.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.29.3 ]; then
-	cd ~/imp/mpg123-1.29.3
+if [ -f ~/mpg123-1.30.2.tar.bz2 ]; then rm ~/mpg123-1.30.2.tar.bz2; fi
+if [ -d ~/mpg123-1.30.2 ]; then
+	cd ~/mpg123-1.30.2
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.29.3 -R
+	sudo rm ~/mpg123-1.30.2 -R
 fi
 
-if [ -f ~/imp/mpg123-1.25.10.tar.bz2 ]; then rm ~/imp/mpg123-1.25.10.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.25.10 ]; then
-	cd ~/imp/mpg123-1.25.10
+if [ -f ~/mpg123-1.29.3.tar.bz2 ]; then rm ~/mpg123-1.29.3.tar.bz2; fi
+if [ -d ~/mpg123-1.29.3 ]; then
+	cd ~/mpg123-1.29.3
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.25.10 -R
+	sudo rm ~/mpg123-1.29.3 -R
 fi
 
-if [ -f ~/imp/mpg123-1.20.1.tar.bz2 ]; then rm ~/imp/mpg123-1.20.1.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.20.1 ]; then
-	cd ~/imp/mpg123-1.20.1
+if [ -f ~/mpg123-1.25.10.tar.bz2 ]; then rm ~/mpg123-1.25.10.tar.bz2; fi
+if [ -d ~/mpg123-1.25.10 ]; then
+	cd ~/mpg123-1.25.10
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.20.1 -R
+	sudo rm ~/mpg123-1.25.10 -R
+fi
+
+if [ -f ~/mpg123-1.20.1.tar.bz2 ]; then rm ~/mpg123-1.20.1.tar.bz2; fi
+if [ -d ~/mpg123-1.20.1 ]; then
+	cd ~/mpg123-1.20.1
+	sudo make uninstall
+	cd ~/imp
+	sudo rm ~/mpg123-1.20.1 -R
 fi
 
 if [ "$confMPG123" == '1' ]; then
@@ -1696,17 +1993,40 @@ if [ "$confMPG123" == '1' ]; then
 fi
 
 if [ "$confMPG123" == '2' ]; then
-	# mpg123 v1.29.3 2021-09-05
-	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2 -P ~/imp
-	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2.sig ~/imp
-	tar -xvf mpg123-1.29.3.tar.bz2
-	cd ~/imp/mpg123-1.29.3
+	# mpg123 v1.30.2 2022-08-01
+	rm ~/mpg123-1.30.2.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.30.2/mpg123-1.30.2.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.30.2/mpg123-1.30.2.tar.bz2.sig ~/
+	cd ~/
+	tar -xvf mpg123-1.30.2.tar.bz2
+	cd ~/mpg123-1.30.2
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.29.3.tar.bz2
+	rm ~/mpg123-1.30.2.tar.bz2
 fi
 
 if [ "$confMPG123" == '3' ]; then
+	# Check for the mpg123 Offline Installation File
+	if [ ! -f main-imp/offline/mpg123-1.30.2.tar.bz2]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.30.2.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+	mainMENU
+	fi
+fi
+
+if [ "$confMPG123" == '4' ]; then
+	# mpg123 v1.29.3 2021-09-05
+	rm ~/mpg123-1.29.3.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2.sig ~/
+	cd ~/
+	tar -xvf mpg123-1.29.3.tar.bz2
+	cd ~/mpg123-1.29.3
+	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
+	sudo make install
+	rm ~/mpg123-1.29.3.tar.bz2
+fi
+
+if [ "$confMPG123" == '5' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.29.3.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.29.3.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -1714,26 +2034,30 @@ if [ "$confMPG123" == '3' ]; then
 	fi
 	
 	# mpg123 v1.29.3 2021-12-11 [Offline]
-	cp ~/imp/main-imp/offline/mpg123-1.29.3.tar.bz2 ~/imp
+	rm ~/mpg123-1.29.3.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.29.3.tar.bz2 ~/
+	cd ~/
 	tar -xvf mpg123-1.29.3.tar.bz2
-	cd ~/imp/mpg123-1.29.3
+	cd ~/mpg123-1.29.3
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.29.3.tar.bz2
+	rm ~/mpg123-1.29.3.tar.bz2
 fi
 
-if [ "$confMPG123" == '4' ]; then
+if [ "$confMPG123" == '6' ]; then
 	# mpg123 v1.25.10 2018-03-05
-	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.25.10/mpg123-1.25.10.tar.bz2 -P ~/imp
-	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.25.10/mpg123-1.25.10.tar.bz2.sig -P ~/imp
+	rm ~/mpg123-1.25.10.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.25.10/mpg123-1.25.10.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.25.10/mpg123-1.25.10.tar.bz2.sig -P ~/
+	cd ~/
 	tar -xvf mpg123-1.25.10.tar.bz2
-	cd ~/imp/mpg123-1.25.10
+	cd ~/mpg123-1.25.10
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.25.10.tar.bz2
+	rm ~/mpg123-1.25.10.tar.bz2
 fi
 
-if [ "$confMPG123" == '5' ]; then
+if [ "$confMPG123" == '7' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.25.10.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.25.10.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -1741,26 +2065,30 @@ if [ "$confMPG123" == '5' ]; then
 	fi
 	
 	# mpg123 v1.25.10 2018-03-05 [Offline]
-	cp ~/imp/main-imp/offline/mpg123-1.25.10.tar.bz2 ~/imp
+	rm ~/mpg123-1.25.10.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.25.10.tar.bz2 ~/
+	cd ~/
 	tar -xvf mpg123-1.25.10.tar.bz2
-	cd ~/imp/mpg123-1.25.10
+	cd ~/mpg123-1.25.10
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.25.10.tar.bz2
+	rm ~/mpg123-1.25.10.tar.bz2
 fi
 
-if [ "$confMPG123" == '6' ]; then
+if [ "$confMPG123" == '8' ]; then
 	# mpg123 v1.20.1 2014-06-17
-	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.20.1/mpg123-1.20.1.tar.bz2 -P ~/imp
-	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.20.1/mpg123-1.20.1.tar.bz2.sig -P ~/imp
+	rm ~/mpg123-1.20.1.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.20.1/mpg123-1.20.1.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.20.1/mpg123-1.20.1.tar.bz2.sig -P ~/
+	cd ~/
 	tar -xvf mpg123-1.20.1.tar.bz2
-	cd ~/imp/mpg123-1.20.1
+	cd ~/mpg123-1.20.1
 	sudo ./configure --prefix=/usr --with-module-suffix=.so --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.20.1.tar.bz2
+	rm ~/mpg123-1.20.1.tar.bz2
 fi
 
-if [ "$confMPG123" == '7' ]; then
+if [ "$confMPG123" == '9' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.20.1.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.20.1.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -1768,12 +2096,14 @@ if [ "$confMPG123" == '7' ]; then
 	fi
 	
 	# mpg123 v1.20.1 2014-06-17
-	cp ~/imp/main-imp/offline/mpg123-1.20.1.tar.bz2 ~/imp
+	rm ~/mpg123-1.20.1.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.20.1.tar.bz2 ~/
+	cd ~/
 	tar -xvf mpg123-1.20.1.tar.bz2
-	cd ~/imp/mpg123-1.20.1
+	cd ~/mpg123-1.20.1
 	sudo ./configure --prefix=/usr --with-module-suffix=.so --disable-shared && make -j4
 	sudo make install
-	rm ~/imp/mpg123-1.20.1.tar.bz2
+	rm ~/mpg123-1.20.1.tar.bz2
 fi
 
 # Issue: mpg123: symbol lookup error: mpg123: undefined symbol: mpg123_getpar2
@@ -1802,26 +2132,33 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/imp/mpg123-1.29.3.tar.bz2 ]; then rm ~/imp/mpg123-1.29.3.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.29.3 ]; then
-	cd ~/imp/mpg123-1.29.3
+if [ -f ~/mpg123-1.30.2.tar.bz2 ]; then rm ~/mpg123-1.30.2.tar.bz2; fi
+if [ -d ~/mpg123-1.30.2 ]; then
+	cd ~/mpg123-1.30.2
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.29.3 -R
+	sudo rm ~/mpg123-1.30.2 -R
 fi
-if [ -f ~/imp/mpg123-1.25.10.tar.bz2 ]; then rm ~/imp/mpg123-1.25.10.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.25.10 ]; then
-	cd ~/imp/mpg123-1.25.10
+if [ -f ~/mpg123-1.29.3.tar.bz2 ]; then rm ~/mpg123-1.29.3.tar.bz2; fi
+if [ -d ~/mpg123-1.29.3 ]; then
+	cd ~/mpg123-1.29.3
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.25.10 -R
+	sudo rm ~/mpg123-1.29.3 -R
 fi
-if [ -f ~/imp/mpg123-1.20.1.tar.bz2 ]; then rm ~/imp/mpg123-1.20.1.tar.bz2; fi
-if [ -d ~/imp/mpg123-1.20.1 ]; then
-	cd ~/imp/mpg123-1.20.1
+if [ -f ~/mpg123-1.25.10.tar.bz2 ]; then rm ~/mpg123-1.25.10.tar.bz2; fi
+if [ -d ~/mpg123-1.25.10 ]; then
+	cd ~/mpg123-1.25.10
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/imp/mpg123-1.20.1 -R
+	sudo rm ~/mpg123-1.25.10 -R
+fi
+if [ -f ~/mpg123-1.20.1.tar.bz2 ]; then rm ~/mpg123-1.20.1.tar.bz2; fi
+if [ -d ~/mpg123-1.20.1 ]; then
+	cd ~/mpg123-1.20.1
+	sudo make uninstall
+	cd ~/imp
+	sudo rm ~/mpg123-1.20.1 -R
 fi
 # Finished Install
 dialog --no-collapse --title " * [mpg123] Uninstall COMPLETE *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -1838,8 +2175,7 @@ pickUTILITY=$(dialog --stdout --no-collapse --title "     $IMPesUTILS     " \
 	2 " [es_systems.cfg] Repair" \
 	3 " [gamelist.xml] Refresh" \
 	4 " [smb.conf] Update" \
-	5 " [KILL] ES/Pegasus/AM" \
-	6 " [REBOOT]")
+	5 " [KILL] ES/Pegasus/AM")
 	
 # Utility Confirmed - Otherwise Back to Main Menu
 if [ ! "$pickUTILITY" == '' ]; then
@@ -1863,21 +2199,17 @@ if [ ! "$pickUTILITY" == '' ]; then
 		utilityRUN=smbUPDATE
 	fi
 	if [ "$pickUTILITY" == '5' ]; then
-		utilitySELECT='[KILL] ES/Pegasus/AM'
+		utilitySELECT=' [KILL] ES/Pegasus/AM'
 		utilityDESC="       [KILL] ES/Pegasus/AM "
 	fi
-	if [ "$pickUTILITY" == '6' ]; then
-		utilitySELECT='REBOOT'
-		utilityDESC="       REBOOT "
-	fi
+	
 	confUTILITY=$(dialog --stdout --no-collapse --title "$utilityDESC" \
 		--ok-label OK --cancel-label Back \
-		--menu "  ? ARE YOU SURE ?  " 25 75 20 \
+		--menu "         ? ARE YOU SURE ?  Current Install Flag: [$installFLAG]" 25 75 20 \
 		1 "><  $utilitySELECT  ><" \
 		2 "Back to Menu")
 	
-	# Reboot Confirmed
-	if [ "$confUTILITY" == '1' ] && [ "$utilitySELECT" == 'REBOOT' ]; then tput reset && sudo reboot; fi
+	if [ "$confUTILITY" == '2' ] || [ "$confUTILITY" == '' ]; then ESutilityMENU; fi
 	
 	# # v2022.03 Addition - Scenario where Incorrect <game> Tag is used for a Sub-directory - Correct Tag should be <folder>
 	# Set ParseGamelistOnly to OFF
@@ -1887,7 +2219,7 @@ if [ ! "$pickUTILITY" == '' ]; then
 	fi
 	
 	# Kill ES/Pegasus/AM Confirmed
-	if [ "$utilitySELECT" == '[KILL] ES/Pegasus/AM' ]; then
+	if [ "$confUTILITY" == '1' ] && [ "$utilitySELECT" == ' [KILL] ES/Pegasus/AM' ]; then
 		kill $(ps -eaf | grep "emulationstation" | awk '{print $2}')  > /dev/null 2>&1
 		kill $(ps -eaf | grep "pegasus-fe" | awk '{print $2}')  > /dev/null 2>&1
 		kill $(ps -eaf | grep "attract" | awk '{print $2}')  > /dev/null 2>&1
@@ -1896,13 +2228,12 @@ if [ ! "$pickUTILITY" == '' ]; then
 	
 	# Check if IMP Installed before Running Remaining Utilities
 	if [ ! -d "$IMP" ]; then
-		dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "$impLOGO $IMPesFIXref"  25 75
+		dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "   INSTALL [IMP] FIRST?..."  25 75
 		mainMENU
 	fi
 
 	# Utility Confirmed - Otherwise Back to Main Menu
 	if [ "$confUTILITY" == '1' ]; then $utilityRUN; fi
-	if [ "$confUTILITY" == '2' ]; then ESutilityMENU; fi
 	ESutilityMENU
 fi
 
@@ -1947,37 +2278,7 @@ if [ ! -f main-imp/gamelist.imp ]; then
 	mainMENU
 fi
 
-if [ "$installFLAG" == 'offline' ]; then
-	# Check for the Most Important Setup Directories and Files [gamelist*]
-	if [ ! -f main-imp/gamelist.offline ]; then
-		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
-		mainMENU
-	fi
-fi
-
-if [ "$installFLAG" == 'somafm' ]; then
-	# Check for the Most Important Setup Directories and Files [gamelist*]
-	if [ ! -f main-imp/icons/somafm/gamelist.somafm ]; then
-		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
-		mainMENU
-	fi
-fi
-
-# Check for the Most Important Setup Directories and Files [gamelist*]
-if [ ! -f main-imp/gamelist.imp ]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.imp] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
-	mainMENU
-fi
-
-if [ "$installFLAG" == 'offline' ]; then
-	# Check for the Most Important Setup Directories and Files [gamelist*]
-	if [ ! -f main-imp/gamelist.offline ]; then
-		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/gamelist.offline] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
-		mainMENU
-	fi
-fi
-
-if [ "$installFLAG" == 'somafm' ]; then
+if [ "$installFLAG" == 'streams' ]; then
 	# Check for the Most Important Setup Directories and Files [gamelist*]
 	if [ ! -f main-imp/icons/somafm/gamelist.somafm ]; then
 		dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [main-imp/icons/somafm/gamelist.somafm] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $IMPesFIXref"  25 75
@@ -2008,10 +2309,10 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
 	# Add Internet Radio Station Entries to gamelist.xml
-	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
 	# Add SomaFM Entries to gamelist.xml
-	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
 	
 	# Add the Finishing Line to gamelist.xml
 	# echo $'\n</gameList>' >> main-imp/gamelist.xml
@@ -2040,10 +2341,10 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
 	# Add Internet Radio Station Entries to gamelist.xml
-	if [ ! "$installFLAG" == 'offline' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
 	# Add SomaFM Entries to gamelist.xml
-	if [ "$installFLAG" == 'somafm' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
+	if [ "$installFLAG" == 'streams' ]; then cat main-imp/icons/somafm/gamelist.somafm >> main-imp/gamelist.xml; fi
 	
 	# Add the Finishing Line to gamelist.xml
 	# echo $'\n</gameList>' >> main-imp/gamelist.xml
@@ -2104,15 +2405,121 @@ UTILITYconfREBOOT=$(dialog --stdout --no-collapse --title " $utilitySELECT *COMP
 	1 "Back to Menu" \
 	2 "REBOOT")
 # Reboot Confirm - Otherwise Exit
-if [ "$UTILITYconfREBOOT" == '2' ]; then tput reset && sudo reboot; fi
+if [ "$UTILITYconfREBOOT" == '2' ]; then tput reset; sudo reboot; fi
 
 tput reset
 ESutilityMENU
 }
 
+PCutilityMENU()
+{
+# Confirm PC Utility
+pcUTILchoice=$(dialog --stdout --no-collapse --title "     $IMPpcUTILS     " \
+	--ok-label OK --cancel-label Back \
+	--menu "     #  UTILITIES FOR PC TO ADD [IMP] TO AUTOSTART AND ES QUIT  #            If using a [PC/0ther] and IMP is NOT Autostarting or Quitting with ES  Try these Utilities... $PCutilREF" 25 75 20 \
+	1 " ADD [IMP-START] to System [AUTOSTART] " \
+	2 " ADD [IMP-STOP]  to Emulationstation [QUIT] " \
+	3 " REMOVE [IMP-START] from System [AUTOSTART] " \
+	4 " REMOVE [IMP-STOP]  from Emulationstation [QUIT] " \
+	R " REFERENCES ")
+	
+# Utility Confirmed - Otherwise Back to Main Menu
+if [ ! "$pcUTILchoice" == '' ]; then
+	if [ "$pcUTILchoice" == 'R' ]; then
+		dialog --no-collapse --title "$IMPpcUTILS REFERENCES" --ok-label Back --msgbox "$impLOGO $PCutilREF $PCimpDESKTOPref"  25 75
+		PCutilityMENU
+	fi
+	if [ "$pcUTILchoice" == '1' ]; then
+		PCutilitySELECT=' ADD [IMP-START] to System [AUTOSTART] '
+		PCutilityDESC=" Create IMP [autostart] Shortcut if Default ES [autorun.sh] is not in use"
+	fi
+	if [ "$pcUTILchoice" == '2' ]; then
+		PCutilitySELECT=' ADD [IMP-STOP]  to Emulationstation [QUIT] '
+		PCutilityDESC=" Use ES Scripts Directory to Stop IMP @ES Quit (and @ES Restart)"
+	fi
+	if [ "$pcUTILchoice" == '3' ]; then
+		PCutilitySELECT=' REMOVE [IMP-START] from System [AUTOSTART] '
+		PCutilityDESC=" DELETE IMP Shortcut in [~/.config/autostart/imp.desktop]"
+		PCutilityRUN=smbUPDATE
+	fi
+	if [ "$pcUTILchoice" == '4' ]; then
+		PCutilitySELECT=' REMOVE [IMP-STOP]  from Emulationstation [QUIT] '
+		PCutilityDESC=" DELETE IMP ES Quit Script in [~/emulationstation/scripts/quit/impstop.sh]"
+	fi
+
+	PCconfUTILITY=$(dialog --stdout --no-collapse --title "$PCutilityDESC" \
+		--ok-label OK --cancel-label Back \
+		--menu "                            ? ARE YOU SURE ?  " 25 75 20 \
+		1 "><  $PCutilitySELECT  ><" \
+		2 "Back to Menu")
+	if [ "$PCconfUTILITY" == '1' ]; then
+		if [ "$PCutilitySELECT" == ' ADD [IMP-START] to System [AUTOSTART] ' ]; then
+			# Check if IMP Installed before Running Remaining Utilities
+			if [ ! -d "$IMP" ]; then
+				dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "   INSTALL [IMP] FIRST?..."  25 75
+				PCutilityMENU
+			fi
+			
+			# Create autostart Folder
+			mkdir ~/.config > /dev/null 2>&1
+			mkdir ~/.config/autostart > /dev/null 2>&1
+			
+			# Enable IMP @autostart
+			echo "$PCimpDESKTOP" > ~/.config/autostart/imp.desktop
+		fi
+		
+		if [ "$PCutilitySELECT" == ' ADD [IMP-STOP]  to Emulationstation [QUIT] ' ]; then
+			# Check if IMP Installed before Running Remaining Utilities
+			if [ ! -d "$IMP" ]; then
+				dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "   INSTALL [IMP] FIRST?..."  25 75
+				PCutilityMENU
+			fi
+			
+			# Create ES Scripts Folder
+			mkdir /opt/retropie/configs/all/emulationstation/scripts > /dev/null 2>&1
+			
+			# Enable Idle IMP @ESQuit
+			mkdir /opt/retropie/configs/all/emulationstation/scripts/quit > /dev/null 2>&1
+			echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+			echo 'bash /opt/retropie/configs/imp/run-onstart.sh idle &' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+			echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+		fi
+		
+		if [ "$PCutilitySELECT" == ' REMOVE [IMP-START] from System [AUTOSTART] ' ]; then
+			rm ~/.config/autostart/imp.desktop > /dev/null 2>&1
+		fi
+		
+		if [ "$PCutilitySELECT" == ' REMOVE [IMP-STOP]  from Emulationstation [QUIT] ' ]; then
+			rm /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh > /dev/null 2>&1
+			rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+		fi
+
+		dialog --no-collapse --title "*$PCutilitySELECT COMPLETE*" --ok-label Back --msgbox "$impLOGO $PCutilREF $PCimpDESKTOPref"  25 75
+	fi
+	PCutilityMENU
+fi
+
+mainMENU
+}
+
 # DISCLAIMER
 tput reset
-dialog --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+#dialog --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+
+# Confirm impINSTALLflag
+impINSTALLflag=$(dialog --stdout --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " \
+	--ok-label OK --cancel-label Exit \
+	--menu "$impLOGO $impINSTALLflagREF"  25 75 20 \
+	1 " [STREAMS]  IMP + [mpg123] + [Streams]" \
+	2 " [MINIMAL]  IMP + [mpg123]" \
+	3 " [OFFLINE]  IMP 0nly")
+	
+# impINSTALLflag Confirmed - Otherwise Exit
+if [ "$impINSTALLflag" == '1' ]; then installFLAG=streams; fi
+if [ "$impINSTALLflag" == '2' ]; then installFLAG=minimal; fi
+if [ "$impINSTALLflag" == '3' ]; then installFLAG=offline; fi
+if [ "$impINSTALLflag" == '' ]; then tput reset; exit 0; fi
 
 mainMENU
 
