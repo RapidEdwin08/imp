@@ -3,6 +3,7 @@ IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 playerVOL=$(cat $IMPSettings/volume.flag)
+if [ -f /dev/shm/lower-idle.volume ]; then playerVOL=$(cat /dev/shm/lower-idle.volume); rm /dev/shm/lower-idle.volume > /dev/null 2>&1; fi # 0ne-Time-Use Lower Volume Setting
 httpSTREAM=$(head -qn1 $IMPPlaylist/abc | grep -q 'http:' ; echo $?)
 # FULL MODE Write to Disk - LITE MODE Write to tmpfs - Recall Last Track/Position Lost on REBOOT using LITE MODE
 if [ $(cat $IMPSettings/lite.flag) == "0" ]; then
@@ -13,6 +14,7 @@ fi
 musicDIR=~/RetroPie/retropiemenu/imp/music
 BGMdir="$musicDIR/bgm"
 startupMP3="$BGMdir/startup.mp3"
+quitMP3="$BGMdir/quit.mp3"
 startupTRACK=/dev/shm/startup-track
 
 # [$IMP/mpg123loop.sh] runs with -continue -k to Continue from Last Frame Position pulled from [$currentTRACK] - Does NOT apply to HTTP
@@ -48,6 +50,22 @@ fi
 
 # Disable Livewire if Not already
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
+
+# [quitsong.play] - IF [2] Play [quit.mp3] then EXIT
+if [ -f "$quitMP3" ] && [ $(cat $IMPSettings/quitsong.play) == "2" ]; then
+	echo '0' > $IMPSettings/quitsong.play
+	mpg123 -v -f "$playerVOL" "$quitMP3" > $startupTRACK 2>&1
+	rm $startupTRACK
+	exit 0
+fi
+# [quitsong.play] - IF [3] Play [quit.mp3] - Re0rganize Playlist around Current Playing Track and Continue
+if [ -f "$quitMP3" ] && [ $(cat $IMPSettings/quitsong.play) == "3" ]; then
+	echo '0' > $IMPSettings/quitsong.play
+	mpg123 -v -f "$playerVOL" "$quitMP3" > $startupTRACK 2>&1
+	rm $startupTRACK
+	bash "$IMP/play.sh" &
+	exit 0
+fi
 
 # [startupsong.play] - IF [1] Play [startup.mp3]
 if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "1" ]; then

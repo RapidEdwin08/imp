@@ -12,10 +12,28 @@ IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
 
 musicDIR=~/RetroPie/retropiemenu/imp/music
-musicROMS=~/RetroPie/roms/music
 BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
+
+# Startup/Quit Song should Not interrupt Current Playlist
+if [[ "$mp3ROM" == *"imp/music/bgm/quit.mp3" ]]; then
+	# Continue Playback after Startup Song
+	if [[ $(cat $IMPSettings/music-switch.flag) == "1" ]]; then
+		# Stop mpg123loop with continue parameter
+		bash "$IMP/stop.sh" continue > /dev/null 2>&1
+		echo '3' > $IMPSettings/quitsong.play
+		bash "$IMP/mpg123loop.sh" &
+		exit 0
+	else
+		# Exit Playback after Startup Song
+		# Stop mpg123loop with continue parameter in case Paused
+		bash "$IMP/stop.sh" continue > /dev/null 2>&1
+		echo '2' > $IMPSettings/quitsong.play
+		bash "$IMP/mpg123loop.sh" &
+		exit 0
+	fi
+fi
 
 # Startup Song should Not interrupt Current Playlist
 if [[ "$mp3ROM" == *"imp/music/bgm/startup.mp3" ]]; then
@@ -85,18 +103,11 @@ elif [[ "$mp3BASE" == *".PLS" || "$mp3BASE" == *".M3U" ]]; then
 	cat $IMPPlaylist/init > $IMPPlaylist/abc
 else	
 	# Build INIT and ABC Playists - Parse .mp3 files
-	if [ "$mp3DIR" == "$musicROMS" ]; then
-		# Obtain First Track
-		PLfirst=$(find "$musicDIR" -maxdepth 1 -type f -iname "$mp3BASE" )
-		# Add Remaining MP3s from the musicDIR directory to Playlist Non-Recursive
-		find "$musicDIR" -maxdepth 1 -type f -iname "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
-	else
-		# Obtain First Track
-		PLfirst=$(find "$mp3DIR" -maxdepth 1 -type f -iname "$mp3BASE" )
-		# Add Remaining MP3s from selected MP3-ROM directory to Playlist Non-Recursive
-		find "$mp3DIR" -maxdepth 1 -type f -iname "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
-	fi
-
+	# Obtain First Track
+	PLfirst=$(find "$mp3DIR" -maxdepth 1 -type f -iname "$mp3BASE" )
+	# Add Remaining MP3s from selected MP3-ROM directory to Playlist Non-Recursive
+	find "$mp3DIR" -maxdepth 1 -type f -iname "*.mp3" | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/abc
+	
 	# Sort init playlist
 	sort $IMPPlaylist/abc -n > $IMPPlaylist/init
 	

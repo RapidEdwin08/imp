@@ -20,6 +20,15 @@ if [ -f "$IMP/somafm-specials.sh" ]; then bash $IMP/somafm-specials.sh; fi
 # Start HTTP Server if flag 1 - Used at Startup
 if [ $(cat $IMPSettings/http-server.flag) == "1" ]; then sleep 5 && bash "$IMP/httpon.sh"; fi &
 
+# Start 0mxmon
+if [ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]; then
+	rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
+	# kill instances of 0mxmon script
+	PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
+	kill $PIDplayloop > /dev/null 2>&1
+	bash "$IMP/0mxmon.sh" &
+fi
+
 # Exit if music startup flag 0 and startupsong flag 0
 if [ $(cat $IMPSettings/music-startup.flag) == "0" ] && [ $(cat $IMPSettings/startupsong.flag) == "0" ]; then exit 0; fi
 

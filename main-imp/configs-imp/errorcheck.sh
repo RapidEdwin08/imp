@@ -1,4 +1,8 @@
 #!/bin/bash
+# Called after read line in mpg123loop.sh
+# Sets Last Position 0000 to have next track in Playlist start from the beginning
+# Checks for common mpg123 Errors to Kill Infinite Loop in Event of Errors
+
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
@@ -9,16 +13,13 @@ else
 	currentTRACK=/dev/shm/current-track
 fi
 
-# Called after read line in mpg123loop
-# Sets Last Position 0000 to have next track in Playlist start from the beginning
-# Checks for common mpg123 Errors to Kill Infinite Loop in Event of Errors
-
 # Last Position 0000 to have next track in Playlist start from the beginning
 echo "" >> $currentTRACK
 echo -e '> 0000+0000' >> $currentTRACK
 # sleep 2
 
 # Check for common mpg123 Errors
+# [src/streamdump.c:stream_parse_headers():246] error: no data at all from network resource
 # [error: Cannot open] [error: Unable to establish connection] [error: reading the rest of] [error: buffer reading]
 errorCOMMON=$(tail -n 9 $currentTRACK | grep -q 'error:' ; echo $?)
 if [ "$errorCOMMON" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
@@ -31,5 +32,9 @@ if [ "$errorSYNTAX" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 errorDRIVER=$(tail -n 9 $currentTRACK | grep -q 'Cannot specify output file without previously specifying a driver' ; echo $?)
 if [ "$errorDRIVER" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
-tput reset
+# [src/streamdump.c:stream_parse_headers():246] error: no data at all from network resource
+errorDRIVER=$(tail -n 9 $currentTRACK | grep -q 'no data at all from network resource' ; echo $?)
+if [ "$errorDRIVER" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
+
+#tput reset # *ISSUE* - Blanks Screen while using 0ther Menu Scripts in ES when Song Changes
 exit 0

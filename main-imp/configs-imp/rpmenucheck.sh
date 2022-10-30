@@ -13,17 +13,25 @@ musicROMS=~/RetroPie/roms/music
 BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
+startupMP3="$BGMdir/startup.mp3"
+quitMP3="$BGMdir/quit.mp3"
 
 # Create Music Directories if not found
 if [ ! -d "$musicDIR" ]; then mkdir "$musicDIR"; fi
-if [ ! -d "$musicROMS" ]; then ln -s "$musicDIR" "$musicROMS"; fi
+if [ ! -d "$musicROMS" ]; then mkdir $musicROMS; fi
+if [ ! -d "$musicDIR/_roms_music" ]; then ln -s ~/RetroPie/roms/music "$musicDIR/_roms_music"; fi
 if [ ! -d "$BGMdir" ]; then mkdir "$BGMdir"; fi
 if [ ! -d "$BGMa" ]; then mkdir "$BGMa"; fi
 if [ ! -d "$BGMb" ]; then mkdir "$BGMb"; fi
 
-# Put something in [musicDIR] If No MP3s found at all
-for d in $(find $musicDIR -type d | grep -v $BGMa | grep -v $BGMb); do find $d -iname *.mp3 >> /dev/shm/tmpMP3; done
-if [[ $(cat /dev/shm/tmpMP3) == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/MMMenu.mp3" > /dev/null 2>&1; fi
+# Put something in [musicDIR] If No MP3s found at all - This Check includes [ROMsMusic]
+for d in $(find $musicDIR -type d | grep -v $BGMa | grep -v $BGMb | grep -v $startupMP3 | grep -v $quitMP3); do find $d -iname *.mp3 > /dev/shm/tmpMP3; done
+for d in $(find $musicDIR -type l | grep -v $BGMa | grep -v $BGMb | grep -v $startupMP3 | grep -v $quitMP3); do find $d -iname *.mp3 > /dev/shm/tmpMP3; done
+for d in $(find $musicDIR/_roms_music -type d); do find $d -iname *.mp3 >> /dev/shm/tmpMP3; done
+find $musicDIR/_roms_music/ -iname *.mp3 >> /dev/shm/tmpMP3
+find $musicDIR -iname *.mp3 | grep -v $BGMa | grep -v $BGMb | grep -v $startupMP3 | grep -v $quitMP3 >> /dev/shm/tmpMP3
+#if [[ $(cat /dev/shm/tmpMP3) == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallm0.png "$musicDIR/MMMenu.mp3" > /dev/null 2>&1; fi
+if [[ $(cat /dev/shm/tmpMP3) == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartallrm0.png "$musicDIR/_roms_music/Seppuku Station.mp3" > /dev/null 2>&1; fi
 rm /dev/shm/tmpMP3 > /dev/null 2>&1
 
 # Put something in [BGMadir] If No MP3s found
@@ -35,7 +43,7 @@ mp3BGMb=$(find $BGMb -iname *.mp3 )
 if [[ "$mp3BGMb" == '' ]]; then cp ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png "$musicDIR/bgm/B-SIDE/e1m2.mp3" > /dev/null 2>&1; fi
 
 # Put [startup.mp3] in [BGMbdir] If Not found
-if [ ! -f "$BGMdir/startup.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartupm0.png "$BGMdir/startup.mp3" > /dev/null 2>&1; fi
+if [ ! -f "$BGMdir/startup.mp3" ]; then cp ~/RetroPie/retropiemenu/icons/impstartupm0.png "$startupMP3" > /dev/null 2>&1; fi
 
 # v2021.11 Addition - Runs at [IMP] install + Runs here in case of [RetroPie-Setup] Scripts gets Updated
 rpsKODIautostart=~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh

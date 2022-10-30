@@ -1,0 +1,21 @@
+#!/bin/bash
+sleepTIME=3
+
+#  0ptional [KillDisplayLoop.sh] - Can be ENABLED/DISABLED from [imp_setup.sh] - Called by [impXdisplay0.sh] @ES Sleep - To be Killed by [impXdisplay1.sh] @ES Wake
+# Issue Explained here: https://unix.stackexchange.com/questions/4466/screen-turns-on-automatically-xset-dpms-force-off
+
+# ==============================
+tmpACTIVEfile=/dev/shm/KillDisplayLoop.Active
+primaryMON="$(xrandr --verbose | grep primary | awk '{print $1}' 2>/dev/null)"
+echo "[$(date +%m/%d/%Y%t%H:%M:%S)] KillDisplayLoop Active - Running Every [$sleepTIME] Seconds" > $tmpACTIVEfile
+
+# Simple Shell Script L00P Uses the Existance of a [tmpACTIVEfile] FIle as the Toggle Switch
+while [ -f $tmpACTIVEfile ]; do # L00P will Continue to RUN while the [$tmpACTIVEfile] File Exists
+	sleep "$sleepTIME"
+	# Stop Displays Indiscriminately
+	xrandr --output $primaryMON --off > /dev/null 2>&1  # PowerOff Display for PC/0ther [xrandr]
+	xset dpms force off > /dev/null 2>&1 # PowerOFF Display for PC/0ther [xset]
+	vcgencmd display_power 0 > /dev/null 2>&1 # PowerOFF Display for Pi
+done
+exit 0
+# ==============================
