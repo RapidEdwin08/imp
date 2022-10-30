@@ -10,7 +10,7 @@ IMP=/opt/retropie/configs/imp
 versionIMP=$(cat $IMP/VERSION)
 IMPSettings=$IMP/settings
 IMPPlaylist=$IMP/playlist
-musicROMS=~/RetroPie/roms/music
+musicDIR=~/RetroPie/retropiemenu/imp/music
 
 aside_music=$(cat $IMPSettings/a-side.flag)
 bside_music=$(cat $IMPSettings/b-side.flag)
@@ -31,7 +31,7 @@ shuffleboot_mode=$(cat $IMPSettings/shuffleboot.flag)
 if [ $aside_music == "1" ]; then aside_music=${GREEN}" ON"; else aside_music=${RED}"OFF"; fi
 if [ $bside_music == "1" ]; then bside_music=${GREEN}"ON "; else bside_music=${RED}"OFF"; fi
 if [ $music_start == "1" ]; then music_start=${GREEN}" ON"; else music_start=${RED}"OFF"; fi
-if [ $music_over_game == "1" ]; then music_over_game=${GREEN}"ON "; else music_over_game=${RED}"OFF"; fi
+#if [ $music_over_game == "1" ]; then music_over_game=${GREEN}"ON "; else music_over_game=${RED}"OFF"; fi
 if ! [ $delay_startup == "000" ]; then delay_startup=${YEL}"$delay_startup"; else delay_startup=${RED}"OFF"; fi
 if ! [ $delay_playback == "00" ]; then delay_playback=${YEL}"$delay_playback "; else delay_playback=${RED}"OFF"; fi
 if [ $fade_out == "1" ]; then fade_out=${GREEN}"ON "; else fade_out=${RED}"OFF"; fi
@@ -48,6 +48,72 @@ if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_m
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; fi
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; fi
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; fi
+
+if [ -f /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh ]; then
+	quitsong_mode=${GREEN}"ON "
+else
+	quitsong_mode=${RED}"OFF"
+fi
+
+# Idle Settings for SLEEP
+idleORkill="   Stop IMP"
+if [ -f /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh ]; then
+	sleepIMPsleep=${GREEN}"ON "
+	if [ -f /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh ]; then
+		idleORkill=${RED}"KillDisplay"
+	fi
+else
+	sleepIMPsleep=${RED}"OFF"
+fi
+
+# Idle Settings for SCREENSAVER
+if [ -f /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh ]; then
+	sleepIMPscreen=${GREEN}"ANY"
+	if [ "$(cat /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh | grep -q 'random video' ; echo $?)" == '0' ]; then
+		sleepIMPscreen=${GREEN}"VID"
+	fi
+else
+	sleepIMPscreen=${RED}"OFF"
+fi
+
+# Lower Idle Settings for SCREENSAVER
+lowerVOLUME=$(cat $IMPSettings/lower-idle.volume)
+if [ $lowerVOLUME == "32768" ]; then volume_percent="MAX"; fi
+if [ $lowerVOLUME == "29484" ]; then volume_percent="%90"; fi
+if [ $lowerVOLUME == "26208" ]; then volume_percent="%80"; fi
+if [ $lowerVOLUME == "22932" ]; then volume_percent="%70"; fi
+if [ $lowerVOLUME == "19656" ]; then volume_percent="%60"; fi
+if [ $lowerVOLUME == "16380" ]; then volume_percent="%50"; fi
+if [ $lowerVOLUME == "13104" ]; then volume_percent="%40"; fi
+if [ $lowerVOLUME == "9828" ]; then volume_percent="%30"; fi
+if [ $lowerVOLUME == "6552" ]; then volume_percent="%20"; fi
+if [ $lowerVOLUME == "3276" ]; then volume_percent="%10"; fi
+if [ $lowerVOLUME == "1638" ]; then volume_percent="%5 "; fi
+#sleepIMPvolume=${RED}"$volume_percent"
+sleepIMPvolume="   "
+
+stopORIdle=" Stop IMP"
+lower_idle=$(cat $IMPSettings/lower-idle.flag)
+if [ $lower_idle == "1" ]; then
+	sleepIMPvolume=${YEL}"$volume_percent"
+	stopORIdle=Volume${YEL}"$sleepIMPvolume"
+fi
+
+if [ $music_over_game == "1" ]; then
+	music_over_game=${GREEN}"ON "
+elif [ $music_over_game == "2" ]; then
+	music_over_game=${YEL}"$volume_percent"
+else
+	music_over_game=${RED}"OFF"
+fi
+
+omxM0Nflag=$(cat $IMPSettings/0mxmon.flag)
+#omxmonSETTING="           "
+omxmonSETTING=0MXM0N:${RED}"OFF "
+omxwaitSETTING="$(cat $IMPSettings/0mxmon.sleep)"
+if [ $omxM0Nflag == "1" ]; then
+	omxmonSETTING="${YEL}"0MX${blue}"M0N"":${GREEN}"$omxwaitSETTING""
+fi
 
 currentIP=$(hostname -I)
 echo $currentIP:$http_port > $IMPSettings/current.ip
@@ -81,19 +147,19 @@ echo "                  '::.   -.------   .-:           "
 echo "                   :-   ':------:. '::.           "
 echo "                   =-'  .::-..-::-  ='            "
 echo "                        .::-.'-:--                "
-echo "                        '---. .-:'                "
-echo -e "         ${RED}I${YEL}ntegrated      '::-'..-'        for     "
-echo -e "         ${RED}M${YEL}usic             .-- .--       ${RED}R${YEL}etro${RED}P${YEL}ie  "
+echo -e "         ${RED}I${YEL}ntegrated     '---. .-:'        for        "
+echo -e "         ${RED}M${YEL}usic          '::-'..-'        ${RED}R${YEL}etro${RED}P${YEL}ie     "
 echo -e "         ${RED}P${YEL}layer          .:-:.'''        ${RED}v${YEL}$versionIMP  "
 echo -e "${NC} ,-------------------------------------------------------.               "
-echo -e " | Music @Boot:$music_start${NC}  Delay: $delay_startup${NC} |         LITE Mode:  $lite_mode${NC} | "
-echo -e " | BGM A~SIDE: $aside_music${NC} B~SIDE: $bside_music${NC} |     INFINITE Mode:  $infinite_mode${NC} | "
-echo -e " | Shuffle Playlist @Boot: $shuffleboot_mode${NC} |   Music OVER Game:  $music_over_game${NC} | "
-echo -e " |      PLAY STARTUP SONG: $startupsong_mode${NC} | Volume FADE @Game:  $fade_out${NC} | "
-echo -e " |        RANDOMIZER Mode: $randomizer_mode${NC} |   DELAY @Game End:  $delay_playback${NC} | "
+echo -e " | Music @Boot:$music_start${NC}  Delay: $delay_startup${NC} |          LITE Mode: $lite_mode${NC} | "
+echo -e " | startup.mp3: $startupsong_mode${NC} @quit: $quitsong_mode${NC} |      INFINITE Mode: $infinite_mode${NC} | "
+echo -e " | BGM A~SIDE: $aside_music${NC} B~SIDE: $bside_music${NC} |    Music OVER Game: $music_over_game${NC} | "
+echo -e " | Shuffle Playlist @Boot: $shuffleboot_mode${NC} | FADE Volume Out/In: $fade_out${NC} | "
+echo -e " | $omxmonSETTING${NC} RANDOMIZER: $randomizer_mode${NC} |    DELAY @Game End: $delay_playback${NC} | "
+echo -e " | $stopORIdle${NC} @Screensaver: $sleepIMPscreen${NC} | $idleORkill${NC} @Sleep: $sleepIMPsleep${NC} | "
 echo " \`-------------------------------------------------------'  "
 echo -e " http.server: [$http_setting${NC}] ${blue}[${YEL}http://$currentHTTP${blue}]${NC} [$http_server${NC}]"
-echo -e "       Music Folder: ${YEL}$musicROMS${NC}"
+echo -e " Music: ${YEL}$musicDIR${NC}"
 echo -n "9.."
 sleep 1
 echo -n "8.."
