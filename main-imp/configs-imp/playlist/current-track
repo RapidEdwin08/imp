@@ -4,7 +4,7 @@ High Performance MPEG 1.0/2.0/2.5 Audio Player for Layers 1, 2 and 3
 Decoder: generic
 Trying output module: alsa, device: <nil>
 
-Directory: /home/pi/RetroPie/roms/music/bgm/B-SIDE/
+Directory: /home/pi/RetroPie/retropiemenu/imp/music/bgm/B-SIDE/
 Playing MPEG stream 1 of 1: e1m2.mp3 ...
 
 MPEG 1.0 L III vbr 44100 j-s
