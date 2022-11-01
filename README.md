@@ -19,8 +19,6 @@ On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/im
 On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropiemenu/music]*  
 
 ## INSTALLATION
-~~git clone https://github.com/RapidEdwin08/imp.git~~  Use a Filter for Latest Branch  
-
 ```bash
 cd ~
 git clone --depth 1 https://github.com/RapidEdwin08/imp.git
