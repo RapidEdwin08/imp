@@ -53,7 +53,7 @@ while ! pgrep omxplayer > /dev/null 2>&1; do sleep 0.1; done' > /dev/shm/0mxwait
 		sleep 0.1
 	else
 		echo '# TMP-L00P to Wait for mpg123 to Start - TMP-Process will eventually close clearing 0ut built up CPU/Mem Usage in the Main Infinite L00P
-while ! pgrep mpg123 > /dev/null 2>&1; do sleep 5; done' > /dev/shm/0mxwaitstart.sh
+while ! pgrep mpg123 > /dev/null 2>&1; do sleep 0.1; done' > /dev/shm/0mxwaitstart.sh
 		sudo chmod 755 /dev/shm/0mxwaitstart.sh
 		/dev/shm/0mxwaitstart.sh
 		rm /dev/shm/0mxwaitstart.sh
