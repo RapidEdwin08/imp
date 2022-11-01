@@ -19,12 +19,11 @@ On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/im
 On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropiemenu/music]*  
 
 ## INSTALLATION
-~~git clone https://github.com/RapidEdwin08/imp.git~~  Use a Size Limit Filter [--filter=blob:limit=5m]  
-Large Files 0btained in *[.git/objects/pack/]* Not Needed and Slow the Download  
+~~git clone https://github.com/RapidEdwin08/imp.git~~  Use a Filter for Latest Branch  
 
 ```bash
 cd ~
-git clone --filter=blob:limit=5m https://github.com/RapidEdwin08/imp.git
+git clone --depth 1 https://github.com/RapidEdwin08/imp.git
 sudo chmod 755 ~/imp/imp_setup.sh
 cd ~/imp && ./imp_setup.sh
 ```
