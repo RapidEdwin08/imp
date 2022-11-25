@@ -787,6 +787,18 @@ if [ "$mpg123RC" == '0' ] || [ "$bgmRC" == '0' ]; then
 	sudo mv main-imp/rc.local /etc/rc.local
 fi
 
+bgmPY=$(cat /etc/rc.local | grep -q 'backgroundmusic' ; echo $?)
+if [ "$bgmPY" == '0' ]; then
+	# Parse all lines Except [backgroundmusic]
+	cat /etc/rc.local | grep -v "backgroundmusic" > main-imp/rc.local
+	
+	# Backup [rc.local] if not exist already
+	if [ ! -f /etc/rc.local.b4imp ]; then sudo cp /etc/rc.local /etc/rc.local.b4imp 2>/dev/null; fi
+	
+	# Replace [rc.local] with [mpg123] Removed
+	sudo mv main-imp/rc.local /etc/rc.local
+fi
+
 # Modifications to Retain [IMP] when Switching ES/Kodi on Boot from RetroPie-Setup
 # --- [Default] [~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh]  ---
 #            echo -e "kodi #auto\nemulationstation #auto" >>"$script"
