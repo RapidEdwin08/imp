@@ -1375,15 +1375,17 @@ echo '
 [Unit]
 Description=IMP Stop + Quit Song
 DefaultDependencies=no
-Before=reboot.target poweroff.target halt.target shutdown.target
+Conflicts=reboot.target poweroff.target halt.target shutdown.target
+After=network.target
 
 [Service]
 Type=oneshot
-ExecStart=/opt/retropie/configs/imp/impquit.sh
-TimeoutStartSec=0
+RemainAfterExit=yes
+ExecStart=/bin/true
+ExecStop=/opt/retropie/configs/imp/impquit.sh
 
 [Install]
-WantedBy=reboot.target poweroff.target halt.target shutdown.target
+WantedBy=multi-user.target                                        
 
 '
 )
