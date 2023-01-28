@@ -35,7 +35,7 @@ if [ $omxM0Nflag == "1" ]; then
 	omxmonSETTING="Enabled: $omxwaitSETTING"
 fi
 
-dialog --no-collapse --title "   READ ME OMX Monitor [BETA]   <  $omxmonSETTING  >    " --msgbox "$omxMONreadme"  25 75
+dialog --no-collapse --title "   READ ME OMX Monitor [RC1]   <  $omxmonSETTING  >    " --msgbox "$omxMONreadme"  25 75
 
 # read -p " < OK >" </dev/tty
 tput reset
