@@ -27,6 +27,7 @@ randomizer_boot=$(cat $IMPSettings/randomizerboot.flag)
 randomizer_mode=$(cat $IMPSettings/randomizer.flag)
 startupsong_mode=$(cat $IMPSettings/startupsong.flag)
 shuffleboot_mode=$(cat $IMPSettings/shuffleboot.flag)
+quitsong_flag=$(cat $IMPSettings/quitsong.flag)
 
 if [ $aside_music == "1" ]; then aside_music=${GREEN}" ON"; else aside_music=${RED}"OFF"; fi
 if [ $bside_music == "1" ]; then bside_music=${GREEN}"ON "; else bside_music=${RED}"OFF"; fi
@@ -34,7 +35,7 @@ if [ $music_start == "1" ]; then music_start=${GREEN}" ON"; else music_start=${R
 #if [ $music_over_game == "1" ]; then music_over_game=${GREEN}"ON "; else music_over_game=${RED}"OFF"; fi
 if ! [ $delay_startup == "000" ]; then delay_startup=${YEL}"$delay_startup"; else delay_startup=${RED}"OFF"; fi
 if ! [ $delay_playback == "00" ]; then delay_playback=${YEL}"$delay_playback "; else delay_playback=${RED}"OFF"; fi
-if [ $fade_out == "1" ]; then fade_out=${GREEN}"ON "; else fade_out=${RED}"OFF"; fi
+if [ $fade_out == "1" ]; then fade_out=${GREEN}"x1 "; elif [ $fade_out == "5" ]; then fade_out=${GREEN}"x5 "; elif [ $fade_out == "10" ]; then fade_out=${GREEN}"x10"; else fade_out=${RED}"OFF"; fi
 if [ $http_setting == "1" ]; then http_setting=${GREEN}"ON "; else http_setting=${RED}"OFF"; fi
 if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"ON "; else infinite_mode=${RED}"OFF"; fi
 if [ $lite_mode == "1" ]; then lite_mode=${GREEN}"ON "; else lite_mode=${RED}"OFF"; fi
@@ -48,12 +49,7 @@ if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_m
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; fi
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; fi
 if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; fi
-
-if [ -f /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh ]; then
-	quitsong_mode=${GREEN}"ON "
-else
-	quitsong_mode=${RED}"OFF"
-fi
+if [ $quitsong_flag == "1" ]; then quitsong_mode=${GREEN}"ON "; else quitsong_mode=${RED}"OFF"; fi
 
 # Idle Settings for SLEEP
 idleORkill="   Stop IMP"
