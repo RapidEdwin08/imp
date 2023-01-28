@@ -59,6 +59,18 @@ fi
 # Identify current Audio Device by Pulling AudioDevice Setting from [es_settings.cfg] - Expecting HDMI - PCM - Master - Headphone - Speaker - Digital - Analogue
 audioDEVICEcurrent=$(cat /opt/retropie/configs/all/emulationstation/es_settings.cfg | grep "AudioDevice" | awk -F'=' '{print $3}'| cut -c 2- | rev | cut -c 5- | rev)
 
+# The AudioDevice from [es_settings.cfg] may NOT be the AudioDevice identified by [amixer]
+if [[ ! $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"$audioDEVICEcurrent"* ]]; then 
+	# Identify current Audio Output Device by Process of Elimination - Expecting HDMI - PCM - Master - Headphone - Speaker - Digital - Analogue
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"HDMI"* ]]; then audioDEVICEcurrent="HDMI"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"PCM"* ]]; then audioDEVICEcurrent="PCM"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"Master"* ]]; then audioDEVICEcurrent="Master"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"Headphone"* ]]; then audioDEVICEcurrent="Headphone"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"Speaker"* ]]; then audioDEVICEcurrent="Speaker"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"Digital"* ]]; then audioDEVICEcurrent="Digital"; fi
+	if [[ $(amixer | grep "Simple mixer control" | grep -v 'Capture' ) == *"Analogue"* ]]; then audioDEVICEcurrent="Analogue"; fi
+fi
+
 # Parse amixer output for volume - /dB/ or /Left:/ depending on Version of the OS
 # awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)
 # awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)
@@ -67,18 +79,18 @@ audioDEVICEcurrent=$(cat /opt/retropie/configs/all/emulationstation/es_settings.
 amixerCMD=amixer
 
 # Obtain current Volume Setting before fade out - Try BOTH  '/dB/  and   '/Left:/
-currentVOL=$(awk -F"[][]" '/dB/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
+currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/dB/ { print $2 }' | cut -d '%' -f 1 )
 if [[ $currentVOL == '' ]]; then
-	currentVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
+	currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/Left:/ { print $2 }' | cut -d '%' -f 1 )
 fi
 
 # Try pulseaudio IF STILL Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == '' ]]; then
 	amixerCMD='amixer -D pulse'
 	# Obtain current Volume Setting before fade out - Try BOTH  '/dB/  and   '/Left:/ AGAIN with [amixer -D pulse]
-	currentVOL=$(awk -F"[][]" '/dB/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
+	currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/dB/ { print $2 }' | cut -d '%' -f 1 )
 	if [[ $currentVOL == '' ]]; then
-		currentVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
+		currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/Left:/ { print $2 }' | cut -d '%' -f 1 )
 	fi
 fi
 
@@ -103,32 +115,22 @@ fi
 echo $currentVOL > $IMPSettings/volume.last
 
 # set Dynamic Volume to check while decreasing volume - '/dB/
-dynamicVOL=$(awk -F"[][]" '/dB/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
-if [[ $dynamicVOL == '' ]]; then
-	# set Dynamic Volume to check while decreasing volume - '/Left:/
-	dynamicVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
-fi
+dynamicVOL=$currentVOL
 
-# Result Expected if ERROR - amixer: Unable to find simple control 
-if [[ $dynamicVOL == '' ]]; then
-		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
-		bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
-		exit 0
-fi
-
-# Increase Volume until Dynamic Volume reaches previously obtained Current Volume
+# Decrease Volume until Dynamic Volume reaches 0
 while [ $dynamicVOL -gt 0 ]; do
-	# Decrease Alsa Volume
-	# $amixerCMD -q -c 0 sset "$audioDEVICEcurrent" 1db- unmet no cap # NOT Working with Headphone
-	((dynamicVOL=dynamicVOL-1))
-	$amixerCMD --quiet set "$audioDEVICEcurrent" "$dynamicVOL"%
-	# set Dynamic Volume to check while decreasing volume - '/dB/
-	dynamicVOL=$(awk -F"[][]" '/dB/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
-	if [[ $dynamicVOL == '' ]]; then
-		# set Dynamic Volume to check while decreasing volume - '/Left:/
-		dynamicVOL=$(awk -F"[][]" '/Left:/ { print $2 }' <($amixerCMD sget $audioDEVICEcurrent 2>/dev/null) | cut -d '%' -f 1 )
+	# Decrease Alsa Volume # $amixerCMD -q -c 0 sset "$audioDEVICEcurrent" 1db- unmet no cap # NOT Working with Headphone
+	# High/Med/Low Fade Settings: Workaround for Slow Fade on Certain Builds. eg. PlayBox Vanilla V2
+	if [[ $(cat $IMPSettings/fade-out.flag) == "10" ]]; then #High
+		((dynamicVOL=dynamicVOL-10))
+	elif [[ $(cat $IMPSettings/fade-out.flag) == "5" ]]; then #Medium
+		((dynamicVOL=dynamicVOL-5))
+	else
+		((dynamicVOL=dynamicVOL-1)) #Low
 	fi
-	sleep 0.015
+	if [ $dynamicVOL -lt 0 ]; then dynamicVOL=0; fi # amixer Fails with Negative Numbers
+	$amixerCMD --quiet set "$audioDEVICEcurrent" "$dynamicVOL"%
+	if [[ $(cat $IMPSettings/fade-out.flag) == "1" ]]; then sleep 0.025; fi
 done
 
 # Stop/Pause player after Volume 0 - allow time for mpg123 to stop
