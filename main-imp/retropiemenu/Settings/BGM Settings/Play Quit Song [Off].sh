@@ -1,9 +1,7 @@
 #!/bin/bash
-
-# Disable quit.mp3 @ESQuit
-rm /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh > /dev/null 2>&1
-rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
-rm -d /opt/retropie/configs/all/emulationstation/scripts/ > /dev/null 2>&1
+IMP=/opt/retropie/configs/imp
+IMPSettings=$IMP/settings
+echo "0" > $IMPSettings/quitsong.flag
 
 #tput reset
 exit 0
