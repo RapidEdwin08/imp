@@ -100,7 +100,7 @@ Volume % [mpg123 Player Volume]
 Current Settings  
 
 **General Settings**  
-Fade Volume Out-In [Off/On]  
+Fade Volume Out-In [Off/On/x1/x5/x10]  
 Lite Mode [Off/On]  
 Infinite Mode [Off/On]  
 

@@ -126,6 +126,7 @@ echo "                   ~/.config/autostart/imp.desktop"
 echo ""
 echo "                    ~/emulationstation/scripts/quit"
 echo "              ~/emulationstation/scripts/quit/impstop.sh"
+echo "              ~/emulationstation/scripts/quit/quitsong.sh"
 echo ""
 )
 
@@ -662,6 +663,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh ]; then mv ~/Retro
 # Disable Livewire
 if [ ! -f ~/.DisableMusic ]; then touch ~/.DisableMusic; fi
 if [ -f ~/RetroPie/retropiemenu/bgm-mute.sh ]; then mv ~/RetroPie/retropiemenu/bgm-mute.sh ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp; fi
+if [ -f ~/RetroPie/retropiemenu/System/bgm.sh ]; then mv ~/RetroPie/retropiemenu/System/bgm.sh ~/RetroPie/retropiemenu/System/bgm.sh.b4imp; fi
 
 # Disable BGM Naprosnia
 sudo pkill -STOP audacious > /dev/null 2>&1
@@ -788,9 +790,10 @@ if [ "$mpg123RC" == '0' ] || [ "$bgmRC" == '0' ]; then
 fi
 
 bgmPY=$(cat /etc/rc.local | grep -q 'backgroundmusic' ; echo $?)
-if [ "$bgmPY" == '0' ]; then
+bgmLW=$(cat /etc/rc.local | grep -q 'livewire.py' ; echo $?)
+if [ "$bgmPY" == '0' ] || [ "$bgmLW" == '0' ]; then
 	# Parse all lines Except [backgroundmusic]
-	cat /etc/rc.local | grep -v "backgroundmusic" > main-imp/rc.local
+	cat /etc/rc.local | grep -v "backgroundmusic" | grep -v "livewire.py" > main-imp/rc.local
 	
 	# Backup [rc.local] if not exist already
 	if [ ! -f /etc/rc.local.b4imp ]; then sudo cp /etc/rc.local /etc/rc.local.b4imp 2>/dev/null; fi
@@ -1367,11 +1370,39 @@ rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh > /d
 rm /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh > /dev/null 2>&1
 
 # Enable quit.mp3 IMP @ESQuit
-mkdir /opt/retropie/configs/all/emulationstation/scripts/quit > /dev/null 2>&1
-echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
-echo 'mpg123 -f "$(cat /opt/retropie/configs/imp/settings/volume.flag)" "$HOME/RetroPie/retropiemenu/imp/music/bgm/quit.mp3" > /dev/null 2>&1' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
-echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+impQUITsvc=$(
+echo '
+[Unit]
+Description=IMP Stop + Quit Song
+DefaultDependencies=no
+Before=reboot.target poweroff.target halt.target shutdown.target
+
+[Service]
+Type=oneshot
+ExecStart=/opt/retropie/configs/imp/impquit.sh
+TimeoutStartSec=0
+
+[Install]
+WantedBy=reboot.target poweroff.target halt.target shutdown.target
+
+'
+)
+# Enable [impquit.service] @Reboot/Shutown/Halt
+echo "0" > /opt/retropie/configs/imp/settings/quitsong.flag # Temporarily Disable quitsong during SVC setup
+sudo systemctl stop impquit.service 2>/dev/null
+sudo systemctl disable impquit.service 2>/dev/null
+sudo rm /etc/systemd/system/impquit.service 2>/dev/null
+sudo systemctl daemon-reload
+echo "$impQUITsvc" > /dev/shm/impquit.service
+sudo mv /dev/shm/impquit.service /etc/systemd/system/impquit.service
+sudo systemctl daemon-reload
+sudo systemctl enable impquit.service
+sudo systemctl start impquit.service
+echo "1" > /opt/retropie/configs/imp/settings/quitsong.flag
+
+# Replace [/home/pi] with current User [$homeDIR] in [impquit.sh] - This may Not be a pi
+homeDIR=~/
+sed -i s+'/home/pi/'+"$homeDIR"+ /opt/retropie/configs/imp/impquit.sh
 
 impFINISH
 }
@@ -1565,6 +1596,13 @@ rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
 # Disable quit.mp3 @ESQuit
 rm /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh > /dev/null 2>&1
 rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+# Disable [impquit.service]
+#echo "0" > /opt/retropie/configs/imp/settings/quitsong.flag 2>/dev/null
+sudo systemctl stop impquit.service 2>/dev/null
+sudo systemctl disable impquit.service 2>/dev/null
+sudo systemctl daemon-reload
+sudo rm /etc/systemd/system/impquit.service
+sudo systemctl daemon-reload
 
 # Disable Idle IMP @ESSleep
 rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh > /dev/null 2>&1
@@ -1618,6 +1656,8 @@ rm ~/RetroPie/retropiemenu/icons/impsettingbgmboff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingbgmbon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingfadeoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingfadeon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingfadeon5.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingfadeon10.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingidlescreenonvid.png 2>/dev/null
@@ -1804,6 +1844,7 @@ if [ -f ~/RetroPie/retropiemenu/audiotools/backgroundmusic.sh.b4imp ]; then mv ~
 # Enable Livewire
 if [ -f ~/.DisableMusic ]; then rm ~/.DisableMusic; fi
 if [ -f ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/bgm-mute.sh.b4imp ~/RetroPie/retropiemenu/bgm-mute.sh; fi
+if [ -f ~/RetroPie/retropiemenu/System/bgm.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/System/bgm.sh.b4imp ~/RetroPie/retropiemenu/System/bgm.sh; fi
 
 # Enable BGM Naprosnia
 # if [ -f ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ]; then mv ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh.b4imp ~/RetroPie/retropiemenu/Audiotools/backgroundmusic.sh 2>/dev/null; fi
@@ -2431,8 +2472,10 @@ pcUTILchoice=$(dialog --stdout --no-collapse --title "     $IMPpcUTILS     " \
 	--menu "     #  UTILITIES FOR PC TO ADD [IMP] TO AUTOSTART AND ES QUIT  #            If using a [PC/0ther] and IMP is NOT Autostarting or Quitting with ES  Try these Utilities... $PCutilREF" 25 75 20 \
 	1 " ADD [IMP-START] to System [AUTOSTART] " \
 	2 " ADD [IMP-STOP]  to Emulationstation [QUIT] " \
-	3 " REMOVE [IMP-START] from System [AUTOSTART] " \
-	4 " REMOVE [IMP-STOP]  from Emulationstation [QUIT] " \
+	3 " ADD [QUIT SONG] to Emulationstation [QUIT] " \
+	4 " REMOVE [IMP-START] from System [AUTOSTART] " \
+	5 " REMOVE [IMP-STOP]  from Emulationstation [QUIT] " \
+	6 " REMOVE [QUIT-SONG] from Emulationstation [QUIT] " \
 	R " REFERENCES ")
 	
 # Utility Confirmed - Otherwise Back to Main Menu
@@ -2450,13 +2493,21 @@ if [ ! "$pcUTILchoice" == '' ]; then
 		PCutilityDESC=" Use ES Scripts Directory to Stop IMP @ES Quit (and @ES Restart)"
 	fi
 	if [ "$pcUTILchoice" == '3' ]; then
+		PCutilitySELECT=' ADD [QUIT SONG] to Emulationstation [QUIT] '
+		PCutilityDESC=" Use ES Scripts Directory to Play Quit Song @ES Quit (and @ES Restart)"
+	fi
+	if [ "$pcUTILchoice" == '4' ]; then
 		PCutilitySELECT=' REMOVE [IMP-START] from System [AUTOSTART] '
 		PCutilityDESC=" DELETE IMP Shortcut in [~/.config/autostart/imp.desktop]"
 		PCutilityRUN=smbUPDATE
 	fi
-	if [ "$pcUTILchoice" == '4' ]; then
+	if [ "$pcUTILchoice" == '5' ]; then
 		PCutilitySELECT=' REMOVE [IMP-STOP]  from Emulationstation [QUIT] '
 		PCutilityDESC=" DELETE IMP ES Quit Script in [~/emulationstation/scripts/quit/impstop.sh]"
+	fi
+	if [ "$pcUTILchoice" == '6' ]; then
+		PCutilitySELECT=' REMOVE [QUIT-SONG] from Emulationstation [QUIT] '
+		PCutilityDESC=" DELETE IMP ES Quit Song Script in [~/emulationstation/scripts/quit/quitsong.sh]"
 	fi
 
 	PCconfUTILITY=$(dialog --stdout --no-collapse --title "$PCutilityDESC" \
@@ -2498,6 +2549,24 @@ if [ ! "$pcUTILchoice" == '' ]; then
 			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 		fi
 		
+		if [ "$PCutilitySELECT" == ' ADD [QUIT SONG] to Emulationstation [QUIT] ' ]; then
+			# Check if IMP Installed before Running Remaining Utilities
+			if [ ! -d "$IMP" ]; then
+				dialog --no-collapse --title "   * [IMP] INSTALL NOT DETECTED *   " --ok-label Back --msgbox "   INSTALL [IMP] FIRST?..."  25 75
+				PCutilityMENU
+			fi
+			
+			# Create ES Scripts Folder
+			mkdir /opt/retropie/configs/all/emulationstation/scripts > /dev/null 2>&1
+			
+			# Enable quit.mp3 IMP @ESQuit
+			mkdir /opt/retropie/configs/all/emulationstation/scripts/quit > /dev/null 2>&1
+			echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+			echo 'mpg123 -f "$(cat /opt/retropie/configs/imp/settings/volume.flag)" "$HOME/RetroPie/retropiemenu/imp/music/bgm/quit.mp3" > /dev/null 2>&1' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+			echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+		fi
+		
 		if [ "$PCutilitySELECT" == ' REMOVE [IMP-START] from System [AUTOSTART] ' ]; then
 			rm ~/.config/autostart/imp.desktop > /dev/null 2>&1
 		fi
@@ -2505,6 +2574,14 @@ if [ ! "$pcUTILchoice" == '' ]; then
 		if [ "$PCutilitySELECT" == ' REMOVE [IMP-STOP]  from Emulationstation [QUIT] ' ]; then
 			rm /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh > /dev/null 2>&1
 			rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+			rm -d /opt/retropie/configs/all/emulationstation/scripts/ > /dev/null 2>&1
+		fi
+		
+		if [ "$PCutilitySELECT" == ' REMOVE [QUIT-SONG] from Emulationstation [QUIT] ' ]; then
+			# Disable quit.mp3 @ESQuit
+			rm /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh > /dev/null 2>&1
+			rm -d /opt/retropie/configs/all/emulationstation/scripts/quit/ > /dev/null 2>&1
+			rm -d /opt/retropie/configs/all/emulationstation/scripts/ > /dev/null 2>&1
 		fi
 
 		dialog --no-collapse --title "*$PCutilitySELECT COMPLETE*" --ok-label Back --msgbox "$impLOGO $PCutilREF $PCimpDESKTOPref"  25 75
