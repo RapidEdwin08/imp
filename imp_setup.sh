@@ -174,7 +174,7 @@ fi
 
 # Main Install Menu
 tput reset
-installTYPE=$(dialog --stdout --no-collapse --title "  $internetSTATUS" \
+installTYPE=$(dialog --no-collapse --title "  $internetSTATUS" \
 	--ok-label OK --cancel-label Exit \
 	--menu " Choose Type of Install for Integrated Music Player [IMP]: [$installFLAG]" 25 75 20 \
 	1 "$IMPstandard" \
@@ -183,7 +183,7 @@ installTYPE=$(dialog --stdout --no-collapse --title "  $internetSTATUS" \
 	4 "$IMPesUTILS" \
 	5 "$IMPpcUTILS" \
 	U "Uninstall [IMP]" \
-	R "Reboot")
+	R "Reboot" 2>&1>/dev/tty)
 tput reset
 
 # If ESC then Exit
@@ -192,11 +192,11 @@ if [ "$installTYPE" == '' ]; then exit 0; fi
 if [ "$installTYPE" == 'R' ]; then
 	selectTYPE="REBOOT"
 	# Confirm Uninstall
-	confREBOOT=$(dialog --stdout --no-collapse --title "               REBOOT               " \
+	confREBOOT=$(dialog --no-collapse --title "               REBOOT               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
 		1 "><  $selectTYPE  ><" \
-		2 "Back to Main Menu")
+		2 "Back to Main Menu" 2>&1>/dev/tty)
 	# Uninstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confREBOOT" == '1' ]; then tput reset; sudo reboot; fi
 	mainMENU
@@ -206,11 +206,11 @@ fi
 if [ "$installTYPE" == 'U' ]; then
 	selectTYPE="UNINSTALL [IMP]"
 	# Confirm Uninstall
-	confREMOVE=$(dialog --stdout --no-collapse --title "               UNINSTALL [IMP]               " \
+	confREMOVE=$(dialog --no-collapse --title "               UNINSTALL [IMP]               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
 		1 "><  $selectTYPE  ><" \
-		2 "Back to Main Menu")
+		2 "Back to Main Menu" 2>&1>/dev/tty)
 	# Uninstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confREMOVE" == '1' ]; then impUNINSTALL; fi
 	mainMENU
@@ -553,11 +553,11 @@ if [[ $? -eq 0 || "$installFLAG" == 'offline' ]]; then
 	# Confirm Install
 	confSTATUS="OK"
 	if [ "$installFLAG" == 'offline' ]; then confSTATUS="Offline-Install-Selected"; fi
-	confINSTALL=$(dialog --stdout --no-collapse --title "  Internet Connection: [$confSTATUS]  " \
+	confINSTALL=$(dialog --no-collapse --title "  Internet Connection: [$confSTATUS]  " \
 		--ok-label OK --cancel-label Back \
 		--menu "                           ? ARE YOU SURE ?             " 25 75 20 \
 		1 "PROCEED $selectTYPE [$installFLAG]" \
-		2 "Back")
+		2 "Back" 2>&1>/dev/tty)
 	# Install Confirmed - Otherwise Back to Main Menu
 	if [ "$confINSTALL" == '1' ]; then impINSTALL; fi
 	mainMENU
@@ -1875,12 +1875,12 @@ impFINISH
 impFINISH()
 {
 # Finished Install - Confirm Reboot
-confREBOOT=$(dialog --stdout --no-collapse --title "*INSTALL* $selectTYPE *COMPLETE*" \
+confREBOOT=$(dialog --no-collapse --title "*INSTALL* $selectTYPE *COMPLETE*" \
 	--ok-label OK --cancel-label EXIT \
 	--menu "$impLOGO $impFINISHREF" 25 75 20 \
 	1 "REBOOT" \
 	2 "BACK TO MENU" \
-	3 "EXIT")
+	3 "EXIT" 2>&1>/dev/tty)
 # Reboot Confirm - Otherwise Exit
 if [ "$confREBOOT" == '1' ]; then tput reset; sudo reboot; fi
 if [ "$confREBOOT" == '2' ]; then mainMENU; fi
@@ -1899,7 +1899,7 @@ mpg123VER=$(mpg123 --version)
 if [[ ! "$mpg123VER" == "mpg123 1."* ]]; then mpg123VER="mpg123-?.??.??"; fi
 
 # Confirm mpg123 Manual Install
-confMPG123=$(dialog --stdout --no-collapse --title "  Select mpg123 Install Method  [Current Version Detected: $mpg123VER]  " \
+confMPG123=$(dialog --no-collapse --title "  Select mpg123 Install Method  [Current Version Detected: $mpg123VER]  " \
 	--ok-label OK --cancel-label Back \
 	--menu "$mpg123FILEREF " 25 75 20 \
 	1 " [apt-get install] mpg123  [Recommended]" \
@@ -1913,15 +1913,15 @@ confMPG123=$(dialog --stdout --no-collapse --title "  Select mpg123 Install Meth
 	9 " [make install] mpg123-1.20.1  [Offline]" \
 	U " UNINSTALL mpg123-1.2.x.y" \
 	C " CLEAN UP  mpg123-1.2.x.y SOURCE" \
-	X " [KILL] ES/Pegasus/AM [Recommended before make install]")
+	X " [KILL] ES/Pegasus/AM [Recommended before make install]" 2>&1>/dev/tty)
 	
 # mpg123 Manual Uninstall Confirmed - Otherwise Back to Main Menu
 if [ "$confMPG123" == 'U' ]; then
-	confUNmpg123=$(dialog --stdout --no-collapse --title "               UNINSTALL [mpg123-1.2.x.y]               " \
+	confUNmpg123=$(dialog --no-collapse --title "               UNINSTALL [mpg123-1.2.x.y]               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
 		1 "><  UNINSTALL [mpg123-1.2.x.y]  ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 	# Uninstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confUNmpg123" == '1' ]; then mpg123UNINSTALL; fi
 	mpg123MENU
@@ -1929,11 +1929,11 @@ fi
 
 # Clean mpg123 Source Files and FOlders
 if [ "$confMPG123" == 'C' ]; then
-	confCLNmpg123=$(dialog --stdout --no-collapse --title "               CLEAN UP  mpg123-1.2.x.y SOURCE               " \
+	confCLNmpg123=$(dialog --no-collapse --title "               CLEAN UP  mpg123-1.2.x.y SOURCE               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?                                 SOURCE: [$(ls -d1 ~/mpg123-*)]" 25 75 20 \
 		1 "><  CLEAN UP  mpg123-1.2.x.y SOURCE  ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 	# Clean Confirmed - Otherwise Back to Main Menu
 	if [ "$confCLNmpg123" == '1' ]; then 
 		# Clean mpg123 Source Files and Folders
@@ -1967,11 +1967,11 @@ if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '8' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
 	if [ "$confMPG123" == '9' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
 	if [ "$confMPG123" == 'X' ]; then
-		confKILLfe=$(dialog --stdout --no-collapse --title "               CONFIRM [KILL] ES/Pegasus/AM               " \
+		confKILLfe=$(dialog --no-collapse --title "               CONFIRM [KILL] ES/Pegasus/AM               " \
 		--ok-label OK --cancel-label Back \
 		--menu "  ? ARE YOU SURE ?  [Recommended before make install]  " 25 75 20 \
 		1 "><  [KILL] ES/Pegasus/AM ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 		
 		# Ininstall Confirmed - Otherwise Back to Main Menu
 		if [ "$confKILLfe" == '1' ]; then
@@ -1983,11 +1983,11 @@ if [ ! "$confMPG123" == '' ]; then
 		mpg123MENU
 	fi
 	
-	confINmpg123=$(dialog --stdout --no-collapse --title "               CONFIRM $mpg123SELECT               " \
+	confINmpg123=$(dialog --no-collapse --title "               CONFIRM $mpg123SELECT               " \
 		--ok-label OK --cancel-label Back \
 		--menu "  ? ARE YOU SURE ?  This will REMOVE Any [mpg123] Currently INSTALLED  " 25 75 20 \
 		1 "><  $mpg123SELECT  ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 	
 	# Ininstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confINmpg123" == '1' ]; then mpg123INSTALL; fi
@@ -2223,14 +2223,14 @@ mainMENU
 ESutilityMENU()
 {
 # Confirm Utility
-pickUTILITY=$(dialog --stdout --no-collapse --title "     $IMPesUTILS     " \
+pickUTILITY=$(dialog --no-collapse --title "     $IMPesUTILS     " \
 	--ok-label OK --cancel-label Back \
 	--menu "                #  [RP/ES] Utilities File Reference  # $IMPesFIXref" 25 75 20 \
 	1 " [ParseGamelistOnly] OFF" \
 	2 " [es_systems.cfg] Repair" \
 	3 " [gamelist.xml] Refresh" \
 	4 " [smb.conf] Update" \
-	5 " [KILL] ES/Pegasus/AM")
+	5 " [KILL] ES/Pegasus/AM" 2>&1>/dev/tty)
 	
 # Utility Confirmed - Otherwise Back to Main Menu
 if [ ! "$pickUTILITY" == '' ]; then
@@ -2258,11 +2258,11 @@ if [ ! "$pickUTILITY" == '' ]; then
 		utilityDESC="       [KILL] ES/Pegasus/AM "
 	fi
 	
-	confUTILITY=$(dialog --stdout --no-collapse --title "$utilityDESC" \
+	confUTILITY=$(dialog --no-collapse --title "$utilityDESC" \
 		--ok-label OK --cancel-label Back \
 		--menu "         ? ARE YOU SURE ?  Current Install Flag: [$installFLAG]" 25 75 20 \
 		1 "><  $utilitySELECT  ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 	
 	if [ "$confUTILITY" == '2' ] || [ "$confUTILITY" == '' ]; then ESutilityMENU; fi
 	
@@ -2454,11 +2454,11 @@ finishUTILITY
 finishUTILITY()
 {
 # Finished Refresh - Confirm Reboot
-UTILITYconfREBOOT=$(dialog --stdout --no-collapse --title " $utilitySELECT *COMPLETE*" \
+UTILITYconfREBOOT=$(dialog --no-collapse --title " $utilitySELECT *COMPLETE*" \
 	--ok-label OK --cancel-label Back \
 	--menu "$IMPesFIXref" 25 75 20 \
 	1 "Back to Menu" \
-	2 "REBOOT")
+	2 "REBOOT" 2>&1>/dev/tty)
 # Reboot Confirm - Otherwise Exit
 if [ "$UTILITYconfREBOOT" == '2' ]; then tput reset; sudo reboot; fi
 
@@ -2469,7 +2469,7 @@ ESutilityMENU
 PCutilityMENU()
 {
 # Confirm PC Utility
-pcUTILchoice=$(dialog --stdout --no-collapse --title "     $IMPpcUTILS     " \
+pcUTILchoice=$(dialog --no-collapse --title "     $IMPpcUTILS     " \
 	--ok-label OK --cancel-label Back \
 	--menu "     #  UTILITIES FOR PC TO ADD [IMP] TO AUTOSTART AND ES QUIT  #            If using a [PC/0ther] and IMP is NOT Autostarting or Quitting with ES  Try these Utilities... $PCutilREF" 25 75 20 \
 	1 " ADD [IMP-START] to System [AUTOSTART] " \
@@ -2478,7 +2478,7 @@ pcUTILchoice=$(dialog --stdout --no-collapse --title "     $IMPpcUTILS     " \
 	4 " REMOVE [IMP-START] from System [AUTOSTART] " \
 	5 " REMOVE [IMP-STOP]  from Emulationstation [QUIT] " \
 	6 " REMOVE [QUIT-SONG] from Emulationstation [QUIT] " \
-	R " REFERENCES ")
+	R " REFERENCES " 2>&1>/dev/tty)
 	
 # Utility Confirmed - Otherwise Back to Main Menu
 if [ ! "$pcUTILchoice" == '' ]; then
@@ -2512,11 +2512,11 @@ if [ ! "$pcUTILchoice" == '' ]; then
 		PCutilityDESC=" DELETE IMP ES Quit Song Script in [~/emulationstation/scripts/quit/quitsong.sh]"
 	fi
 
-	PCconfUTILITY=$(dialog --stdout --no-collapse --title "$PCutilityDESC" \
+	PCconfUTILITY=$(dialog --no-collapse --title "$PCutilityDESC" \
 		--ok-label OK --cancel-label Back \
 		--menu "                            ? ARE YOU SURE ?  " 25 75 20 \
 		1 "><  $PCutilitySELECT  ><" \
-		2 "Back to Menu")
+		2 "Back to Menu" 2>&1>/dev/tty)
 	if [ "$PCconfUTILITY" == '1' ]; then
 		if [ "$PCutilitySELECT" == ' ADD [IMP-START] to System [AUTOSTART] ' ]; then
 			# Check if IMP Installed before Running Remaining Utilities
@@ -2600,12 +2600,12 @@ tput reset
 #dialog --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
 
 # Confirm impINSTALLflag
-impINSTALLflag=$(dialog --stdout --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " \
+impINSTALLflag=$(dialog --no-collapse --title "   *DISCLAIMER* Install at your own Risk   " \
 	--ok-label OK --cancel-label Exit \
 	--menu "$impLOGO $impINSTALLflagREF"  25 75 20 \
 	1 " [STREAMS]  IMP + [mpg123] + [Streams]" \
 	2 " [MINIMAL]  IMP + [mpg123]" \
-	3 " [OFFLINE]  IMP 0nly")
+	3 " [OFFLINE]  IMP 0nly" 2>&1>/dev/tty)
 	
 # impINSTALLflag Confirmed - Otherwise Exit
 if [ "$impINSTALLflag" == '1' ]; then installFLAG=streams; fi
