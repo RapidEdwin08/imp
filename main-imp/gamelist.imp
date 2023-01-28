@@ -128,15 +128,32 @@ Track Position Retained @PowerOff</desc>
 		<image>./icons/impinfiniteoff.png</image>
 	</game>
 	<game>
-		<path>./imp/Settings/General Settings/Fade Volume Out-In [On].sh</path>
-		<name>Fade Volume Out-In [On]</name>
-		<desc>[ENABLE]: Volume Fade Out-In
+		<path>./imp/Settings/General Settings/Fade Volume [x1].sh</path>
+		<name>Fade Volume [x1]</name>
+		<desc>[ENABLE]: Volume Fade Out-In [x1]
+Fades Volume @Intervals of [x1]
 [Respected @Game + @Idle]</desc>
 		<image>./icons/impsettingfadeon.png</image>
 	</game>
 	<game>
-		<path>./imp/Settings/General Settings/Fade Volume Out-In [Off].sh</path>
-		<name>Fade Volume Out-In [Off]</name>
+		<path>./imp/Settings/General Settings/Fade Volume [x5].sh</path>
+		<name>Fade Volume [x5]</name>
+		<desc>[ENABLE]: Volume Fade Out-In [x5]
+Fades Volume @Intervals of [x5]
+[Respected @Game + @Idle]</desc>
+		<image>./icons/impsettingfadeon5.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/General Settings/Fade Volume [x10].sh</path>
+		<name>Fade Volume: [x10]</name>
+		<desc>[ENABLE]: Volume Fade Out-In [x10]
+Fades Volume @Intervals of [x10]
+[Respected @Game + @Idle]</desc>
+		<image>./icons/impsettingfadeon10.png</image>
+	</game>
+	<game>
+		<path>./imp/Settings/General Settings/Fade Volume [0ff].sh</path>
+		<name>Fade Volume [0ff]</name>
 		<desc>[DISABLE]: Volume Fade Out-In
 [Respected @Game + @Idle]</desc>
 		<image>./icons/impsettingfadeoff.png</image>
@@ -618,7 +635,7 @@ Track Position Retained @PowerOff</desc>
 		<path>./imp/Settings/OMX Monitor</path>
 		<name>{OMX Monitor}</name>
 		<desc>[IMP] OMX Monitor.
-[BETA]</desc>
+[RC1]</desc>
 		<image>./icons/impsettings.png</image>
 	</folder>
 	<game>
@@ -638,7 +655,7 @@ Track Position Retained @PowerOff</desc>
 		<path>./imp/Settings/OMX Monitor/[ReadMe] OMX Monitor.sh</path>
 		<name># ReadMe OMX Monitor #</name>
 		<desc>[README]: OMX Monitor
-[BETA]</desc>
+[RC1]</desc>
 		<image>./icons/impsettingomxmonreadme.png</image>
 	</game>
 	<game>
