@@ -19,10 +19,17 @@ echo -e '> 0000+0000' >> $currentTRACK
 # sleep 2
 
 # Check for common mpg123 Errors
+# [error: Cannot open]
+errorCOMMONopen=$(tail -n 9 $currentTRACK | grep -q 'error: Cannot open' ; echo $?)
+if [ "$errorCOMMONopen" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
+
+# [error: Unable to establish connection] [error: reading the rest of] [error: buffer reading]
+errorCOMMONcon=$(tail -n 9 $currentTRACK | grep -q 'error: Unable to establish connection' ; echo $?)
+if [ "$errorCOMMONcon" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
+
 # [src/streamdump.c:stream_parse_headers():246] error: no data at all from network resource
-# [error: Cannot open] [error: Unable to establish connection] [error: reading the rest of] [error: buffer reading]
-errorCOMMON=$(tail -n 9 $currentTRACK | grep -q 'error:' ; echo $?)
-if [ "$errorCOMMON" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
+errorCOMMONnodata=$(tail -n 9 $currentTRACK | grep -q 'error: no data at all from network resource' ; echo $?)
+if [ "$errorCOMMONnodata" == '0' ]; then bash $IMP/stop.sh && exit 0; fi
 
 # You made some mistake in program usage... let me briefly remind you:
 errorSYNTAX=$(head -n 1 $currentTRACK | grep -q 'You made some mistake in program usage... let me briefly remind you:' ; echo $?)
