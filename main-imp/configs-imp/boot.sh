@@ -77,13 +77,13 @@ if [[ $(cat $IMPSettings/a-side.flag) == "1" || $(cat $IMPSettings/b-side.flag) 
 	fi
 	
 	# Escape the /\slashes/\ in the Paths
-	ESCmusicROMS=${musicROMS//\//\\/}
-	ESCmusicDIR=${musicDIR//\//\\/}
+	#ESCmusicROMS=${musicROMS//\//\\/}
+	#ESCmusicDIR=${musicDIR//\//\\/}
 	
 	# Replace rpMenu/music Path with roms/Music Path in Playlist files - No Longer Required - No Longer Works
-	##sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/abc
-	##sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/shuffle
-	##sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/init
+	#sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/abc
+	#sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/shuffle
+	#sed -i s+$ESCmusicDIR+$ESCmusicROMS+ /dev/shm/init
 	
 	# Compare New BGM Playlist with Current Playlist - Replace If Differences or NOT in accordance with BGM Flags
 	cat $IMPPlaylist/init | sort -n > /dev/shm/abc-current
