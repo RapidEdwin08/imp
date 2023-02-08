@@ -58,6 +58,14 @@ if [[ "$1" == *"Desktop.sh" ]]; then
 	exit 0
 fi
 
+# Certain Scripts we do NOT want to use with Joypad  Simply [bash %ROM%]
+if [[ "$1" == *"Kodi.sh" ]]; then
+	#     <command>bash %ROM%</command>
+	bash "$1"
+	clear
+	exit 0
+fi
+
 # Remaining [iMP] .sh Scripts do Not need a Joypad - Unnecessary and Slower to Launch with retropie_packages.sh retropiemenu
 # If File is IN [retropiemenu/imp/*] and is .sh then Simply [bash %ROM%]
 if [[ "$romDIR" == *"$IMPmenuRP"* && $1 == *".sh" ]]; then
