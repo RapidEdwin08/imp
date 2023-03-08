@@ -765,11 +765,13 @@ if [ ! -f /opt/retropie/configs/all/autostart.sh.b4imp ] && [ -f /opt/retropie/c
 fi
 
 # Backup runcommand-onstart if not exist already
+if [ ! -f /opt/retropie/configs/all/runcommand-onstart.sh ]; then touch /opt/retropie/configs/all/runcommand-onstart.sh; fi
 if [ ! -f /opt/retropie/configs/all/runcommand-onstart.sh.b4imp ]; then
 	mv /opt/retropie/configs/all/runcommand-onstart.sh /opt/retropie/configs/all/runcommand-onstart.sh.b4imp 2>/dev/null
 fi
 
 # Backup runcommand-onend if not exist already
+if [ ! -f /opt/retropie/configs/all/runcommand-onend.sh ]; then touch /opt/retropie/configs/all/runcommand-onend.sh; fi
 if [ ! -f /opt/retropie/configs/all/runcommand-onend.sh.b4imp ]; then
 	mv /opt/retropie/configs/all/runcommand-onend.sh /opt/retropie/configs/all/runcommand-onend.sh.b4imp 2>/dev/null
 fi
