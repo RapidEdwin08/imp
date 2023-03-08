@@ -1447,10 +1447,10 @@ if [ -f /etc/samba/smb.conf.b4imp ]; then
 	# sudo systemctl restart smbd.service
 fi
 
-# Restore autostart.sh if Backup is found - No Longer Restore backup because changes made while IMP installed are Lost
-#if [ -f /opt/retropie/configs/all/autostart.sh.b4imp ]; then mv /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh; fi
-cat /opt/retropie/configs/all/autostart.sh | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" > /dev/shm/autostart.sh
-mv /dev/shm/autostart.sh /opt/retropie/configs/all/autostart.sh
+# Restore autostart.sh if Backup is found - Needs Work because changes made while IMP installed are Lost
+if [ -f /opt/retropie/configs/all/autostart.sh.b4imp ]; then mv /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh; fi
+#cat /opt/retropie/configs/all/autostart.sh | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" > /dev/shm/autostart.sh
+#mv /dev/shm/autostart.sh /opt/retropie/configs/all/autostart.sh
 
 if [ ! -f /opt/retropie/configs/all/autostart.sh ]; then
 	# ?Create autostart.sh from scratch if NOT found?
@@ -1468,15 +1468,15 @@ sed -i s+"$impKODI"+"$rpsKODI"+ $rpsKODIautostart
 sed -i s+"$impKODIsa"+"$rpsKODIsa"+ $rpsKODIautostart
 sed -i s+"$impKODIes"+"$rpsKODIes"+ $rpsKODIautostart
 
-# Restore runcommand-onstart.sh if Backup is found - No Longer Restore backup because changes made while IMP installed are Lost
-#if [ -f /opt/retropie/configs/all/runcommand-onstart.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onstart.sh.b4imp /opt/retropie/configs/all/runcommand-onstart.sh; fi
-cat /opt/retropie/configs/all/runcommand-onstart.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onstart.sh
-mv /dev/shm/runcommand-onstart.sh /opt/retropie/configs/all/runcommand-onstart.sh
+# Restore runcommand-onstart.sh if Backup is found - Needs Work because changes made while IMP installed are Lost
+if [ -f /opt/retropie/configs/all/runcommand-onstart.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onstart.sh.b4imp /opt/retropie/configs/all/runcommand-onstart.sh; fi
+#cat /opt/retropie/configs/all/runcommand-onstart.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onstart.sh
+#mv /dev/shm/runcommand-onstart.sh /opt/retropie/configs/all/runcommand-onstart.sh
 
-# Restore runcommand-onend.sh if Backup is found - No Longer Restore backup because changes made while IMP installed are Lost
-#if [ -f /opt/retropie/configs/all/runcommand-onend.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onend.sh.b4imp /opt/retropie/configs/all/runcommand-onend.sh; fi
-cat /opt/retropie/configs/all/runcommand-onend.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onend.sh
-mv /dev/shm/runcommand-onend.sh /opt/retropie/configs/all/runcommand-onend.sh
+# Restore runcommand-onend.sh if Backup is found - Needs Work because changes made while IMP installed are Lost
+if [ -f /opt/retropie/configs/all/runcommand-onend.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onend.sh.b4imp /opt/retropie/configs/all/runcommand-onend.sh; fi
+#cat /opt/retropie/configs/all/runcommand-onend.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onend.sh
+#mv /dev/shm/runcommand-onend.sh /opt/retropie/configs/all/runcommand-onend.sh
 
 # Restore gamelist.xml OPT if Backup is found
 if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp ]; then
