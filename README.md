@@ -24,6 +24,7 @@ cd ~
 git clone --depth 1 https://github.com/RapidEdwin08/imp.git
 sudo chmod 755 ~/imp/imp_setup.sh
 cd ~/imp && ./imp_setup.sh
+
 ```
 
 **INSTALL FLAGS** *Determines the RetroPieMenu [gamelist.xml] used @Install/Refresh*  
@@ -40,13 +41,14 @@ BACKUP the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newe
 cd ~ #Change to Home Directory
 mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
 mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
+
 ```
 
 To REMOVE the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
 ```bash
 cd ~ #Change to Home Directory
-rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
 rm ~/imp-setup.tar.gz
+rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
 ```
 ~~*You may need to use [sudo mv] or [sudo rm] if you used [make-install] mpg123 due to the [SOURCE] folder*~~  
 v2022.10 now uses the home directory for building mpg123 from Source and Includes a Clean Source Option  
