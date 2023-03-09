@@ -257,13 +257,13 @@ if [ "$selectTYPE" == "$IMPstandard" ]; then
 	# Attempt to Seek out and Copy Current Scripts to be Installed in [/opt/retropie/configs/all/]
 	if [ -f /opt/retropie/configs/all/autostart.sh ]; then
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'while pgrep omxplayer' ; echo $?) == '0' ]; then
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" > main-imp/configs-all/autostart.sh
+			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs] [shutdown] [exit]
+			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > main-imp/configs-all/autostart.sh
 		else
 			# Add [while pgrep omxplayer >/dev/null; do sleep 1; done] if Not found
 			echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > main-imp/configs-all/autostart.sh
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" >> main-imp/configs-all/autostart.sh
+			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs] [shutdown] [exit]
+			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" >> main-imp/configs-all/autostart.sh
 		fi
 		# Add [kodi] if found
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'kodi #auto' ; echo $?) == '0' ]; then echo 'kodi #auto' >> main-imp/configs-all/autostart.sh; fi
@@ -276,6 +276,8 @@ if [ "$selectTYPE" == "$IMPstandard" ]; then
 		else
 			echo 'emulationstation #auto' >> main-imp/configs-all/autostart.sh
 		fi
+		# Add [shutdown] or [exit] strings Last
+		cat /opt/retropie/configs/all/autostart.sh | grep -e "shutdown" -e "exit" >> main-imp/configs-all/autostart.sh
 	fi
 	
 	# [IMP] will be Added LAST to [runcommand-onend.sh]
@@ -383,12 +385,12 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	if [ ! -f custom-imp/autostart.sh ] && [ -f /opt/retropie/configs/all/autostart.sh ]; then
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'while pgrep omxplayer' ; echo $?) == '0' ]; then
 			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" > custom-imp/autostart.sh
+			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > custom-imp/autostart.sh
 		else
 			# Add [while pgrep omxplayer >/dev/null; do sleep 1; done] if Not found
 			echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > custom-imp/autostart.sh
 			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" >> custom-imp/autostart.sh
+			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" >> custom-imp/autostart.sh
 		fi
 		
 		# Add [kodi] if found
@@ -399,6 +401,9 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 		echo '#[IMP] THIS LINE SHOULD BE ABOVE [emulationstation #auto]'  >> custom-imp/autostart.sh
 		echo 'bash /opt/retropie/configs/imp/boot.sh > /dev/null 2>&1 & #auto' >> custom-imp/autostart.sh
 		echo 'emulationstation #auto' >> custom-imp/autostart.sh
+		
+		# Add [shutdown] or [exit] strings Last
+		cat /opt/retropie/configs/all/autostart.sh | grep -e "shutdown" -e "exit" >> main-imp/configs-all/autostart.sh
 	fi
 	
 	# [IMP] will be Added LAST to [runcommand-onend.sh]
@@ -1451,20 +1456,9 @@ fi
 
 # Restore autostart.sh if Backup is found - Not Preferred because changes made while IMP installed are Lost
 ##if [ -f /opt/retropie/configs/all/autostart.sh.b4imp ]; then mv /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh; fi
-# Subtract [- IMP - ES] from Current
-cat /opt/retropie/configs/all/autostart.sh | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" > /dev/shm/autostart.sh
-
-# Add [+ BackupDIFFs - ES] #Expected BackupDIFFs are mainly Previous BGM Strings if present
-##grep -v "$(< /opt/retropie/configs/all/autostart.sh)" /opt/retropie/configs/all/autostart.sh.b4imp | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" >> /dev/shm/autostart.sh
-fgrep -vf /opt/retropie/configs/all/autostart.sh /opt/retropie/configs/all/autostart.sh.b4imp | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" >> /dev/shm/autostart.sh
-
-# Add [+ ES] Last
-if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'emulationstation --no-splash' ; echo $?) == '0' ]; then # No Splash for you
-	echo 'emulationstation --no-splash #auto' >> /dev/shm/autostart.sh
-else
-	echo 'emulationstation #auto' >> /dev/shm/autostart.sh
-fi
-# Final Result = [Current - IMP - ES + BackupDIFFs + ES]
+# Restore Content From Backup to Current # Add [+ DIFFs] from Current if found # Final Result = [Backup +DIFFs]
+cat /opt/retropie/configs/all/autostart.sh.b4imp > /dev/shm/autostart.sh
+fgrep -vf /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh | grep -v "emulationstation " | grep -v "while pgrep omxplayer" >> /dev/shm/autostart.sh
 mv /dev/shm/autostart.sh /opt/retropie/configs/all/autostart.sh
 
 if [ ! -f /opt/retropie/configs/all/autostart.sh ]; then
@@ -1485,26 +1479,16 @@ sed -i s+"$impKODIes"+"$rpsKODIes"+ $rpsKODIautostart
 
 # Restore runcommand-onstart.sh if Backup is found - Not Preferred because changes made while IMP installed are Lost
 ##if [ -f /opt/retropie/configs/all/runcommand-onstart.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onstart.sh.b4imp /opt/retropie/configs/all/runcommand-onstart.sh; fi
-# Subtract [- IMP] from Current
-cat /opt/retropie/configs/all/runcommand-onstart.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onstart.sh
-
-# Add [+ BackupDIFFs] #Expected BackupDIFFs are mainly Previous BGM Strings if present
-##grep -v "$(< /opt/retropie/configs/all/runcommand-onstart.sh)" /opt/retropie/configs/all/runcommand-onstart.sh.b4imp >> /dev/shm/runcommand-onstart.sh
-fgrep -vf /opt/retropie/configs/all/runcommand-onstart.sh /opt/retropie/configs/all/runcommand-onstart.sh.b4imp >> /dev/shm/runcommand-onstart.sh
-
-# Final Result = [Current - IMP + BackupDIFFs]
+# Restore Content From Backup to Current # Add [+ DIFFs] from Current if found # Final Result = [Backup +DIFFs]
+cat /opt/retropie/configs/all/runcommand-onstart.sh.b4imp > /dev/shm/runcommand-onstart.sh
+fgrep -vf /opt/retropie/configs/all/runcommand-onstart.sh.b4imp /opt/retropie/configs/all/runcommand-onstart.sh >> /dev/shm/runcommand-onstart.sh
 mv /dev/shm/runcommand-onstart.sh /opt/retropie/configs/all/runcommand-onstart.sh
 
 # Restore runcommand-onend.sh if Backup is found - Not Preferred because changes made while IMP installed are Lost
 ##if [ -f /opt/retropie/configs/all/runcommand-onend.sh.b4imp ]; then mv /opt/retropie/configs/all/runcommand-onend.sh.b4imp /opt/retropie/configs/all/runcommand-onend.sh; fi
-# Subtract [- IMP] from Current
-cat /opt/retropie/configs/all/runcommand-onend.sh | grep -Fv "/opt/retropie/configs/imp/" > /dev/shm/runcommand-onend.sh
-
-# Add [+ BackupDIFFs] #Expected BackupDIFFs are mainly Previous BGM Strings if present
-##grep -v "$(< /opt/retropie/configs/all/runcommand-onend.sh)" /opt/retropie/configs/all/runcommand-onend.sh.b4imp >> /dev/shm/runcommand-onend.sh
-fgrep -vf /opt/retropie/configs/all/runcommand-onend.sh /opt/retropie/configs/all/runcommand-onend.sh.b4imp >> /dev/shm/runcommand-onend.sh
-
-# Final Result = [Current - IMP + BackupDIFFs]
+# Restore Content From Backup to Current # Add [+ DIFFs] from Current if found # Final Result = [Backup +DIFFs]
+cat /opt/retropie/configs/all/runcommand-onend.sh.b4imp > /dev/shm/runcommand-onend.sh
+fgrep -vf /opt/retropie/configs/all/runcommand-onend.sh.b4imp /opt/retropie/configs/all/runcommand-onend.sh >> /dev/shm/runcommand-onend.sh
 mv /dev/shm/runcommand-onend.sh /opt/retropie/configs/all/runcommand-onend.sh
 
 # Restore gamelist.xml OPT if Backup is found
