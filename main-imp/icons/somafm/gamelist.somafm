@@ -23,10 +23,22 @@
 		<image>./icons/brfm-400.jpg</image>
 	</game>
 	<game>
+		<path>./imp/music/streams/SomaFM/cliqhop.pls</path>
+		<name>cliqhop idm</name>
+		<desc>cliqhop idm: Experimental techno, also known as Intelligent dance music (IDM). This is music composed digitally, creating sounds from bits rather than with bits and the instrument of choice of most IDM artists is a laptop computer. Typical artists include: Telefon Tel Aviv, Boards Of Canada, Autechre, Aphex Twin, Mu-ziq, Black Dog, Cex, Ulrich Schnauss, and Album Leaf.</desc>
+		<image>./icons/cliqhop-400.png</image>
+	</game>
+	<game>
 		<path>./imp/music/streams/SomaFM/covers.pls</path>
 		<name>Covers</name>
 		<desc>Covers: Just covers. Songs you know by artists you don't. We've got you covered.</desc>
 		<image>./icons/covers-400.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SomaFM/darkzone.pls</path>
+		<name>Dark Zone</name>
+		<desc>The Dark Zone: There are times you stare into the abyss. And there are times when the abyss stares back at you. Dark Zone is the audio-enablement of that abyss.</desc>
+		<image>./icons/darkzone-400.jpg</image>
 	</game>
 	<game>
 		<path>./imp/music/streams/SomaFM/deepspaceone.pls</path>
