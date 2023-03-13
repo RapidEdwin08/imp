@@ -33,7 +33,7 @@ cd ~/imp && ./imp_setup.sh
 [MINIMAL]  IMP + [mpg123]  
 [OFFLINE]  IMP 0nly  
 
-**CUSTOM USER GAMELIST**  *0ptional if you want to ADD your own Custom Music Folder/File Entries*  
+**0PTIONAL USER GAMELIST**  *0ptional if you want to ADD your own Custom Music Folder/File Entries*  
 IMP Will *Append* *[imp-user-gamelist.xml]* IF Found at *Install* and *[gamelist.xml] Refresh Utility*.  
 Simply Place *[imp-user-gamelist.xml]* in the Main IMP Setup Directory [~/imp/].  
 Example *[imp-user-gamelist.xml.0FF]* Included  
