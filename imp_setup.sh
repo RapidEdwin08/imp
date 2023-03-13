@@ -176,7 +176,7 @@ fi
 tput reset
 installTYPE=$(dialog --no-collapse --title "  $internetSTATUS" \
 	--ok-label OK --cancel-label Exit \
-	--menu " Choose Type of Install for Integrated Music Player [IMP]: [$installFLAG]" 25 75 20 \
+	--menu " Choose Type of Install for Integrated Music Player [IMP]: [$installFLAG]  0ptional User Gamelist: [$(if [ ! -f /home/$USER/imp/imp-user-gamelist.xml ]; then ls /home/$USER/imp/imp-user-gamelist.xml.0FF 2>/dev/null; fi)$(ls /home/$USER/imp/imp-user-gamelist.xml 2>/dev/null)]" 25 75 20 \
 	1 "$IMPstandard" \
 	2 "$IMPcustom" \
 	3 "$IMPmpg123" \
@@ -933,6 +933,9 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	# Rebuild retropiemenu gamelist.xml with [IMP]
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
+	# Add user-gamlist.xml IF Found
+	if [ -f imp-user-gamelist.xml ]; then cat imp-user-gamelist.xml | grep -v '<?xml' | grep -v '<gameList>' | grep -v '</gameList>' | grep -v '<provider>' | grep -v '</provider>' | grep -v '<System>' | grep -v '</System>' | grep -v '<software>' | grep -v '</software>' >> main-imp/gamelist.xml; fi
+	
 	# Add Internet Radio Station Entries to gamelist.xml
 	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
@@ -964,6 +967,9 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add user-gamlist.xml IF Found
+	if [ -f imp-user-gamelist.xml ]; then cat imp-user-gamelist.xml | grep -v '<?xml' | grep -v '<gameList>' | grep -v '</gameList>' | grep -v '<provider>' | grep -v '</provider>' | grep -v '<System>' | grep -v '</System>' | grep -v '<software>' | grep -v '</software>' >> main-imp/gamelist.xml; fi
 	
 	# Add Internet Radio Station Entries to gamelist.xml
 	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
@@ -1299,7 +1305,9 @@ if [ "$installFLAG" == 'streams' ]; then
 	if [ ! -f "$musicDIR/streams/SomaFM/beatblender.pls" ]; then wget --no-check-certificate https://somafm.com/beatblender.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/bootliquor.pls" ]; then wget --no-check-certificate https://somafm.com/bootliquor.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/brfm.pls" ]; then wget --no-check-certificate https://somafm.com/brfm.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/cliqhop.pls" ]; then wget --no-check-certificate https://somafm.com/cliqhop.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/covers.pls" ]; then wget --no-check-certificate https://somafm.com/covers.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/darkzone.pls" ]; then wget --no-check-certificate https://somafm.com/darkzone.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/deepspaceone.pls" ]; then wget --no-check-certificate https://somafm.com/deepspaceone.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/defcon.pls" ]; then wget --no-check-certificate https://somafm.com/defcon.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/digitalis.pls" ]; then wget --no-check-certificate https://somafm.com/digitalis.pls -P "$musicDIR/streams/SomaFM"; fi
@@ -1739,7 +1747,9 @@ rm ~/RetroPie/retropiemenu/icons/7soul-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/beatblender-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/bootliquor-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/brfm-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/cliqhop-400.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/covers-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/darkzone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/deepspaceone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/defcon-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/defcon400.png 2>/dev/null
@@ -2239,32 +2249,36 @@ ESutilityMENU()
 pickUTILITY=$(dialog --no-collapse --title "     $IMPesUTILS     " \
 	--ok-label OK --cancel-label Back \
 	--menu "                #  [RP/ES] Utilities File Reference  # $IMPesFIXref" 25 75 20 \
-	1 " [ParseGamelistOnly] OFF" \
-	2 " [es_systems.cfg] Repair" \
-	3 " [gamelist.xml] Refresh" \
+	1 " [gamelist.xml] Refresh" \
+	2 " [ParseGamelistOnly] OFF" \
+	3 " [es_systems.cfg] Repair" \
 	4 " [smb.conf] Update" \
 	5 " [KILL] ES/Pegasus/AM" 2>&1>/dev/tty)
 	
 # Utility Confirmed - Otherwise Back to Main Menu
 if [ ! "$pickUTILITY" == '' ]; then
 	if [ "$pickUTILITY" == '1' ]; then
-		utilitySELECT='[ParseGamelistOnly] OFF'
-		utilityDESC=" [ParseGamelistOnly] OFF if Experiencing [Assertion mType == FOLDER failed]"
-	fi
-	if [ "$pickUTILITY" == '2' ]; then
-		utilitySELECT='[es_systems.cfg] Repair'
-		utilityDESC=" Fix Mising .MP3 Extensions if Experiencing [Assertion mType == * failed]"
-		utilityRUN=esSYSrepair
-	fi
-	if [ "$pickUTILITY" == '3' ]; then
 		utilitySELECT='[gamelist.xml] Refresh'
 		utilityDESC=" Restore RPMenu [gamelist.xml] File (Clean Entries P0ST [IMP] Install)"
 		utilityRUN=gamelistREFRESH
+		settingCHECK="$(ls /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; ls /home/$USER/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; if [ ! -f /home/$USER/imp/imp-user-gamelist.xml ]; then ls /home/$USER/imp/imp-user-gamelist.xml.0FF 2>/dev/null; fi; ls /home/$USER/imp/imp-user-gamelist.xml 2>/dev/null)"
+	fi
+	if [ "$pickUTILITY" == '2' ]; then
+		utilitySELECT='[ParseGamelistOnly] OFF'
+		utilityDESC=" [ParseGamelistOnly] OFF if Experiencing [Assertion mType == FOLDER failed]"
+		settingCHECK="es_settings.cfg: $(cat /opt/retropie/configs/all/emulationstation/es_settings.cfg | grep 'ParseGamelistOnly')"
+	fi
+	if [ "$pickUTILITY" == '3' ]; then
+		utilitySELECT='[es_systems.cfg] Repair'
+		utilityDESC=" Fix Mising .MP3 Extensions if Experiencing [Assertion mType == * failed]"
+		utilityRUN=esSYSrepair
+		settingCHECK="etc=$(cat /etc/emulationstation/es_systems.cfg 2>/dev/null | grep '<extension>.rp .sh') opt=$(cat /opt/retropie/configs/all/emulationstation/es_systems.cfg 2>/dev/null | grep '<extension>.rp .sh')"
 	fi
 	if [ "$pickUTILITY" == '4' ]; then
 		utilitySELECT='[smb.conf] Update'
 		utilityDESC=" Add Windows (Samba) Share for [~/RetroPie/retropiemenu/imp/music]"
 		utilityRUN=smbUPDATE
+		settingCHECK="smb.conf:$(cat /etc/samba/smb.conf  2>/dev/null | grep 'music')"
 	fi
 	if [ "$pickUTILITY" == '5' ]; then
 		utilitySELECT=' [KILL] ES/Pegasus/AM'
@@ -2273,8 +2287,8 @@ if [ ! "$pickUTILITY" == '' ]; then
 	
 	confUTILITY=$(dialog --no-collapse --title "$utilityDESC" \
 		--ok-label OK --cancel-label Back \
-		--menu "         ? ARE YOU SURE ?  Current Install Flag: [$installFLAG]" 25 75 20 \
-		1 "><  $utilitySELECT  ><" \
+		--menu "         ? ARE YOU SURE ?  Current Install Flag: [$installFLAG]              $settingCHECK" 25 75 20 \
+		1 "><  APPLY $utilitySELECT  ><" \
 		2 "Back to Menu" 2>&1>/dev/tty)
 	
 	if [ "$confUTILITY" == '2' ] || [ "$confUTILITY" == '' ]; then ESutilityMENU; fi
@@ -2376,6 +2390,9 @@ if [ -f /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.x
 	# Rebuild retropiemenu gamelist.xml with [IMP]
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
 	
+	# Add user-gamlist.xml IF Found
+	if [ -f imp-user-gamelist.xml ]; then cat imp-user-gamelist.xml | grep -v '<?xml' | grep -v '<gameList>' | grep -v '</gameList>' | grep -v '<provider>' | grep -v '</provider>' | grep -v '<System>' | grep -v '</System>' | grep -v '<software>' | grep -v '</software>' >> main-imp/gamelist.xml; fi
+	
 	# Add Internet Radio Station Entries to gamelist.xml
 	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi
 	
@@ -2407,6 +2424,9 @@ if [ -f ~/RetroPie/retropiemenu/gamelist.xml ]; then
 	
 	# Rebuild retropiemenu gamelist.xml with [IMP]
 	cat main-imp/gamelist.imp >> main-imp/gamelist.xml
+	
+	# Add user-gamlist.xml IF Found
+	if [ -f imp-user-gamelist.xml ]; then cat imp-user-gamelist.xml | grep -v '<?xml' | grep -v '<gameList>' | grep -v '</gameList>' | grep -v '<provider>' | grep -v '</provider>' | grep -v '<System>' | grep -v '</System>' | grep -v '<software>' | grep -v '</software>' >> main-imp/gamelist.xml; fi
 	
 	# Add Internet Radio Station Entries to gamelist.xml
 	if [ "$installFLAG" == 'streams' ]; then cat main-imp/gamelist.streams >> main-imp/gamelist.xml; fi

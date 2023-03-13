@@ -7,6 +7,7 @@ Automates Playlists, Recalls Last Track/Position, Next/Previous Track, Fade, INF
 (No OGG Support) [Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.  
 
 **Before you get started:**  
+- Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
 - Recommend your Music File *Extensions* be either ALL *lower-case* or *UPPER-CASE* for IMP `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
 Results may vary using File Extensions such as`*.mP3 .Mp3 .pLs .PlS .M3u .m3U*` since Linux is cAsE-sEnSiTiVe  
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
@@ -31,6 +32,11 @@ cd ~/imp && ./imp_setup.sh
 [STREAMS]  IMP + [mpg123] + [Streams]  
 [MINIMAL]  IMP + [mpg123]  
 [OFFLINE]  IMP 0nly  
+
+**CUSTOM USER GAMELIST**  *0ptional if you want to ADD your own Custom Music Folder/File Entries*  
+IMP Will *Append* *[imp-user-gamelist.xml]* IF Found at *Install* and *[gamelist.xml] Refresh Utility*.  
+Simply Place *[imp-user-gamelist.xml]* in the Main IMP Setup Directory [~/imp/].  
+Example *[imp-user-gamelist.xml.0FF]* Included  
 
 **If you are [Upgrading] to a Newer Version of IMP:**  
 UNINSTALL [IMP] FIRST using the SETUP Script *CURRENTLY INSTALLED*  

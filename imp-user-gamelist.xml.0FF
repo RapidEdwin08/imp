@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<gameList>
+	<provider>
+		<System>retropie</System>
+		<software>IMP Will Append [imp-user-gamelist.xml] IF Found at Install and at Refresh Utility.
+SET Path [./imp/music/*] OR [./imp/music/_roms_music/*] for the Symbolic Link to ../roms/music</software>
+	</provider>
+	<folder>
+		<path>./imp/music/QCDE</path>
+		<name># QCDE V2.5 #</name>
+		<desc>Quake Champions Doom Edition</desc>
+		<image>./icons/QCDE.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/QCDE/00 Slipgate.mp3</path>
+		<name>00 Slipgate.mp3</name>
+		<desc>Quake Champions Doom Edition</desc>
+		<image>./icons/QCDE.png</image>
+	</game>
+	<folder>
+		<path>./imp/music/_roms_music/QuakeII</path>
+		<name># Quake II #</name>
+		<desc>Quake II</desc>
+		<image>./icons/QuakeII.png</image>
+	</folder>
+	<game>
+		<path>./imp/music/_roms_music/QuakeII/track07.mp3</path>
+		<name>track07.mp3</name>
+		<desc>Quake II</desc>
+		<image>./icons/QuakeII.png</image>
+	</game>
+</gameList>
