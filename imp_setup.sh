@@ -2261,7 +2261,7 @@ if [ ! "$pickUTILITY" == '' ]; then
 		utilitySELECT='[gamelist.xml] Refresh'
 		utilityDESC=" Restore RPMenu [gamelist.xml] File (Clean Entries P0ST [IMP] Install)"
 		utilityRUN=gamelistREFRESH
-		settingCHECK="$(ls /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null; ls /home/$USER/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; if [ ! -f /home/$USER/imp/imp-user-gamelist.xml ]; then ls /home/$USER/imp/imp-user-gamelist.xml.0FF 2>/dev/null; fi; ls /home/$USER/imp/imp-user-gamelist.xml 2>/dev/null)"
+		settingCHECK="$(if [ ! -f /home/$USER/imp/imp-user-gamelist.xml ]; then ls /home/$USER/imp/imp-user-gamelist.xml.0FF 2>/dev/null; fi; ls /home/$USER/imp/imp-user-gamelist.xml 2>/dev/null; ls /home/$USER/RetroPie/retropiemenu/gamelist.xml.b4imp 2>/dev/null; ls /opt/retropie/configs/all/emulationstation/gamelists/retropie/gamelist.xml.b4imp 2>/dev/null)"
 	fi
 	if [ "$pickUTILITY" == '2' ]; then
 		utilitySELECT='[ParseGamelistOnly] OFF'
@@ -2283,6 +2283,7 @@ if [ ! "$pickUTILITY" == '' ]; then
 	if [ "$pickUTILITY" == '5' ]; then
 		utilitySELECT=' [KILL] ES/Pegasus/AM'
 		utilityDESC="       [KILL] ES/Pegasus/AM "
+		settingCHECK=""
 	fi
 	
 	confUTILITY=$(dialog --no-collapse --title "$utilityDESC" \
