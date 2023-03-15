@@ -2580,7 +2580,7 @@ if [ ! "$pcUTILchoice" == '' ]; then
 			# Enable Idle IMP @ESQuit
 			mkdir /opt/retropie/configs/all/emulationstation/scripts/quit > /dev/null 2>&1
 			echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
-			echo 'bash /opt/retropie/configs/imp/run-onstart.sh idle &' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+			echo 'bash /opt/retropie/configs/imp/impquit.sh &' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 			echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 		fi
