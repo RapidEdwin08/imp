@@ -1,10 +1,11 @@
 # [IMP] for RetroPie
 ![impplaylist.png](https://raw.githubusercontent.com/RapidEdwin08/imp/main/main-imp/icons/imp/impplaylist.png )  
 
-Based on every article you ever read about mpg123 scripts in RetroPie.  
+Based on every article you ever read about mpg123 scripts in RetroPie (No OGG Support).  
 Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files like a ROM.  
-Automates Playlists, Recalls Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
-(No OGG Support) [Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.  
+Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
+~~[Recall Last Track/Retains] NOT Retained at STARTUP in LITE Mode.~~  
+*v2023.03 Now Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown.*  
 
 **Before you get started:**  
 - Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
@@ -154,7 +155,7 @@ Shuffle Playlist [Off/On]
 Delay at Startup [seconds]  
 
 ## PLAY MODES  
-LITE MODE [On]: Log to TMPFS (RAM), Track Position Reset @PowerOff [Recommended for SD-Cards]  
+LITE MODE [On]: Log to TMPFS (RAM), Track Position Retained @Poweroff if Properly Shutdown [Recommended for SD-Cards]  
 LITE MODE [Off]: Log to File (Disk), Track Position Retained @PowerOff [**NOT** Recommended for SD-Cards]  
 
 INFINITE MODE [On]: Infinite L00P of Current Playlist  
