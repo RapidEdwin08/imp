@@ -10,6 +10,11 @@ BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
 
+# Retain Current Track Position for LITE Mode - Grab from DISK and Move to TMPFS - Referenced in impquit.sh
+if [ $(cat /opt/retropie/configs/imp/settings/lite.flag) == "1" ]; then
+	cp /opt/retropie/configs/imp/playlist/current-track /dev/shm/current-track > /dev/null 2>&1
+fi
+
 # Check for [IMP] Files/Folders Linked to [retropiemenu] [gamelist.xml]
 # Create Files/Folders If Needed to Prevent ERROR [Assertion `mType == FLODER' failed]
 bash "$IMP/rpmenucheck.sh" > /dev/null 2>&1
