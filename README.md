@@ -1,18 +1,18 @@
 # [IMP] for RetroPie
 ![impplaylist.png](https://raw.githubusercontent.com/RapidEdwin08/imp/main/main-imp/icons/imp/impplaylist.png )  
 
-Based on every article you ever read about mpg123 scripts in RetroPie (No OGG Support).  
+Based on every article you ever read about mpg123 scripts in RetroPie *(No OGG Support)*.  
 Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files like a ROM.  
 Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
-~~[Recall Last Track/Retains] NOT Retained at STARTUP in LITE Mode.~~  
+~~[Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.~~  
 *v2023.03 Now Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown.*  
 
 **Before you get started:**  
 - Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
-- Recommend your Music File *Extensions* be either ALL *lower-case* or *UPPER-CASE* for IMP `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
-Results may vary using File Extensions such as`*.mP3 .Mp3 .pLs .PlS .M3u .m3U*` since Linux is cAsE-sEnSiTiVe  
+- Recommend your Music File *EXTENSIONS* be either ALL *lower-case* or *UPPER-CASE* eg. `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
-If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].  
+If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].   
+*0ptional User Gamelist file now included with v2023.03*  
 
 **IMP Music Folders [v2022.10]:**  
 DEFAULT IMP Music Folder: *[..retropiemenu/imp/music]*  
@@ -68,11 +68,9 @@ It is still Recommended you Disable your Current BGM Scripts Before Installing [
 
 0THER RETROPIE IMAGES:  
 You can install [IMP] on a range of 0ther [Non-Default] RetroPie Images  
-The Installer is built to handle a small set of SUPREME Images as well  
-***NO AFFILLIATION*** to SUPREME TEAM or anyone else Referenced  
-You can CHECK your Non-Default RetroPie Image by Entering the CUSTOM [IMP] Menu  
+You can also CHECK your Non-Default RetroPie Image by Entering the CUSTOM [IMP] Menu  
 If you see your Image NAME DETECTED when Entering the CUSTOM [IMP] Menu, you should NOT need the CUSTOM Installer  
-It is RECOMMENDED to try the STANDARD Install First Regardless of the RetroPie Image  
+*It is RECOMMENDED to try the **AUTO-INSTALL** First Regardless of the RetroPie Image*  
 
 CUSTOM [IMP]:  
 [IMP] 0ffers a CUSTOM INSTALL that gives you the 0pportunity to Modify the Scripts before Install  
@@ -197,6 +195,10 @@ cd ~/imp && ./imp_setup.sh
 **[PC/0ther] Utilities**:  
 - [Add/Remove] IMP [autostart.desktop] Shortcut to System Start  
 - [Add/Remove] IMP [Stop.sh] Script to Emulationstation Quit  
+
+**0ther Features:**  
+IMP can properly Load *Desktop* and *Kodi* from the *RetroPie Menu* while Installed.  
+Simply Place *[Desktop.sh]* and *[Kodi.sh]* into ~/RetroPie/retropiemenu/  
 
 ## License
 [GNU](https://www.gnu.org/licenses/gpl-3.0.en.html)
