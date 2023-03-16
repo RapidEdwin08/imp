@@ -15,7 +15,7 @@ If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually 
 *0ptional User Gamelist file now included with v2023.03*  
 
 **IMP Music Folders [v2022.10]:**  
-DEFAULT IMP Music Folder: *[..retropiemenu/imp/music]*  
+DEFAULT IMP Music Folder: ***[..retropiemenu/imp/music]***  
 A *Symbolic Link* to *[..roms/music]* is Created Inside the Default IMP Music Folder *[..retropiemenu/imp/music]*  
 On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/imp/music]* *If it Exists*  
 On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropiemenu/music]*  
@@ -39,11 +39,11 @@ IMP Will *Append* *[imp-user-gamelist.xml]* IF Found at *Install* and *[gamelist
 Simply Place *[imp-user-gamelist.xml]* in the Main IMP Setup Directory [~/imp/].  
 Example *[imp-user-gamelist.xml.0FF]* Included  
 
-**If you are [Upgrading] to a Newer Version of IMP:**  
+## UPGRADING:  
 UNINSTALL [IMP] FIRST using the SETUP Script *CURRENTLY INSTALLED*  
 Then BACKUP or REMOVE the 0lder IMP Setup Folder/Files  
 
-BACKUP the 0lder ~/imp Directory {and ~/imp-setup.tar.gz} Before Installing Newer Version of [IMP]:  
+To **BACKUP** the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
 ```bash
 cd ~ #Change to Home Directory
 mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
@@ -51,35 +51,33 @@ mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
 
 ```
 
-To REMOVE the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
+To **REMOVE** the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
 ```bash
 cd ~ #Change to Home Directory
 rm ~/imp-setup.tar.gz
 rm ~/imp -R -f #ALWAYS PROCEED WITH CAUTION USING rm .. -R -f
 ```
-~~*You may need to use [sudo mv] or [sudo rm] if you used [make-install] mpg123 due to the [SOURCE] folder*~~  
-v2022.10 now uses the home directory for building mpg123 from Source and Includes a Clean Source Option  
 
-0THER BGMs ALREADY INSTALLED:  
+**0THER BGMs ALREADY INSTALLED:**  
 [IMP] will attempt to Disable (NOT Remove) the following BGMs Indiscriminately upon Install:  
 Livewire, BGM Naprosnia, BGM Rydra, BGM OfficialPhilcomm, Generic mpg123 Scripts  
 [IMP] will attempt to Re-Enable them Upon Uninstall  
 It is still Recommended you Disable your Current BGM Scripts Before Installing [IMP] If you can  
 
-0THER RETROPIE IMAGES:  
+**0THER RETROPIE IMAGES:**  
 You can install [IMP] on a range of 0ther [Non-Default] RetroPie Images  
 You can also CHECK your Non-Default RetroPie Image by Entering the CUSTOM [IMP] Menu  
 If you see your Image NAME DETECTED when Entering the CUSTOM [IMP] Menu, you should NOT need the CUSTOM Installer  
 *It is RECOMMENDED to try the **AUTO-INSTALL** First Regardless of the RetroPie Image*  
 
-CUSTOM [IMP]:  
+**CUSTOM [IMP]:**  
 [IMP] 0ffers a CUSTOM INSTALL that gives you the 0pportunity to Modify the Scripts before Install  
 Selecting CUSTOM [IMP] will Create the Files Required for you in ~/imp/custom-imp  
 You are Expected to VERIFY the Scripts in [custom-imp] and MODIFY IF NEEDED  
 TEMPLATES are provided for Reference in: ~/imp/custom-imp/templates  
 A README is included in the Installer for more details on [custom-imp]  
 
-[mpg123] INSTALL UTILITIES:  
+**[mpg123] INSTALL UTILITIES:**  
 [IMP] 0ffers a range of Alternative 0ptions for installing mpg123 if needed  
 This can be useful for 0lder RetroPie images with outdated repositories, or [0ffline] Installs  
 The [make-install] 0ptions Provided in the [IMP] Installer have been Configured For/Tested On [Pi Zero/2/W 1/2/3/4]  
@@ -153,7 +151,7 @@ Shuffle Playlist [Off/On]
 Delay at Startup [seconds]  
 
 ## PLAY MODES  
-LITE MODE [On]: Log to TMPFS (RAM), Track Position Retained @Poweroff if Properly Shutdown [Recommended for SD-Cards]  
+LITE MODE [On]: Log to TMPFS (RAM), Track Position Retained @Poweroff *If Properly Shutdown* [Recommended for SD-Cards]  
 LITE MODE [Off]: Log to File (Disk), Track Position Retained @PowerOff [**NOT** Recommended for SD-Cards]  
 
 INFINITE MODE [On]: Infinite L00P of Current Playlist  
