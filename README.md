@@ -9,7 +9,7 @@ Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INF
 
 **Before you get started:**  
 - Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
-- Recommend your Music File *EXTENSIONS* be either ALL *lower-case* or *UPPER-CASE* eg. `(.mp3 .MP3 .pls. PLS .m3u .M3U)`  
+- Recommend your Music File *EXTENSIONS* be either ALL *lower-case* or *UPPER-CASE* eg. `(.mp3 .MP3 .pls .PLS .m3u .M3U)`  
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].   
 *0ptional User Gamelist file now included with v2023.03*  
