@@ -13,7 +13,7 @@ SET Path [./imp/music/*] OR [./imp/music/_roms_music/*] for the Symbolic Link to
 	</folder>
 	<game>
 		<path>./imp/music/QCDE/00 Slipgate.mp3</path>
-		<name>00 Slipgate.mp3</name>
+		<name>00 Slipgate</name>
 		<desc>Quake Champions Doom Edition</desc>
 		<image>./icons/QCDE.png</image>
 	</game>
@@ -25,7 +25,7 @@ SET Path [./imp/music/*] OR [./imp/music/_roms_music/*] for the Symbolic Link to
 	</folder>
 	<game>
 		<path>./imp/music/_roms_music/QuakeII/track07.mp3</path>
-		<name>track07.mp3</name>
+		<name>track07</name>
 		<desc>Quake II</desc>
 		<image>./icons/QuakeII.png</image>
 	</game>
