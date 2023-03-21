@@ -20,7 +20,9 @@ if [ $(cat $IMPSettings/startupsong.play) == "2" ]; then
 fi
 
 # Start 0mxmon here if Needed - almost all IMP scripts call play.sh
-if [ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ] && [ ! -f /dev/shm/0mxMonLoop.Active ]; then	bash "$IMP/0mxmon.sh" &; fi
+if [[ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]] && [[ ! -f /dev/shm/0mxMonLoop.Active ]]; then
+	bash "$IMP/0mxmon.sh" &
+fi
 
 # Continue mpg123 if coming from a Paused state
 result=`pgrep mpg123`
