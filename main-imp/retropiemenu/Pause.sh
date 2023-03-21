@@ -11,6 +11,7 @@ echo "0" > $IMPSettings/music-switch.flag
 # Stop 0mxmon while paused
 if [ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]; then
 	rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
+	rm /dev/shm/0mxwaitstart.sh > /dev/null 2>&1
 	# kill instances of 0mxmon script
 	PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
 	kill $PIDplayloop > /dev/null 2>&1
