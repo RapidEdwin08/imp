@@ -19,7 +19,9 @@ musicDIR=~/RetroPie/retropiemenu/imp/music
 BGMdir="$musicDIR/bgm"
 
 # Start 0mxmon here if Needed - previous.sh is one of the few scripts that does not call play.sh
-if [ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ] && [ ! -f /dev/shm/0mxMonLoop.Active ]; then	bash "$IMP/0mxmon.sh" &; fi
+if [[ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]] && [[ ! -f /dev/shm/0mxMonLoop.Active ]]; then
+	bash "$IMP/0mxmon.sh" &
+fi
 
 # Full Stop
 bash $IMP/stop.sh
