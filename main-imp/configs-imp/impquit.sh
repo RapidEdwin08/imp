@@ -9,6 +9,7 @@ if [ -f /dev/shm/current-track ] && [ $(cat /opt/retropie/configs/imp/settings/l
 	# Don't Move the 0riginal [current-track] - This might be Called From ES Quit Scripts / PC Utilites
 	cp /dev/shm/current-track /dev/shm/current-track.lite
 	mv /dev/shm/current-track.lite /opt/retropie/configs/imp/playlist/current-track > /dev/null 2>&1
+	sudo chmod 777 /opt/retropie/configs/imp/playlist/current-track
 fi
 
 # Do not play the quitsong if it's already found @ES Quit
