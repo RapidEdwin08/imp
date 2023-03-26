@@ -1455,6 +1455,10 @@ PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
 kill $PIDplayloop > /dev/null 2>&1
 rm /dev/shm/0mxwaitstart.sh > /dev/null 2>&1
 
+# To Prevent impquit-service permissons issue
+sudo chmod 777 /opt/retropie/configs/imp/playlist/current-track
+sudo rm /opt/retropie/configs/imp/playlist/current-track
+
 # Restore [smb.conf] if Backup is found
 if [ -f /etc/samba/smb.conf.b4imp ]; then
     sudo mv /etc/samba/smb.conf.b4imp /etc/samba/smb.conf
