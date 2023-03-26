@@ -1456,8 +1456,8 @@ kill $PIDplayloop > /dev/null 2>&1
 rm /dev/shm/0mxwaitstart.sh > /dev/null 2>&1
 
 # To Prevent impquit-service permissons issue
-sudo chmod 777 /opt/retropie/configs/imp/playlist/current-track
-sudo rm /opt/retropie/configs/imp/playlist/current-track
+sudo chmod 777 /opt/retropie/configs/imp/playlist/current-track > /dev/null 2>&1
+sudo rm /opt/retropie/configs/imp/playlist/current-track > /dev/null 2>&1
 
 # Restore [smb.conf] if Backup is found
 if [ -f /etc/samba/smb.conf.b4imp ]; then
