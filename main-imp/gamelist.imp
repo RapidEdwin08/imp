@@ -635,7 +635,7 @@ Fades Volume @Intervals of [x10]
 		<path>./imp/Settings/OMX Monitor</path>
 		<name>{OMX Monitor}</name>
 		<desc>[IMP] OMX Monitor.
-[RC1]</desc>
+[RC2]</desc>
 		<image>./icons/impsettings.png</image>
 	</folder>
 	<game>
