@@ -272,7 +272,10 @@ Fades Volume @Intervals of [x10]
 	<game>
 		<path>./imp/Settings/Game Settings/Music 0ver Games [On].sh</path>
 		<name>Music 0ver Games [On]</name>
-		<desc>[ENABLE]: Music Over Games</desc>
+		<desc>[ENABLE]: Music Over Games
+Recommend Changing RetroArch Audio Driver to Something 0ther than ALSA.
+RetroArch -&gt; Settings -&gt; Drivers -&gt; Audio &quot;SDL2&quot;
+Save CFG -&gt; Main Menu -&gt; Configuration File -&gt;  &quot;Save Current Configuration&quot;</desc>
 		<image>./icons/impsettingmusicon.png</image>
 	</game>
 	<game>
@@ -655,7 +658,7 @@ Fades Volume @Intervals of [x10]
 		<path>./imp/Settings/OMX Monitor/[ReadMe] OMX Monitor.sh</path>
 		<name># ReadMe OMX Monitor #</name>
 		<desc>[README]: OMX Monitor
-[RC1]</desc>
+[RC2]</desc>
 		<image>./icons/impsettingomxmonreadme.png</image>
 	</game>
 	<game>
