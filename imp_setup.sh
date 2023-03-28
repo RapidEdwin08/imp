@@ -550,6 +550,7 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME PRO BY THE SUPREME TEAM' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Pro (Pi4 20200401)"; fi
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME DUO BY THE SUPREME TEAM AND monkaBlyat.' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Duo (Unofficial) (Pi4B 20200104)"; fi
 	if [ "$(cat ~/.bashrc | grep -q 'SUPREME ULTRA V1 BY THE SUPREME TEAM' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Ultra V1 (Pi4 20210121)"; fi
+	if [ "$(cat ~/.bashrc | grep -q 'SUPREME ULTRA V2.0' ; echo $?)" == '0' ]; then detectTYPE="[SUPREME] Ultra V2.0 (202304)"; fi
 	#if [ -d /opt/retropie/configs/all/emulationstation/themes/MB\ Custom\ Back\ to\ the\ Future\ Theme\ 2020-21/ ]; then detectTYPE="[MBM] BTTF PleasureParadise (Pi4 19851026)"; fi
 	
 	# README Custom Install
@@ -837,20 +838,20 @@ if [ ! -f ~/.bashrc.b4imp ]; then cp ~/.bashrc ~/.bashrc.b4imp; fi
 bashrcCHECK=$(cat ~/.bashrc | grep -q 'pkill mpg123' ; echo $?)
 if [ "$bashrcCHECK" == '0' ]; then
 	# Replace [[ $(tty) == "/dev/tty1" ]] && pkill mpg123
-	sudo sed -i s+'\[\[ $(tty) == \"/dev/tty1\" \]\] \&\& pkill mpg123'+'\[\[ $(tty) == \"/dev/tty1\" ]] \&\& bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
+	sudo sed -i s+'\[\[ $(tty) == \"/dev/tty1\" \]\] \&\& pkill mpg123'+'\[\[ $(tty) == \"/dev/tty1\" ]] \&\& bash /opt/retropie/configs/imp/run-onbashrc.sh'+ ~/.bashrc
 	# Replace pkill mpg123
-	sudo sed -i s+'pkill mpg123'+'bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
+	sudo sed -i s+'pkill mpg123'+'bash /opt/retropie/configs/imp/run-onbashrc.sh'+ ~/.bashrc
 else
 	# Replace # RETROPIE PROFILE END - IF [.bashrc] did NOT Contain '# RETROPIE PROFILE END'  it will after this
-	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
+	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/run-onbashrc.sh'+ ~/.bashrc
 	echo '# RETROPIE PROFILE END' >> ~/.bashrc
 fi
 
 # [IMP] might NOT have been added IF [.bashrc] did NOT Contain '# RETROPIE PROFILE END'  - Final check
-IMPbashrcCHECK=$(cat ~/.bashrc | grep -q 'stop.sh continue' ; echo $?)
+IMPbashrcCHECK=$(cat ~/.bashrc | grep -q 'run-onbashrc.sh' ; echo $?)
 if [ "$IMPbashrcCHECK" == '1' ]; then
 	# Replace # RETROPIE PROFILE END
-	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/stop.sh continue'+ ~/.bashrc
+	sudo sed -i s+'# RETROPIE PROFILE END'+'\[\[ $(tty) == "/dev/tty1" \]\] \&\& bash /opt/retropie/configs/imp/run-onbashrc.sh'+ ~/.bashrc
 	echo '# RETROPIE PROFILE END' >> ~/.bashrc
 fi
 
