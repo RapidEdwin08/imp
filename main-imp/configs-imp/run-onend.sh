@@ -80,11 +80,12 @@ fi
 # Parse amixer output for volume - /dB/ or /Left:/ depending on Version of the OS
 # awk -F"[][]" '/dB/ { print $2 }' <(amixer sget Master)
 # awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master)
+# awk 'END{print}' | cut -d '%' -f 1 | cut -d[ -f2-
 
 # System may be using pulseaudio - use variable amixerCMD
 amixerCMD=amixer
 
-# Obtain current Volume Setting before fade out - Try BOTH  '/dB/  and   '/Left:/
+# Obtain current Volume Setting before fade - Try BOTH  '/dB/  and   '/Left:/
 currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/dB/ { print $2 }' | cut -d '%' -f 1 )
 if [[ $currentVOL == '' ]]; then
 	currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/Left:/ { print $2 }' | cut -d '%' -f 1 )
@@ -93,17 +94,29 @@ fi
 # Try pulseaudio IF STILL Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == '' ]]; then
 	amixerCMD='amixer -D pulse'
-	# Obtain current Volume Setting before fade out - Try BOTH  '/dB/  and   '/Left:/ AGAIN with [amixer -D pulse]
+	# Obtain current Volume Setting before fade - Try BOTH  '/dB/  and   '/Left:/ AGAIN with [amixer -D pulse]
 	currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/dB/ { print $2 }' | cut -d '%' -f 1 )
 	if [[ $currentVOL == '' ]]; then
 		currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/Left:/ { print $2 }' | cut -d '%' -f 1 )
 	fi
 fi
 
+# Last Try to Obtain current Volume Setting
+# amixer sget Master 2>/dev/null | awk 'END{print}' | cut -d '%' -f 1 | cut -d[ -f2-
+if [[ $currentVOL == '' ]]; then
+	# Obtain current Volume Setting before fade - Works with Q4OS
+	amixerCMD='amixer'
+	currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk 'END{print}' | cut -d '%' -f 1 | cut -d[ -f2- )
+	if [[ $currentVOL == '' ]]; then
+		amixerCMD='amixer -D pulse'
+		currentVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk 'END{print}' | cut -d '%' -f 1 | cut -d[ -f2- )
+	fi
+fi
+
 # Result Expected if ERROR - amixer: Unable to find simple control 
 if [[ $currentVOL == '' ]]; then
-		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade Out..."
-		bash "$IMP/stop.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
+		echo "Unable to Identify Obtain Current VOLUME. Skipping Fade ..."
+		bash "$IMP/play.sh" continue > /dev/null 2>&1 #pkill -STOP mpg123
 		exit 0
 fi
 
@@ -124,6 +137,12 @@ dynamicVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/dB
 if [[ $dynamicVOL == '' ]]; then
 	# set Dynamic Volume to check while increasing volume - '/Left:/
 	dynamicVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk -F"[][]" '/Left:/ { print $2 }' | cut -d '%' -f 1 )
+fi
+
+# Last Try to Obtain Dynamic Volume Setting -  Works with Q4OS
+if [[ $dynamicVOL == '' ]]; then
+	# set Dynamic Volume to check while increasing volume - '/Left:/
+	dynamicVOL=$($amixerCMD sget $audioDEVICEcurrent 2>/dev/null | awk 'END{print}' | cut -d '%' -f 1 | cut -d[ -f2- )
 fi
 
 # Continue player
