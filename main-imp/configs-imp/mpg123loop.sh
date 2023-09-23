@@ -37,9 +37,10 @@ if [ "$httpSTREAM" == '1' ]; then
 	fi
 fi
 
-# Settings Flags
-echo '0' > $IMPSettings/pause.flag
-echo "1" > $IMPSettings/music-switch.flag
+# https://github.com/RapidEdwin08/imp/issues/5 - Reported by gloony on Aug 16 2023
+# Settings Flags *MOVED* - Startup/Quit Song Actions should NOT Touch the [music-switch.flag]
+##echo '0' > $IMPSettings/pause.flag
+##echo "1" > $IMPSettings/music-switch.flag
 
 # Determine ABC or Shuffle Playlist from Settings Flags
 if [ $(cat $IMPSettings/shuffle.flag) == "1" ]; then
@@ -88,6 +89,10 @@ if [ -f "$startupMP3" ] && [ $(cat $IMPSettings/startupsong.play) == "3" ]; then
 	bash "$IMP/play.sh" &
 	exit 0
 fi
+
+# [music-switch.flag] Settings Flags AFTER Startup/Quit Song Actions
+echo '0' > $IMPSettings/pause.flag
+echo "1" > $IMPSettings/music-switch.flag
 
 # [IMP] FULL MODE - Always Logging while Playing - Full Features
 if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
