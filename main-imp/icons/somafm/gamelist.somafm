@@ -239,11 +239,44 @@
 		<image>./icons/xmasinfrisko-400.jpg</image>
 	</game>
 	<game>
+		<path>./imp/music/streams/SomaFM/deptstore.pls</path>
+		<name>[Department Store Christmas]</name>
+		<desc>Department Store Christmas:
+Holiday Elevator Music from a more innocent time.</desc>
+		<image>./icons/deptstorechristmas-400.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SomaFM/doomed.pls</path>
+		<name>[Doomed]</name>
+		<desc>Doomed:
+Where every day is Halloween: Dark industrial/ambient music for tortured souls.</desc>
+		<image>./icons/doomed-400.jpg</image>
+	</game>
+	<game>
 		<path>./imp/music/streams/SomaFM/specials.pls</path>
 		<name>[SomaFM Special]</name>
 		<desc>SomaFM Special:
- Now featuring Tiki Time, Bossa Beyond, Surf Report & More.
- [DOOMED] Halloween Sountrack that runs October until November 15th.
- [Department Store Christmas] Holiday Sountrack that runs after November 15th until 1st week in January.</desc>
+This is where we experiment. New channel ideas, mini-channels that don't have enough content to be a full-time channel, stuff like that.</desc>
 		<image>./icons/specials-400.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SomaFM/bossa.pls</path>
+		<name>[Bossa Beyond]</name>
+		<desc>Bossa Beyond:
+Silky-smooth, laid-back Brazilian-style rhythms of Bossa Nova, Samba and beyond.</desc>
+		<image>./icons/bossa-400.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SomaFM/insound.pls</path>
+		<name>[The In-Sound]</name>
+		<desc>The In-Sound:
+60s/70s Hipster Euro Pop where psychedelic melodies meets groovy vibes.</desc>
+		<image>./icons/insound-400.jpg</image>
+	</game>
+	<game>
+		<path>./imp/music/streams/SomaFM/tikitime.pls</path>
+		<name>[Tiki Time]</name>
+		<desc>Tiki Time:
+Classic Tiki music and Vintage island rhythms to sip cocktails by.</desc>
+		<image>./icons/tikitime-400.jpg</image>
 	</game>

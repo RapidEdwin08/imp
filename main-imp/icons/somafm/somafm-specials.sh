@@ -1,5 +1,7 @@
 #!/bin/bash
 
+# *Deprecated* Department Store Christmas and DOOMED are now dedicated channels
+
 # SomaFM Seasonal Stations - Check Current Date and Icon - Swap Icon accordingly [specials-400.jpg]
 currentDATE=$(date +' %m%d')
 currentICON=$(du -b ~/RetroPie/retropiemenu/icons/specials-400.jpg | awk '{print $1}')
