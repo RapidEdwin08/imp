@@ -41,14 +41,15 @@ if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"ON "; else infinite_mo
 if [ $lite_mode == "1" ]; then lite_mode=${GREEN}"ON "; else lite_mode=${RED}"OFF"; fi
 if [ $startupsong_mode == "1" ]; then startupsong_mode=${GREEN}"ON "; else startupsong_mode=${RED}"OFF"; fi
 if [ $shuffleboot_mode == "1" ]; then shuffleboot_mode=${GREEN}"ON "; else shuffleboot_mode=${RED}"OFF"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${RED}"ALL"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${RED}"ALL"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${RED}"BGM"; fi
-if [ $randomizer_boot == "0" ] &&  [ $randomizer_mode == "3" ]; then randomizer_mode=${RED}"PLS"; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${GREEN}"ALL"; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${RED}"ALL"; randomizer_boot=${RED}"OFF"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${RED}"ALL"; randomizer_boot=${RED}"OFF"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${RED}"ALL"; randomizer_boot=${RED}"OFF"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${RED}"BGM"; randomizer_boot=${RED}"OFF"; fi
+if [ $randomizer_boot == "0" ] &&  [ $randomizer_mode == "3" ]; then randomizer_mode=${RED}"PLS"; randomizer_boot=${RED}"OFF"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_mode=${GREEN}"ALL"; randomizer_boot=${GREEN}"ON "; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode=${GREEN}"ALL"; randomizer_boot=${GREEN}"ON "; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode=${GREEN}"BGM"; randomizer_boot=${GREEN}"ON "; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode=${GREEN}"PLS"; randomizer_boot=${GREEN}"ON "; fi
 if [ $quitsong_flag == "1" ]; then quitsong_mode=${GREEN}"ON "; else quitsong_mode=${RED}"OFF"; fi
 
 # Idle Settings for SLEEP
@@ -151,7 +152,7 @@ echo -e " | Music @Boot:$music_start${NC}  Delay: $delay_startup${NC} |         
 echo -e " | startup.mp3: $startupsong_mode${NC} @quit: $quitsong_mode${NC} |      INFINITE Mode: $infinite_mode${NC} | "
 echo -e " | BGM A~SIDE: $aside_music${NC} B~SIDE: $bside_music${NC} |    Music OVER Game: $music_over_game${NC} | "
 echo -e " | Shuffle Playlist @Boot: $shuffleboot_mode${NC} | FADE Volume Out/In: $fade_out${NC} | "
-echo -e " | $omxmonSETTING${NC} RANDOMIZER: $randomizer_mode${NC} |    DELAY @Game End: $delay_playback${NC} | "
+echo -e " | Randomizer: $randomizer_mode${NC}  @Boot: $randomizer_boot${NC} |    DELAY @Game End: $delay_playback${NC} | "
 echo -e " | $stopORIdle${NC} @Screensaver: $sleepIMPscreen${NC} | $idleORkill${NC} @Sleep: $sleepIMPsleep${NC} | "
 echo " \`-------------------------------------------------------'  "
 echo -e " http.server: [$http_setting${NC}] ${blue}[${YEL}http://$currentHTTP${blue}]${NC} [$http_server${NC}]"
