@@ -14,7 +14,7 @@ Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INF
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].   
 *0ptional User Gamelist file now included since v2023.03*  
 
-**IMP Music Folders [v2022.10 and Up]:**  
+**IMP Music Folders [>= v2022.10]:**  
 DEFAULT IMP Music Folder: ***[..retropiemenu/imp/music]***  
 A *Symbolic Link* to *[..roms/music]* is Created Inside the Default IMP Music Folder *[..retropiemenu/imp/music]*  
 On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/imp/music]* *If it Exists*  
