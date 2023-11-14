@@ -5,14 +5,14 @@ Based on every article you ever read about mpg123 scripts in RetroPie *(No OGG S
 Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files like a ROM.  
 Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
 ~~[Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.~~  
-*v2023.03 Now Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown.*  
+*v2023.11 Now Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown.*  
 
 **Before you get started:**  
 - Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
 - Recommend your Music File *EXTENSIONS* be either ALL *lower-case* or *UPPER-CASE* eg. `(.mp3 .MP3 .pls .PLS .m3u .M3U)`  
 - Recommend [ParseGamelistOnly] set to **OFF**, 0therwise any/all Music files not in your [gamelist.xml] will not show in ES.  
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].   
-*0ptional User Gamelist file now included with v2023.03*  
+*0ptional User Gamelist file now included since v2023.03*  
 
 **IMP Music Folders [v2022.10]:**  
 DEFAULT IMP Music Folder: ***[..retropiemenu/imp/music]***  
@@ -25,7 +25,7 @@ On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropie
 cd ~
 git clone --depth 1 https://github.com/RapidEdwin08/imp.git
 sudo chmod 755 ~/imp/imp_setup.sh
-cd ~/imp && ./imp_setup.sh
+cd ~/imp && ./imp_setup.sh && cd ~
 
 ```
 
@@ -133,11 +133,6 @@ Idle at Screensaver [Off/Any/VideoOnly]
 Idle IMP Behavior at Screensaver [Stop/AdjustVolume]  
 Stop IMP at Sleep [Off/On/+KillDisplay]  
 Idle IMP Volume % [Volume Level when Idle]  
-
-**OMX Monitor [BETA]**  
-ReadMe OMX Monitor [Infinite L00P Script to Idle IMP at omxplayer]  
-OMX Monitor [Off/On]  
-Remain Idle for [seconds]  
 
 **Randomizer Settings** [*Will Override Playlist at Startup*] {Icons Change to Reflect BGM Settings}  
 Music Randomizer [Off/On]  

@@ -76,6 +76,7 @@ mpg123FILEREF=$(
 echo
 echo "                    # [mpg123] Install Utilities #"
 echo "                        ~/imp/main-imp/offline"
+echo "                        [mpg123-1.32.3.tar.bz2]"
 echo "                        [mpg123-1.31.2.tar.bz2]"
 echo "                        [mpg123-1.29.3.tar.bz2]"
 echo "                        [mpg123-1.25.10.tar.bz2]"
@@ -256,15 +257,9 @@ if [ "$selectTYPE" == "$IMPstandard" ]; then
 	
 	# Attempt to Seek out and Copy Current Scripts to be Installed in [/opt/retropie/configs/all/]
 	if [ -f /opt/retropie/configs/all/autostart.sh ]; then
-		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'while pgrep omxplayer' ; echo $?) == '0' ]; then
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs] [shutdown] [exit]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > main-imp/configs-all/autostart.sh
-		else
-			# Add [while pgrep omxplayer >/dev/null; do sleep 1; done] if Not found
-			echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > main-imp/configs-all/autostart.sh
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs] [shutdown] [exit]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" >> main-imp/configs-all/autostart.sh
-		fi
+		# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs] [shutdown] [exit]
+		cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > main-imp/configs-all/autostart.sh
+		
 		# Add [kodi] if found
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'kodi #auto' ; echo $?) == '0' ]; then echo 'kodi #auto' >> main-imp/configs-all/autostart.sh; fi
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'kodi-standalone #auto' ; echo $?) == '0' ]; then echo 'kodi-standalone #auto' >> main-imp/configs-all/autostart.sh; fi
@@ -296,8 +291,7 @@ if [ "$selectTYPE" == "$IMPstandard" ]; then
 	
 	# CREATE Core [mpg123] Scripts if still NOT found
 	if [ ! -f main-imp/configs-all/autostart.sh ]; then
-		echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > main-imp/configs-all/autostart.sh
-		echo 'bash /opt/retropie/configs/imp/boot.sh > /dev/null 2>&1 & #auto' >> main-imp/configs-all/autostart.sh
+		echo 'bash /opt/retropie/configs/imp/boot.sh > /dev/null 2>&1 & #auto' > main-imp/configs-all/autostart.sh
 		echo 'emulationstation #auto' >> main-imp/configs-all/autostart.sh
 	fi
 	if [ ! -f main-imp/configs-all/runcommand-onend.sh ]; then
@@ -383,16 +377,9 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	
 	# Attempt to Seek out and Copy Current Scripts to be Installed in [/opt/retropie/configs/all/]
 	if [ ! -f custom-imp/autostart.sh ] && [ -f /opt/retropie/configs/all/autostart.sh ]; then
-		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'while pgrep omxplayer' ; echo $?) == '0' ]; then
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > custom-imp/autostart.sh
-		else
-			# Add [while pgrep omxplayer >/dev/null; do sleep 1; done] if Not found
-			echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > custom-imp/autostart.sh
-			# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
-			cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" >> custom-imp/autostart.sh
-		fi
-		
+		# Parse all lines Except [mpg123] [emulationstation] [kodi] [pegasus-fe #auto] [attract #auto] [pegasus-fe #auto] [attract #auto] [0ther BGMs]
+		cat /opt/retropie/configs/all/autostart.sh | grep -v "mpg123" | grep -v "audacious"| grep -v "BGM" | grep -v "bgm" | grep -v "retropie_music" | grep -v "DisableMusic" | grep -v "music_disable" | grep -v "emulationstation #auto" | grep -v "emulationstation --no-splash" | grep -v "pegasus-fe #auto" | grep -v "attract #auto" | grep -v "kodi" | grep -Fv "/opt/retropie/configs/imp/" | grep -Fv "#[IMP]" | grep -Fv "shutdown" | grep -Fv "exit" > custom-imp/autostart.sh
+			
 		# Add [kodi] if found
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'kodi #auto' ; echo $?) == '0' ]; then echo 'kodi #auto' >> custom-imp/autostart.sh; fi
 		if [ $(cat /opt/retropie/configs/all/autostart.sh | grep -q 'kodi-standalone #auto' ; echo $?) == '0' ]; then echo 'kodi-standalone #auto' >> custom-imp/autostart.sh; fi
@@ -424,8 +411,7 @@ if [ "$selectTYPE" == "$IMPcustom" ]; then
 	
 	# CREATE Core [mpg123] Scripts if still NOT found
 	if [ ! -f custom-imp/autostart.sh ]; then
-		echo 'while pgrep omxplayer >/dev/null; do sleep 1; done' > custom-imp/autostart.sh
-		echo '#[IMP] THIS LINE SHOULD BE ABOVE [emulationstation #auto]'  >> custom-imp/autostart.sh
+		echo '#[IMP] THIS LINE SHOULD BE ABOVE [emulationstation #auto]'  > custom-imp/autostart.sh
 		echo 'bash /opt/retropie/configs/imp/boot.sh > /dev/null 2>&1 & #auto' >> custom-imp/autostart.sh
 		echo 'emulationstation #auto' >> custom-imp/autostart.sh
 	fi
@@ -754,7 +740,7 @@ if [ ! -d "$IMPMenuRP/Settings/HTTP Server Settings" ]; then mkdir "$IMPMenuRP/S
 if [ ! -d "$IMPMenuRP/Settings/Randomizer Settings" ]; then mkdir "$IMPMenuRP/Settings/Randomizer Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Startup Settings" ]; then mkdir "$IMPMenuRP/Settings/Startup Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/General Settings" ]; then mkdir "$IMPMenuRP/Settings/General Settings"; fi
-if [ ! -d "$IMPMenuRP/Settings/OMX Monitor" ]; then mkdir "$IMPMenuRP/Settings/OMX Monitor"; fi
+##if [ ! -d "$IMPMenuRP/Settings/OMX Monitor" ]; then mkdir "$IMPMenuRP/Settings/OMX Monitor"; fi # *Deprecated*
 if [ ! -d "$IMPMenuRP/Volume" ]; then mkdir "$IMPMenuRP/Volume"; fi
 
 # Copy Files to configs
@@ -1337,22 +1323,29 @@ if [ "$installFLAG" == 'streams' ]; then
 	if [ ! -f "$musicDIR/streams/SomaFM/thistle.pls" ]; then wget --no-check-certificate https://somafm.com/thistle.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/u80s.pls" ]; then wget --no-check-certificate https://somafm.com/u80s.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/vaporwaves.pls" ]; then wget --no-check-certificate https://somafm.com/vaporwaves.pls -P "$musicDIR/streams/SomaFM"; fi
-	# Seasonal SomaFM
+	# Seasonal SomaFM - Availability may vary
 	if [ ! -f "$musicDIR/streams/SomaFM/christmas.pls" ]; then wget --no-check-certificate https://somafm.com/christmas.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/xmasrocks.pls" ]; then wget --no-check-certificate https://somafm.com/xmasrocks.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/jollysoul.pls" ]; then wget --no-check-certificate https://somafm.com/jollysoul.pls -P "$musicDIR/streams/SomaFM"; fi
 	if [ ! -f "$musicDIR/streams/SomaFM/xmasinfrisko.pls" ]; then wget --no-check-certificate https://somafm.com/xmasinfrisko.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/deptstore.pls" ]; then wget --no-check-certificate https://somafm.com/deptstore.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/doomed.pls" ]; then wget --no-check-certificate https://somafm.com/doomed.pls -P "$musicDIR/streams/SomaFM"; fi
+	# SomaFM Specials - Availability may vary
 	if [ ! -f "$musicDIR/streams/SomaFM/specials.pls" ]; then wget --no-check-certificate https://somafm.com/specials.pls -P "$musicDIR/streams/SomaFM"; fi
-		
+	if [ ! -f "$musicDIR/streams/SomaFM/tikitime.pls" ]; then wget --no-check-certificate https://somafm.com/tikitime.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/bossa.pls" ]; then wget --no-check-certificate https://somafm.com/bossa.pls -P "$musicDIR/streams/SomaFM"; fi
+	if [ ! -f "$musicDIR/streams/SomaFM/insound.pls" ]; then wget --no-check-certificate https://somafm.com/insound.pls -P "$musicDIR/streams/SomaFM"; fi
+	
 	# Copy SomaFM icon files to retropiemenu
 	cp main-imp/icons/somafm/*.png ~/RetroPie/retropiemenu/icons/
 	cp main-imp/icons/somafm/*.jpg ~/RetroPie/retropiemenu/icons/
 	
-	if [ ! -f "$IMP/somafm-specials.sh" ]; then
-		cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
-		sudo chmod 755 $IMP/somafm-specials.sh
-		bash $IMP/somafm-specials.sh
-	fi
+	# *Deprecated* Department Store Christmas and DOOMED are now dedicated channels
+	##if [ ! -f "$IMP/somafm-specials.sh" ]; then
+		##cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
+		##sudo chmod 755 $IMP/somafm-specials.sh
+		##bash $IMP/somafm-specials.sh
+	##fi
 fi
 
 # Create ES Scripts Folder
@@ -1450,7 +1443,7 @@ pkill -KILL mpg123
 # Turn Off HTTP Server - Cleans up $HTTPFolder/favicon.ico
 bash "$IMPMenuRP/Settings/HTTP Server Settings/HTTP Server [Off].sh"
 
-# Stop 0mxmon
+# Stop 0mxmon *Deprecated*
 rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
 PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
 kill $PIDplayloop > /dev/null 2>&1
@@ -1471,13 +1464,12 @@ fi
 ##if [ -f /opt/retropie/configs/all/autostart.sh.b4imp ]; then mv /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh; fi
 # Restore Content From Backup to Current # Add [+ DIFFs] from Current if found # Final Result = [Backup +DIFFs]
 cat /opt/retropie/configs/all/autostart.sh.b4imp > /dev/shm/autostart.sh
-fgrep -vf /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh | grep -v "emulationstation " | grep -v "while pgrep omxplayer" >> /dev/shm/autostart.sh
+fgrep -vf /opt/retropie/configs/all/autostart.sh.b4imp /opt/retropie/configs/all/autostart.sh | grep -v "emulationstation " >> /dev/shm/autostart.sh
 mv /dev/shm/autostart.sh /opt/retropie/configs/all/autostart.sh
 
 if [ ! -f /opt/retropie/configs/all/autostart.sh ]; then
 	# ?Create autostart.sh from scratch if NOT found?
-	echo "while pgrep omxplayer >/dev/null; do sleep 1; done" > /opt/retropie/configs/all/autostart.sh
-	echo "emulationstation #auto" >> /opt/retropie/configs/all/autostart.sh
+	echo "emulationstation #auto" > /opt/retropie/configs/all/autostart.sh
 fi
 
 # Restore [rc.local] if Backup is found
@@ -1586,7 +1578,7 @@ rm $IMPMenuRP/Settings/HTTP\ Server\ Settings/*.sh > /dev/null 2>&1
 rm $IMPMenuRP/Settings/Randomizer\ Settings/*.sh > /dev/null 2>&1
 rm $IMPMenuRP/Settings/Startup\ Settings/*.sh > /dev/null 2>&1
 rm $IMPMenuRP/Settings/General\ Settings/*.sh > /dev/null 2>&1
-rm $IMPMenuRP/Settings/OMX\ Monitor/*.sh > /dev/null 2>&1
+rm $IMPMenuRP/Settings/OMX\ Monitor/*.sh > /dev/null 2>&1 # *Deprecated* But Still Removed for 0lder Versions of IMP
 rm $IMPMenuRP/Volume/*.sh > /dev/null 2>&1
 
 # Remove [IMP] Directories from retropiemenu
@@ -1598,7 +1590,7 @@ rm -d $IMPMenuRP/Settings/HTTP\ Server\ Settings/ > /dev/null 2>&1
 rm -d $IMPMenuRP/Settings/Randomizer\ Settings/ > /dev/null 2>&1
 rm -d $IMPMenuRP/Settings/Startup\ Settings/ > /dev/null 2>&1
 rm -d $IMPMenuRP/Settings/General\ Settings/ > /dev/null 2>&1
-rm -d $IMPMenuRP/Settings/OMX\ Monitor/ > /dev/null 2>&1
+rm -d $IMPMenuRP/Settings/OMX\ Monitor/ > /dev/null 2>&1 # *Deprecated* But Still Removed for 0lder Versions of IMP
 rm -d $IMPMenuRP/Settings/ > /dev/null 2>&1
 rm -d $IMPMenuRP/Volume/ > /dev/null 2>&1
 # rm -d $IMPMenuRP/ > /dev/null 2>&1
@@ -1735,9 +1727,9 @@ rm ~/RetroPie/retropiemenu/icons/imprandomizeron.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizerpls.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartrandomizer.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstreamsdir.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impsettingomxmonoff.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impsettingomxmonon.png 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/impsettingomxmonreadme.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonoff.png 2>/dev/null # *Deprecated* But Still Removed for 0lder Versions of IMP
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonon.png 2>/dev/null # *Deprecated* But Still Removed for 0lder Versions of IMP
+rm ~/RetroPie/retropiemenu/icons/impsettingomxmonreadme.png 2>/dev/null # *Deprecated* But Still Removed for 0lder Versions of IMP
 rm ~/RetroPie/retropiemenu/icons/impsettingquitsongoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingquitsongon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impsettingidlestop.png 2>/dev/null
@@ -1758,6 +1750,7 @@ rm ~/RetroPie/retropiemenu/icons/darkzone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/deepspaceone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/defcon-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/defcon400.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/defcon400.png.0ld 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/digitalis-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dronezone-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/dubstep-400.jpg 2>/dev/null
@@ -1789,9 +1782,13 @@ rm ~/RetroPie/retropiemenu/icons/christmas-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/jollysoul-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/xmasinfrisko-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/xmasrocks-400.jpg 2>/dev/null
-rm ~/RetroPie/retropiemenu/icons/specials-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/deptstorechristmas-400.jpg 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/doomed-400.jpg 2>/dev/null
+# SomaFM Specials
+rm ~/RetroPie/retropiemenu/icons/specials-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/bossa-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/insound-400.jpg 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/tikitime-400.jpg 2>/dev/null
 
 # Remove SLAYRadio
 rm $musicDIR/SLAYRadio/*.m3u 2>/dev/null
@@ -1931,24 +1928,26 @@ confMPG123=$(dialog --no-collapse --title "  Select mpg123 Install Method  [Curr
 	--ok-label OK --cancel-label Back \
 	--menu "$mpg123FILEREF " 25 75 20 \
 	1 " [apt-get install] mpg123  [Recommended]" \
-	2 " [make install] mpg123-1.31.2" \
-	3 " [make install] mpg123-1.31.2  [Offline]" \
-	4 " [make install] mpg123-1.29.3" \
-	5 " [make install] mpg123-1.29.3  [Offline]" \
-	6 " [make install] mpg123-1.25.10" \
-	7 " [make install] mpg123-1.25.10 [Offline]" \
-	8 " [make install] mpg123-1.20.1" \
-	9 " [make install] mpg123-1.20.1  [Offline]" \
-	U " UNINSTALL mpg123-1.2.x.y" \
-	C " CLEAN UP  mpg123-1.2.x.y SOURCE" \
+	2 " [make install] mpg123-1.32.3" \
+	3 " [make install] mpg123-1.32.3  [Offline]" \
+	4 " [make install] mpg123-1.31.2" \
+	5 " [make install] mpg123-1.31.2  [Offline]" \
+	6 " [make install] mpg123-1.29.3" \
+	7 " [make install] mpg123-1.29.3  [Offline]" \
+	8 " [make install] mpg123-1.25.10" \
+	9 " [make install] mpg123-1.25.10 [Offline]" \
+	10 " [make install] mpg123-1.20.1" \
+	11 " [make install] mpg123-1.20.1  [Offline]" \
+	U " UNINSTALL mpg123-1.x.y.z" \
+	C " CLEAN UP  mpg123-1.x.y.z SOURCE" \
 	X " [KILL] ES/Pegasus/AM [Recommended before make install]" 2>&1>/dev/tty)
 	
 # mpg123 Manual Uninstall Confirmed - Otherwise Back to Main Menu
 if [ "$confMPG123" == 'U' ]; then
-	confUNmpg123=$(dialog --no-collapse --title "               UNINSTALL [mpg123-1.2.x.y]               " \
+	confUNmpg123=$(dialog --no-collapse --title "               UNINSTALL [mpg123-1.x.y.z]               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?             " 25 75 20 \
-		1 "><  UNINSTALL [mpg123-1.2.x.y]  ><" \
+		1 "><  UNINSTALL [mpg123-1.x.y.z]  ><" \
 		2 "Back to Menu" 2>&1>/dev/tty)
 	# Uninstall Confirmed - Otherwise Back to Main Menu
 	if [ "$confUNmpg123" == '1' ]; then mpg123UNINSTALL; fi
@@ -1957,14 +1956,17 @@ fi
 
 # Clean mpg123 Source Files and FOlders
 if [ "$confMPG123" == 'C' ]; then
-	confCLNmpg123=$(dialog --no-collapse --title "               CLEAN UP  mpg123-1.2.x.y SOURCE               " \
+	confCLNmpg123=$(dialog --no-collapse --title "               CLEAN UP  mpg123-1.x.y.z SOURCE               " \
 		--ok-label OK --cancel-label Back \
 		--menu "                          ? ARE YOU SURE ?                                 SOURCE: [$(ls -d1 ~/mpg123-*)]" 25 75 20 \
-		1 "><  CLEAN UP  mpg123-1.2.x.y SOURCE  ><" \
+		1 "><  CLEAN UP  mpg123-1.x.y.z SOURCE  ><" \
 		2 "Back to Menu" 2>&1>/dev/tty)
 	# Clean Confirmed - Otherwise Back to Main Menu
 	if [ "$confCLNmpg123" == '1' ]; then 
 		# Clean mpg123 Source Files and Folders
+		if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
+		if [ -d ~/mpg123-1.32.3 ]; then cd ~/imp; sudo rm ~/mpg123-1.32.3 -R; fi
+		
 		if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
 		if [ -d ~/mpg123-1.31.2 ]; then cd ~/imp; sudo rm ~/mpg123-1.31.2 -R; fi
 		
@@ -1978,7 +1980,7 @@ if [ "$confMPG123" == 'C' ]; then
 		if [ -d ~/mpg123-1.20.1 ]; then cd ~/imp; sudo rm ~/mpg123-1.20.1 -R; fi
 		
 		# Finished Clean up
-		dialog --no-collapse --title " * CLEAN UP  mpg123-1.2.x.y SOURCE COMPLETE *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+		dialog --no-collapse --title " * CLEAN UP  mpg123-1.x.y.z SOURCE COMPLETE *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
 	fi
 	mpg123MENU
 fi
@@ -1986,14 +1988,16 @@ fi
 # mpg123 Manual Install Confirmed - Otherwise Back to Main Menu
 if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '1' ]; then mpg123SELECT='[apt-get install] mpg123'; fi
-	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.31.2'; fi
-	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.31.2  [Offline]' ; fi
-	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
-	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.29.3  [Offline]' ; fi
-	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.25.10'; fi
-	if [ "$confMPG123" == '7' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
-	if [ "$confMPG123" == '8' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
-	if [ "$confMPG123" == '9' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
+	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.32.3'; fi
+	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.32.3  [Offline]' ; fi
+	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.31.2'; fi
+	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.31.2  [Offline]' ; fi
+	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
+	if [ "$confMPG123" == '7' ]; then mpg123SELECT='[make install] mpg123-1.29.3  [Offline]' ; fi
+	if [ "$confMPG123" == '8' ]; then mpg123SELECT='[make install] mpg123-1.25.10'; fi
+	if [ "$confMPG123" == '9' ]; then mpg123SELECT='[make install] mpg123-1.25.10 [Offline]'; fi
+	if [ "$confMPG123" == '10' ]; then mpg123SELECT='[make install] mpg123-1.20.1'; fi
+	if [ "$confMPG123" == '11' ]; then mpg123SELECT='[make install] mpg123-1.20.1  [Offline]'; fi
 	if [ "$confMPG123" == 'X' ]; then
 		confKILLfe=$(dialog --no-collapse --title "               CONFIRM [KILL] ES/Pegasus/AM               " \
 		--ok-label OK --cancel-label Back \
@@ -2038,6 +2042,14 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
+if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
+if [ -d ~/mpg123-1.32.3 ]; then
+	cd ~/mpg123-1.32.3
+	sudo make uninstall
+	cd ~/imp
+	sudo rm ~/mpg123-1.32.3 -R
+fi
+
 if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
 if [ -d ~/mpg123-1.31.2 ]; then
 	cd ~/mpg123-1.31.2
@@ -2076,6 +2088,37 @@ if [ "$confMPG123" == '1' ]; then
 fi
 
 if [ "$confMPG123" == '2' ]; then
+	# mpg123 v1.32.3 2023-10-02
+	rm ~/mpg123-1.32.3.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.3/mpg123-1.32.3.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.3/mpg123-1.32.3.tar.bz2.sig ~/
+	cd ~/
+	tar -xvf mpg123-1.32.3.tar.bz2
+	cd ~/mpg123-1.32.3
+	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
+	sudo make install
+	rm ~/mpg123-1.32.3.tar.bz2
+fi
+
+if [ "$confMPG123" == '3' ]; then
+	# Check for the mpg123 Offline Installation File
+	if [ ! -f main-imp/offline/mpg123-1.32.3.tar.bz2]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.32.3.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+	mainMENU
+	fi
+	
+	# mpg123 v1.32.3 2023-10-02 [Offline]
+	rm ~/mpg123-1.32.3.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.32.3.tar.bz2 ~/
+	cd ~/
+	tar -xvf mpg123-1.32.3.tar.bz2
+	cd ~/mpg123-1.32.3
+	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
+	sudo make install
+	rm ~/mpg123-1.32.3.tar.bz2
+fi
+
+if [ "$confMPG123" == '4' ]; then
 	# mpg123 v1.31.2 2023-01-14
 	rm ~/mpg123-1.31.2.tar.bz2 > /dev/null 2>&1
 	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.31.2/mpg123-1.31.2.tar.bz2 -P ~/
@@ -2088,15 +2131,25 @@ if [ "$confMPG123" == '2' ]; then
 	rm ~/mpg123-1.31.2.tar.bz2
 fi
 
-if [ "$confMPG123" == '3' ]; then
+if [ "$confMPG123" == '5' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.31.2.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.31.2.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
 	mainMENU
 	fi
+	
+	# mpg123 v1.31.2 2023-01-14 [Offline]
+	rm ~/mpg123-1.31.2.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.31.2.tar.bz2 ~/
+	cd ~/
+	tar -xvf mpg123-1.31.2.tar.bz2
+	cd ~/mpg123-1.31.2
+	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
+	sudo make install
+	rm ~/mpg123-1.31.2.tar.bz2
 fi
 
-if [ "$confMPG123" == '4' ]; then
+if [ "$confMPG123" == '6' ]; then
 	# mpg123 v1.29.3 2021-09-05
 	rm ~/mpg123-1.29.3.tar.bz2 > /dev/null 2>&1
 	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.29.3/mpg123-1.29.3.tar.bz2 -P ~/
@@ -2109,7 +2162,7 @@ if [ "$confMPG123" == '4' ]; then
 	rm ~/mpg123-1.29.3.tar.bz2
 fi
 
-if [ "$confMPG123" == '5' ]; then
+if [ "$confMPG123" == '7' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.29.3.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.29.3.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -2127,7 +2180,7 @@ if [ "$confMPG123" == '5' ]; then
 	rm ~/mpg123-1.29.3.tar.bz2
 fi
 
-if [ "$confMPG123" == '6' ]; then
+if [ "$confMPG123" == '8' ]; then
 	# mpg123 v1.25.10 2018-03-05
 	rm ~/mpg123-1.25.10.tar.bz2 > /dev/null 2>&1
 	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.25.10/mpg123-1.25.10.tar.bz2 -P ~/
@@ -2140,7 +2193,7 @@ if [ "$confMPG123" == '6' ]; then
 	rm ~/mpg123-1.25.10.tar.bz2
 fi
 
-if [ "$confMPG123" == '7' ]; then
+if [ "$confMPG123" == '9' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.25.10.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.25.10.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -2158,7 +2211,7 @@ if [ "$confMPG123" == '7' ]; then
 	rm ~/mpg123-1.25.10.tar.bz2
 fi
 
-if [ "$confMPG123" == '8' ]; then
+if [ "$confMPG123" == '10' ]; then
 	# mpg123 v1.20.1 2014-06-17
 	rm ~/mpg123-1.20.1.tar.bz2 > /dev/null 2>&1
 	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.20.1/mpg123-1.20.1.tar.bz2 -P ~/
@@ -2171,7 +2224,7 @@ if [ "$confMPG123" == '8' ]; then
 	rm ~/mpg123-1.20.1.tar.bz2
 fi
 
-if [ "$confMPG123" == '9' ]; then
+if [ "$confMPG123" == '11' ]; then
 	# Check for the mpg123 Offline Installation File
 	if [ ! -f main-imp/offline/mpg123-1.20.1.tar.bz2]; then
 	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.20.1.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
@@ -2215,6 +2268,13 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
+if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
+if [ -d ~/mpg123-1.32.3 ]; then
+	cd ~/mpg123-1.32.3
+	sudo make uninstall
+	cd ~/imp
+	sudo rm ~/mpg123-1.32.3 -R
+fi
 if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
 if [ -d ~/mpg123-1.31.2 ]; then
 	cd ~/mpg123-1.31.2
