@@ -5,7 +5,7 @@ Based on every article you ever read about mpg123 scripts in RetroPie *(No OGG S
 Integrated Music Player [IMP] allows you to Select and Play [MP3/PLS/M3U] Files like a ROM.  
 Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INFINITE and LITE Mode.  
 ~~[Recall Last Track/Position] NOT Retained at STARTUP in LITE Mode.~~  
-*v2023.11 Now Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown.*  
+*Retains Last Track/Position in LITE Mode @Poweroff if Properly Shutdown. (v2023.03 and Up)*  
 
 **Before you get started:**  
 - Recommend your Music File *NAMEs* do NOT contain Multiple Consecutive *Spaces* (Known Issue with mpg123).  
@@ -14,7 +14,7 @@ Automates Playlists, Retains Last Track/Position, Next/Previous Track, Fade, INF
 If you want to use [ParseGamelistOnly] *ON* with IMP, you will have to manually enter your Music Entries in [gamelist.xml].   
 *0ptional User Gamelist file now included since v2023.03*  
 
-**IMP Music Folders [v2022.10]:**  
+**IMP Music Folders [v2022.10 and Up]:**  
 DEFAULT IMP Music Folder: ***[..retropiemenu/imp/music]***  
 A *Symbolic Link* to *[..roms/music]* is Created Inside the Default IMP Music Folder *[..retropiemenu/imp/music]*  
 On *Install* the *[..retropiemenu/music]* Folder is Moved to *[..retropiemenu/imp/music]* *If it Exists*  
