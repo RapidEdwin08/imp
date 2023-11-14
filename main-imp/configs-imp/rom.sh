@@ -130,11 +130,6 @@ fi
 echo $PLfirst > $IMPPlaylist/shuffle
 sort --random-sort $IMPPlaylist/init | grep -Fv "$PLfirst" >> $IMPPlaylist/shuffle
 
-# Start 0mxmon here if Needed
-if [[ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]] && [[ ! -f /dev/shm/0mxMonLoop.Active ]]; then
-	bash "$IMP/0mxmon.sh" &
-fi
-
 # Start the Music Player Loop Script
 bash "$IMP/mpg123loop.sh" &
 exit 0

@@ -2,16 +2,7 @@
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 
-# A similar version of [run-onstart.sh] just for .bashrc to Respect Fade and kill 0MXM0N
-
-# Stop 0mxmon
-if [ $(cat $IMPSettings/0mxmon.flag) == "1" ]; then
-	rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
-	# kill instances of 0mxmon script
-	PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
-	kill $PIDplayloop > /dev/null 2>&1
-	rm /dev/shm/0mxwaitstart.sh > /dev/null 2>&1
-fi
+# A similar version of [run-onstart.sh] just for .bashrc to Respect Fade
 
 echo "0" > $IMPSettings/music-switch.flag
 
@@ -91,7 +82,7 @@ if [[ ! "$(cat $IMPSettings/volume.last 2>/dev/null)" == '' ]]; then
 fi
 
 # Set [volume.last]
-echo $currentVOL > $IMPSettings/volume.last
+##echo $currentVOL > $IMPSettings/volume.last #Do not leave volume.last on-bashrc
 
 # set Dynamic Volume to check while decreasing volume - '/dB/
 dynamicVOL=$currentVOL

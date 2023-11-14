@@ -10,6 +10,9 @@ BGMdir="$musicDIR/bgm"
 BGMa="$musicDIR/bgm/A-SIDE"
 BGMb="$musicDIR/bgm/B-SIDE"
 
+# Clean last volume from Fade
+rm $IMPSettings/volume.last > /dev/null 2>&1
+
 # Retain Current Track Position for LITE Mode - Grab from DISK and Move to TMPFS - Referenced in impquit.sh
 if [ $(cat /opt/retropie/configs/imp/settings/lite.flag) == "1" ]; then
 	cp /opt/retropie/configs/imp/playlist/current-track /dev/shm/current-track > /dev/null 2>&1
