@@ -115,7 +115,7 @@ else
 	LINEcount=$(grep -c ".*" $IMPPlaylist/init)
 	
 	# Rebuild ABC Playlist now in ABC 0rder - Selected MP3-ROM first
-	echo $PLfirst > $IMPPlaylist/abc
+	echo "$PLfirst" > $IMPPlaylist/abc
 	# Parse all lines after and before Selected MP3-ROM
 	grep -FA $LINEcount "$INITmp3BASE" $IMPPlaylist/init | grep -Fv "$INITmp3BASE" >> $IMPPlaylist/abc
 	grep -FB $LINEcount "$INITmp3BASE" $IMPPlaylist/init | grep -Fv "$INITmp3BASE" >> $IMPPlaylist/abc
@@ -127,7 +127,7 @@ else
 fi
 
 # Build Shuffle Playlist - Selected MP3-ROM first
-echo $PLfirst > $IMPPlaylist/shuffle
+echo "$PLfirst" > $IMPPlaylist/shuffle
 sort --random-sort $IMPPlaylist/init | grep -Fv "$PLfirst" >> $IMPPlaylist/shuffle
 
 # Start the Music Player Loop Script
