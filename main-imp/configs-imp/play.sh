@@ -96,7 +96,7 @@ if [[ "$PLfirst" == '' ]]; then
  	echo -e '> 0000+0000' >> $currentTRACK
 else
 	# Last track played Identified - Rebuild ABC Playlists with Last Track played First
-	echo $PLfirst > $IMPPlaylist/init
+	echo "$PLfirst" > $IMPPlaylist/init
 	# Parse all lines after and before Last Track played
 	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/abc | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
@@ -105,14 +105,14 @@ else
 	cat $IMPPlaylist/init > $IMPPlaylist/abc
 
 	# Last track played Identified - Rebuild Shuffle Playlists with Last Track played First
-	echo $PLfirst > $IMPPlaylist/init
+	echo "$PLfirst" > $IMPPlaylist/init
 	# Parse all lines after and before Last Track played
 	grep -FA $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 	grep -FB $LINEcount "$mp3BASE" $IMPPlaylist/shuffle | grep -Fv "$mp3BASE" | grep -v 'imp/music/bgm/startup.mp3' >> $IMPPlaylist/init
 	
 	# Rebuild Shuffle Playlist with updated 0rder
 	cat $IMPPlaylist/init > $IMPPlaylist/shuffle
-	# echo $PLfirst > $IMPPlaylist/shuffle
+	# echo "$PLfirst" > $IMPPlaylist/shuffle
 	# sort --random-sort $IMPPlaylist/init | grep -Fv "$PLfirst" >> $IMPPlaylist/shuffle
 fi
 
