@@ -1,6 +1,8 @@
 #!/bin/bash
 # Runs @ES Wake
 
+tput cnorm #Restore Cursor
+
 # Issue on rPi4 where omxplayer will get Stuck L00PING the Same Video - KILL omxplayer @ES Wake
 pkill -KILL omxplayer > /dev/null 2>&1
 
@@ -11,5 +13,9 @@ for connectedMON in $(xrandr --verbose 2>/dev/null | grep ' connected ' | awk '{
 done
 xset dpms force on > /dev/null 2>&1 # PowerON Display for PC/0ther [xset]
 vcgencmd display_power 1 > /dev/null 2>&1 # PowerON Display for Pi
+
+# Uncomment to Restart ES on wake if ES Artwork + Video Snaps have issues after sleep/wake
+##touch /tmp/es-restart
+##pkill -f "/opt/retropie/supplementary/.*/emulationstation([^.]|$)" &
 
 exit 0
