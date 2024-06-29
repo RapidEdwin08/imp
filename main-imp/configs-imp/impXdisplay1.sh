@@ -14,8 +14,8 @@ done
 xset dpms force on > /dev/null 2>&1 # PowerON Display for PC/0ther [xset]
 vcgencmd display_power 1 > /dev/null 2>&1 # PowerON Display for Pi
 
-# Uncomment to Restart ES on wake if ES Artwork + Video Snaps have issues after sleep/wake
-##touch /tmp/es-restart
-##pkill -f "/opt/retropie/supplementary/.*/emulationstation([^.]|$)" &
+# Restart ES on wake if ES Artwork + Video Snaps have issues after sleep/wake
+touch /tmp/es-restart
+pkill -f "/opt/retropie/supplementary/.*/emulationstation([^.]|$)" &
 
 exit 0
