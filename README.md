@@ -24,7 +24,7 @@ On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropie
 ```bash
 cd ~
 git clone --depth 1 https://github.com/RapidEdwin08/imp.git
-sudo chmod 755 ~/imp/imp_setup.sh
+chmod 755 ~/imp/imp_setup.sh
 cd ~/imp && ./imp_setup.sh && cd ~
 
 ```
