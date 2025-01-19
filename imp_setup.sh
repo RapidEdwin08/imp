@@ -1420,6 +1420,14 @@ echo "1" > /opt/retropie/configs/imp/settings/quitsong.flag
 homeDIR=~/
 sed -i s+'/home/pi/'+"$homeDIR"+ /opt/retropie/configs/imp/impquit.sh
 
+# Add wait for omxplayer
+if [ -f /usr/bin/omxplayer ]; then
+	echo 'while pgrep omxplayer >/dev/null; do sleep 1; done #Splashscreen-wait' > ~/09-splashscreen-wait.sh
+	chmod 755 ~/09-splashscreen-wait.sh
+	sudo mv ~/09-splashscreen-wait.sh /etc/profile.d/09-splashscreen-wait.sh
+	sudo chown root /etc/profile.d/09-splashscreen-wait.sh
+fi
+
 impFINISH
 }
 
