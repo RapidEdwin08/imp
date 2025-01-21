@@ -74,8 +74,8 @@ randomMP3=$(cat /dev/shm/pls.tmp | shuf | tail -n 1)
 rm /dev/shm/mp3.tmp; rm /dev/shm/pls.tmp
 }
 
-# Turning SHUFFLE On
-echo "1" > $IMPSettings/shuffle.flag
+# Turning SHUFFLE On *202501 Changed my mind...
+#echo "1" > $IMPSettings/shuffle.flag
 
 # If Randomizer flag = 0 - Random Playlist ALL
 if [ $(cat $IMPSettings/randomizer.flag) == "0" ]; then allMUSIC; fi
