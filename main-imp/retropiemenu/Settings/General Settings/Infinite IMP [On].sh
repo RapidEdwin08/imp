@@ -2,8 +2,8 @@
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 
-if [[ $(cat $IMPSettings/infinite.flag) == "0" ]]; then
-	# Turning INFINITE REPEAT On
+if [[ ! $(cat $IMPSettings/infinite.flag) == "1" ]]; then
+	# Turning INFINITE REPEAT [1]
 	echo "1" > $IMPSettings/infinite.flag
 	
 	if [[ $(cat $IMPSettings/music-switch.flag) == "1" ]]; then

@@ -2,9 +2,9 @@
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 
-if [[ ! $(cat $IMPSettings/infinite.flag) == "0" ]]; then
-	# Turning INFINITE REPEAT OFF
-	echo "0" > $IMPSettings/infinite.flag
+if [[ ! $(cat $IMPSettings/infinite.flag) == "2" ]]; then
+	# Turning INFINITE REPEAT ALL
+	echo "2" > $IMPSettings/infinite.flag
 	
 	if [[ $(cat $IMPSettings/music-switch.flag) == "1" ]]; then
 		# Stop mpg123loop WITH continue parameter
