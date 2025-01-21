@@ -116,14 +116,20 @@ Track Position Retained @PowerOff</desc>
 		<image>./icons/impliteoff.png</image>
 	</game>
 	<game>
+		<path>./imp/Settings/General Settings/Infinite IMP [ALL].sh</path>
+		<name>Repeat Mode [ALL]</name>
+		<desc>[ENABLE]: Infinite Repeat Mode [ALL].</desc>
+		<image>./icons/impinfiniteonall.png</image>
+	</game>
+	<game>
 		<path>./imp/Settings/General Settings/Infinite IMP [On].sh</path>
-		<name>Infinite IMP [On]</name>
-		<desc>[ENABLE]: Infinite Repeat Mode.</desc>
+		<name>Repeat Mode [1]</name>
+		<desc>[ENABLE]: Infinite Repeat Mode [1].</desc>
 		<image>./icons/impinfiniteon.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/General Settings/Infinite IMP [Off].sh</path>
-		<name>Infinite IMP [Off]</name>
+		<name>Repeat Mode [0ff]</name>
 		<desc>[DISABLE]: Infinite Repeat Mode.</desc>
 		<image>./icons/impinfiniteoff.png</image>
 	</game>
