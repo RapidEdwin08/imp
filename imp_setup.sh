@@ -76,7 +76,7 @@ mpg123FILEREF=$(
 echo
 echo "                    # [mpg123] Install Utilities #"
 echo "                        ~/imp/main-imp/offline"
-echo "                        [mpg123-1.32.3.tar.bz2]"
+echo "                        [mpg123-1.32.10.tar.bz2]"
 echo "                        [mpg123-1.31.2.tar.bz2]"
 echo "                        [mpg123-1.29.3.tar.bz2]"
 echo "                        [mpg123-1.25.10.tar.bz2]"
@@ -1421,7 +1421,7 @@ homeDIR=~/
 sed -i s+'/home/pi/'+"$homeDIR"+ /opt/retropie/configs/imp/impquit.sh
 
 # Add wait for omxplayer
-if [ -f /usr/bin/omxplayer ]; then
+if [ ! -f /etc/profile.d/09-splashscreen-wait.sh ] && [ -f /usr/bin/omxplayer ]; then
 	echo 'while pgrep omxplayer >/dev/null; do sleep 1; done #Splashscreen-wait' > ~/09-splashscreen-wait.sh
 	chmod 755 ~/09-splashscreen-wait.sh
 	sudo mv ~/09-splashscreen-wait.sh /etc/profile.d/09-splashscreen-wait.sh
@@ -1659,6 +1659,7 @@ rm ~/RetroPie/retropiemenu/icons/imphttpon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imphttpoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impinfiniteoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impinfiniteon.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impinfiniteonall.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impliteoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impliteon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impmusicdir.png 2>/dev/null
@@ -1936,8 +1937,8 @@ confMPG123=$(dialog --no-collapse --title "  Select mpg123 Install Method  [Curr
 	--ok-label OK --cancel-label Back \
 	--menu "$mpg123FILEREF " 25 75 20 \
 	1 " [apt-get install] mpg123  [Recommended]" \
-	2 " [make install] mpg123-1.32.3" \
-	3 " [make install] mpg123-1.32.3  [Offline]" \
+	2 " [make install] mpg123-1.32.10" \
+	3 " [make install] mpg123-1.32.10  [Offline]" \
 	4 " [make install] mpg123-1.31.2" \
 	5 " [make install] mpg123-1.31.2  [Offline]" \
 	6 " [make install] mpg123-1.29.3" \
@@ -1972,8 +1973,8 @@ if [ "$confMPG123" == 'C' ]; then
 	# Clean Confirmed - Otherwise Back to Main Menu
 	if [ "$confCLNmpg123" == '1' ]; then 
 		# Clean mpg123 Source Files and Folders
-		if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
-		if [ -d ~/mpg123-1.32.3 ]; then cd ~/imp; sudo rm ~/mpg123-1.32.3 -R; fi
+		if [ -f ~/mpg123-1.32.10.tar.bz2 ]; then rm ~/mpg123-1.32.10.tar.bz2; fi
+		if [ -d ~/mpg123-1.32.10 ]; then cd ~/imp; sudo rm ~/mpg123-1.32.10 -R; fi
 		
 		if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
 		if [ -d ~/mpg123-1.31.2 ]; then cd ~/imp; sudo rm ~/mpg123-1.31.2 -R; fi
@@ -1996,8 +1997,8 @@ fi
 # mpg123 Manual Install Confirmed - Otherwise Back to Main Menu
 if [ ! "$confMPG123" == '' ]; then
 	if [ "$confMPG123" == '1' ]; then mpg123SELECT='[apt-get install] mpg123'; fi
-	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.32.3'; fi
-	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.32.3  [Offline]' ; fi
+	if [ "$confMPG123" == '2' ]; then mpg123SELECT='[make install] mpg123-1.32.10'; fi
+	if [ "$confMPG123" == '3' ]; then mpg123SELECT='[make install] mpg123-1.32.10  [Offline]' ; fi
 	if [ "$confMPG123" == '4' ]; then mpg123SELECT='[make install] mpg123-1.31.2'; fi
 	if [ "$confMPG123" == '5' ]; then mpg123SELECT='[make install] mpg123-1.31.2  [Offline]' ; fi
 	if [ "$confMPG123" == '6' ]; then mpg123SELECT='[make install] mpg123-1.29.3'; fi
@@ -2050,12 +2051,12 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
-if [ -d ~/mpg123-1.32.3 ]; then
-	cd ~/mpg123-1.32.3
+if [ -f ~/mpg123-1.32.10.tar.bz2 ]; then rm ~/mpg123-1.32.10.tar.bz2; fi
+if [ -d ~/mpg123-1.32.10 ]; then
+	cd ~/mpg123-1.32.10
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/mpg123-1.32.3 -R
+	sudo rm ~/mpg123-1.32.10 -R
 fi
 
 if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
@@ -2096,34 +2097,34 @@ if [ "$confMPG123" == '1' ]; then
 fi
 
 if [ "$confMPG123" == '2' ]; then
-	# mpg123 v1.32.3 2023-10-02
-	rm ~/mpg123-1.32.3.tar.bz2 > /dev/null 2>&1
-	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.3/mpg123-1.32.3.tar.bz2 -P ~/
-	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.3/mpg123-1.32.3.tar.bz2.sig ~/
+	# mpg123 v1.32.10 2024-12-14
+	rm ~/mpg123-1.32.10.tar.bz2 > /dev/null 2>&1
+	wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.10/mpg123-1.32.10.tar.bz2 -P ~/
+	# wget --no-check-certificate https://sourceforge.net/projects/mpg123/files/mpg123/1.32.10/mpg123-1.32.10.tar.bz2.sig ~/
 	cd ~/
-	tar -xvf mpg123-1.32.3.tar.bz2
-	cd ~/mpg123-1.32.3
+	tar -xvf mpg123-1.32.10.tar.bz2
+	cd ~/mpg123-1.32.10
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/mpg123-1.32.3.tar.bz2
+	rm ~/mpg123-1.32.10.tar.bz2
 fi
 
 if [ "$confMPG123" == '3' ]; then
 	# Check for the mpg123 Offline Installation File
-	if [ ! -f main-imp/offline/mpg123-1.32.3.tar.bz2]; then
-	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.32.3.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
+	if [ ! -f main-imp/offline/mpg123-1.32.10.tar.bz2]; then
+	dialog --no-collapse --title " * [IMP] SETUP FILES MISSING * [mpg123-1.32.10.tar.bz2] * PLEASE VERIFY *" --ok-label CONTINUE --msgbox "$impLOGO $mpg123FILEREF"  25 75
 	mainMENU
 	fi
 	
-	# mpg123 v1.32.3 2023-10-02 [Offline]
-	rm ~/mpg123-1.32.3.tar.bz2 > /dev/null 2>&1
-	cp ~/imp/main-imp/offline/mpg123-1.32.3.tar.bz2 ~/
+	# mpg123 v1.32.10 2024-12-14 [Offline]
+	rm ~/mpg123-1.32.10.tar.bz2 > /dev/null 2>&1
+	cp ~/imp/main-imp/offline/mpg123-1.32.10.tar.bz2 ~/
 	cd ~/
-	tar -xvf mpg123-1.32.3.tar.bz2
-	cd ~/mpg123-1.32.3
+	tar -xvf mpg123-1.32.10.tar.bz2
+	cd ~/mpg123-1.32.10
 	sudo ./configure --prefix=/usr --with-default-audio=alsa --disable-shared && make -j4
 	sudo make install
-	rm ~/mpg123-1.32.3.tar.bz2
+	rm ~/mpg123-1.32.10.tar.bz2
 fi
 
 if [ "$confMPG123" == '4' ]; then
@@ -2276,12 +2277,12 @@ pkill -KILL mpg123 > /dev/null 2>&1
 sudo apt-get remove mpg123 -y
 
 # [make uninstall] 0ther Versions of mpg123 Installed by [IMP] if Found 
-if [ -f ~/mpg123-1.32.3.tar.bz2 ]; then rm ~/mpg123-1.32.3.tar.bz2; fi
-if [ -d ~/mpg123-1.32.3 ]; then
-	cd ~/mpg123-1.32.3
+if [ -f ~/mpg123-1.32.10.tar.bz2 ]; then rm ~/mpg123-1.32.10.tar.bz2; fi
+if [ -d ~/mpg123-1.32.10 ]; then
+	cd ~/mpg123-1.32.10
 	sudo make uninstall
 	cd ~/imp
-	sudo rm ~/mpg123-1.32.3 -R
+	sudo rm ~/mpg123-1.32.10 -R
 fi
 if [ -f ~/mpg123-1.31.2.tar.bz2 ]; then rm ~/mpg123-1.31.2.tar.bz2; fi
 if [ -d ~/mpg123-1.31.2 ]; then
