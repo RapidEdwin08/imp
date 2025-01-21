@@ -95,7 +95,7 @@ echo '0' > $IMPSettings/pause.flag
 echo "1" > $IMPSettings/music-switch.flag
 
 # [IMP] FULL MODE - Always Logging while Playing - Full Features
-if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
+if [ ! $(cat $IMPSettings/infinite.flag) == "0" ]; then
 	# Play INFINITE Loop all songs in Playlist  iMP
 	while [ $(cat $IMPSettings/music-switch.flag) == "1" ]; do
 		if [ "$httpSTREAM" == '0' ]; then
@@ -106,6 +106,7 @@ if [ $(cat $IMPSettings/infinite.flag) == "1" ]; then
 			# --continue -k to Continue from Last Frame Position from [$currentTRACK]
 			# Obtain the LastFramePosition="$(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1)"
 			while read line; do mpg123 -v --continue -k $(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1) -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST
+   			if [ $(cat $IMPSettings/infinite.flag) == "2" ]; then bash "$IMP/infinitenext.sh" & exit 0; fi
 		fi
 	done &
 	exit 0
