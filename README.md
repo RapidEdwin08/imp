@@ -151,7 +151,7 @@ LITE MODE [Off]: Log to File (Disk), Track Position Retained @PowerOff [**NOT** 
 
 *INFINITE MODE is now -> REPEAT MODE 202501*  
 REPEAT MODE [ 1 ]: Infinite L00P of Current Playlist  
-REPEAT MODE [ALL]: Infinite L00P that Continues to Next Available Playlist
+REPEAT MODE [ALL]: Infinite L00P that Continues to Next Available Playlist  
 REPEAT MODE [Off]: Stop IMP after Finishing Current Playlist  
 **NOTE:** *It is RECOMMENDED [IMP] always have MUSIC AVAILABLE to Play when using INFINITE Mode  
 If you see the [HIGH TEMP ICON] at any point while attempting to Start Music - STOP [IMP]!  
