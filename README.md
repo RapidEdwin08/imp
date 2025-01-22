@@ -25,7 +25,7 @@ On *Uninstall* the *[../retropiemenu/imp/music]* Folder is Moved to *[..retropie
 cd ~
 git clone --depth 1 https://github.com/RapidEdwin08/imp.git
 chmod 755 ~/imp/imp_setup.sh
-cd ~/imp && ./imp_setup.sh && cd ~
+cd ~/imp && ./imp_setup.sh; cd ~
 
 ```
 
@@ -41,13 +41,10 @@ Example *[imp-user-gamelist.xml.0FF]* Included
 
 ## UPGRADING:  
 UNINSTALL [IMP] FIRST using the SETUP Script *CURRENTLY INSTALLED*  
-Then BACKUP or REMOVE the 0lder IMP Setup Folder/Files  
-
-To **BACKUP** the 0lder ~/imp Directory {and ~/imp-setup.tar.gz}:  
+Newer versions of IMP may include a newer version of mpg123  
+If applicable Uninstall mpg123 and Clean the Source from *[mpg123] INSTALL UTILITIES*  
 ```bash
-cd ~ #Change to Home Directory
-mv ~/imp ~/imp-0lder #Rename 0lder [IMP] Directory
-mv ~/imp-setup.tar.gz ~/imp-setup-0lder.tar.gz #Rename 0lder [IMP] tar.gz
+cd ~/imp && ./imp_setup.sh; cd ~
 
 ```
 
@@ -107,7 +104,7 @@ Current Settings
 **General Settings**  
 Fade Volume Out-In [Off/On/x1/x5/x10]  
 Lite Mode [Off/On]  
-Infinite Mode [Off/On]  
+Repeat Mode [Off/[1]/ALL]  
 
 **BGM Settings** [*Will Override Playlist at Startup*]  
 BGM A-Side [Off/On] ~/RetroPie/roms/music/bgm/A-SIDE/  
