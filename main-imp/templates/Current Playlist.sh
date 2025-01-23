@@ -18,9 +18,9 @@ if [ -f /dev/shm/startup-track ]; then
 fi
 
 trackFILE=$(grep -iE 'Playing MPEG stream' $currentTRACK | cut -b 28-999 | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop' | perl -ple 'chop')
-trackTITLE=$(grep -iE 'Title:' $currentTRACK)
-trackALBUM=$(grep -iE 'Album:' $currentTRACK)
-trackYEAR=$(grep -iE 'Year:' $currentTRACK)
+trackTITLE=$(grep -iE 'Title:' $currentTRACK); if [ $trackTITLE == 'Title:' 2>/dev/null ]; then trackTITLE=''; fi
+trackALBUM=$(grep -iE 'Album:' $currentTRACK); if [ $trackALBUM == 'Album:' 2>/dev/null ]; then trackALBUM=''; fi
+trackYEAR=$(grep -iE 'Year:' $currentTRACK); if [ $trackYEAR == 'Year:' 2>/dev/null ]; then trackYEAR=''; fi
 playerVOL=$(cat $IMPSettings/volume.flag)
 if [ $playerVOL == "32768" ]; then volume_percent="100"; fi
 if [ $playerVOL == "29484" ]; then volume_percent="90"; fi
@@ -53,6 +53,11 @@ streamTITLE=$(grep -iE 'StreamTitle=' $currentTRACK | cut -b 23-999 | cut -d ';'
 pausemode=$(cat $IMPSettings/pause.flag)
 if [[ $pausemode == "1" || $pausemode == "2" ]]; then pausemode="PAUSED"; else pausemode="PLAYING"; fi
 
+infinite_mode=$(cat $IMPSettings/infinite.flag)
+if [ $infinite_mode == "0" ]; then infinite_mode="OFF"; fi
+if [ $infinite_mode == "1" ]; then infinite_mode="1"; fi
+if [ $infinite_mode == "2" ]; then infinite_mode="ALL"; fi
+
 if [ $(cat $IMPSettings/shuffle.flag) == "1" ]; then
 	currentLIST=$IMPPlaylist/shuffle
 	shuffleMODE="ON"
@@ -61,21 +66,24 @@ else
 	shuffleMODE="OFF"
 fi
 
-if ! [[ "$streamURL" == '' ]]; then
-	plistINFO="[STREAMING: $streamURL]  [SHUFFLE Mode: $shuffleMODE]  "
+if [[ ! "$streamNAME" == '' ]] && [[ "$streamURL" == '' ]]; then streamURL=$streamNAME; fi
+if [[ ! "$streamURL" == '' ]]; then
+	plistINFO="STREAM [$streamURL]  SHUFFLE [$shuffleMODE]"
 else
-	plistINFO="[TIME ELAPSED: $trackTIME]  [SHUFFLE Mode: $shuffleMODE]  "
+	plistINFO="TIME ELAPSED [$trackTIME]  SHUFFLE [$shuffleMODE]  REPEAT [$infinite_mode]"
 fi
 
-currentVOLUME="[Player Volume %$volume_percent]"
+currentVOLUME="Volume [%$volume_percent]"
 
 currentPLIST=$(
 echo
-echo
 result=`pgrep mpg123`
 if [[ "$result" == '' ]]; then pausemode="STOPPED"; fi
-echo "  [$pausemode] Track: $trackFILE $trackALBUM $trackYEAR $streamURL"
-if [ ! "$trackTITLE" == '' ] || [ ! "$streamNAME" == '' ]; then echo "  $trackTITLE $streamNAME"; fi
+echo "  [$pausemode] Track: $trackFILE"
+if [[ ! "$streamURL" == '' ]]; then echo "  $streamURL"; fi
+if [[ "$streamURL" == '' ]]; then echo "  $trackALBUM $trackYEAR"; fi
+if [[ ! "$trackTITLE" == '' ]] || [[ ! "$streamNAME" == '' ]]; then echo "  $trackTITLE $streamNAME"; fi
+echo
 echo " -------------------"
 
 while read line; do
@@ -97,6 +105,7 @@ while read line; do
 done < $currentLIST
 
 if ! [[ "$streamTITLE" == '' ]]; then 
+	echo
 	echo "$streamTITLE"
 	echo " -------------------"
 else
