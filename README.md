@@ -111,6 +111,7 @@ BGM A-Side [Off/On] ~/RetroPie/roms/music/bgm/A-SIDE/
 BGM B-Side [Off/On] ~/RetroPie/roms/music/bgm/B-SIDE/  
 Play Startup Song [Off/On] ~/RetroPie/roms/music/bgm/startup.mp3  
 Play Quit Song [Off/On] ~/RetroPie/roms/music/bgm/quit.mp3  
+
 *Both [startup.mp3/quit.mp3] are Ignored in Playlist Creation*  
 *Playing Either [startup.mp3/quit.mp3] will Not Interrupt the Current Playlist*  
 
@@ -146,11 +147,12 @@ Delay at Startup [seconds]
 LITE MODE [On]: Log to TMPFS (RAM), Track Position Retained @Poweroff *If Properly Shutdown* [Recommended for SD-Cards]  
 LITE MODE [Off]: Log to File (Disk), Track Position Retained @PowerOff [**NOT** Recommended for SD-Cards]  
 
-*INFINITE MODE is now -> REPEAT MODE 202501*  
 REPEAT MODE [ 1 ]: Infinite L00P of Current Playlist  
 REPEAT MODE [ALL]: Infinite L00P that Continues to Next Available Playlist  
 REPEAT MODE [Off]: Stop IMP after Finishing Current Playlist  
-**NOTE:** *It is RECOMMENDED [IMP] always have MUSIC AVAILABLE to Play when using INFINITE Mode  
+*INFINITE MODE is now -> REPEAT MODE 202501*  
+
+**NOTE:** *It is RECOMMENDED [IMP] always have MUSIC AVAILABLE to Play when using REPEAT Mode  
 If you see the [HIGH TEMP ICON] at any point while attempting to Start Music - STOP [IMP]!  
 [IMP] will perform various Error checks Automatically to prevent an Infinite [Error] L00P  
 Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manually bash the Stop Script:*  
@@ -173,7 +175,7 @@ bash /opt/retropie/configs/imp/stop.sh
 
 **[RP/ES] + [PC/0ther] Utilities** are available in the [IMP] INSTALLER using the Same Setup Command:  
 ```bash
-cd ~/imp && ./imp_setup.sh
+cd ~/imp && ./imp_setup.sh; cd ~
 ```
 
 **[RP/ES] Utilities**:  
