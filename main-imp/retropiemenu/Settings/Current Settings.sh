@@ -1,5 +1,4 @@
 #!/bin/bash
-tput reset
 blue='\033[0;34m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -37,9 +36,9 @@ if ! [ $delay_startup == "000" ]; then delay_startup=${YEL}"$delay_startup"; els
 if ! [ $delay_playback == "00" ]; then delay_playback=${YEL}"$delay_playback "; else delay_playback=${RED}"OFF"; fi
 if [ $fade_out == "1" ]; then fade_out=${GREEN}"x1 "; elif [ $fade_out == "5" ]; then fade_out=${GREEN}"x5 "; elif [ $fade_out == "10" ]; then fade_out=${GREEN}"x10"; else fade_out=${RED}"OFF"; fi
 if [ $http_setting == "1" ]; then http_setting=${GREEN}"ON "; else http_setting=${RED}"OFF"; fi
-if [ $infinite_mode == "0" ]; then infinite_mode=${RED}"OFF"; fi
-if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"[1]"; fi
-if [ $infinite_mode == "2" ]; then infinite_mode=${GREEN}"ALL"; fi
+if [ $infinite_mode == "0" ]; then infinite_mode=${RED}"[ ]"; infinite_state=${RED}"OFF"; fi
+if [ $infinite_mode == "1" ]; then infinite_mode=${GREEN}"[1]"; infinite_state=${GREEN}"ON "; fi
+if [ $infinite_mode == "2" ]; then infinite_mode=${GREEN}"ALL"; infinite_state=${GREEN}"ON "; fi
 if [ $lite_mode == "1" ]; then lite_mode=${GREEN}"ON "; else lite_mode=${RED}"OFF"; fi
 if [ $startupsong_mode == "1" ]; then startupsong_mode=${GREEN}"ON "; else startupsong_mode=${RED}"OFF"; fi
 if [ $shuffleboot_mode == "1" ]; then shuffleboot_mode=${GREEN}"ON "; else shuffleboot_mode=${RED}"OFF"; fi
@@ -106,13 +105,13 @@ else
 	music_over_game=${RED}"OFF"
 fi
 
-omxM0Nflag=$(cat $IMPSettings/0mxmon.flag)
+##omxM0Nflag=$(cat $IMPSettings/0mxmon.flag)
 #omxmonSETTING="           "
-omxmonSETTING=0MXM0N:${RED}"OFF "
-omxwaitSETTING="$(cat $IMPSettings/0mxmon.sleep)"
-if [ $omxM0Nflag == "1" ]; then
-	omxmonSETTING="${YEL}"0MX${blue}"M0N"":${GREEN}"$omxwaitSETTING""
-fi
+##omxmonSETTING=0MXM0N:${RED}"OFF "
+##omxwaitSETTING="$(cat $IMPSettings/0mxmon.sleep)"
+##if [ $omxM0Nflag == "1" ]; then
+	##omxmonSETTING="${YEL}"0MX${blue}"M0N"":${GREEN}"$omxwaitSETTING""
+##fi
 
 currentIP=$(hostname -I)
 echo $currentIP:$http_port > $IMPSettings/current.ip
@@ -150,11 +149,11 @@ echo -e "         ${RED}I${YEL}ntegrated     '---. .-:'        for        "
 echo -e "         ${RED}M${YEL}usic          '::-'..-'        ${RED}R${YEL}etro${RED}P${YEL}ie     "
 echo -e "         ${RED}P${YEL}layer          .:-:.'''        ${RED}v${YEL}$versionIMP  "
 echo -e "${NC} ,-------------------------------------------------------.               "
-echo -e " | Music @Boot:$music_start${NC}  Delay: $delay_startup${NC} |          LITE Mode: $lite_mode${NC} | "
-echo -e " | startup.mp3: $startupsong_mode${NC} @quit: $quitsong_mode${NC} |        REPEAT Mode: $infinite_mode${NC} | "
+echo -e " | Music @Boot:$music_start${NC}  Delay: $delay_startup${NC} |   REPEAT: $infinite_state${NC} Mode: $infinite_mode${NC} | "
+echo -e " | startup.mp3: $startupsong_mode${NC} @quit: $quitsong_mode${NC} | FADE Volume Out/In: $fade_out${NC} | "
 echo -e " | BGM A~SIDE: $aside_music${NC} B~SIDE: $bside_music${NC} |    Music OVER Game: $music_over_game${NC} | "
-echo -e " | Shuffle Playlist @Boot: $shuffleboot_mode${NC} | FADE Volume Out/In: $fade_out${NC} | "
-echo -e " | Randomizer: $randomizer_mode${NC}  @Boot: $randomizer_boot${NC} |    DELAY @Game End: $delay_playback${NC} | "
+echo -e " | Shuffle Playlist @Boot: $shuffleboot_mode${NC} |    DELAY @Game End: $delay_playback${NC} | "
+echo -e " | Randomizer: $randomizer_boot${NC}   Mode: $randomizer_mode${NC} |          LITE Mode: $lite_mode${NC} | "
 echo -e " | $stopORIdle${NC} @Screensaver: $sleepIMPscreen${NC} | $idleORkill${NC} @Sleep: $sleepIMPsleep${NC} | "
 echo " \`-------------------------------------------------------'  "
 echo -e " http.server: [$http_setting${NC}] ${blue}[${YEL}http://$currentHTTP${blue}]${NC} [$http_server${NC}]"
