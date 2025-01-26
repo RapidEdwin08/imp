@@ -35,6 +35,18 @@
 		<image>./icons/impnext.png</image>
 	</game>
 	<game>
+		<path>./imp/Previous Album.sh</path>
+		<name>&lt;) Previous Tracklist</name>
+		<desc>[IMP] Integrated Music Player.</desc>
+		<image>./icons/imppreviousalbum.png</image>
+	</game>
+	<game>
+		<path>./imp/Next Album.sh</path>
+		<name>&gt;] Next Tracklist</name>
+		<desc>[IMP] Integrated Music Player.</desc>
+		<image>./icons/impnextalbum.png</image>
+	</game>
+	<game>
 		<path>./imp/Current Playlist.sh</path>
 		<name># Current Playlist #</name>
 		<desc>[IMP] Integrated Music Player.</desc>
@@ -173,14 +185,14 @@ Fades Volume @Intervals of [x10]
 	<game>
 		<path>./imp/Settings/Randomizer Settings/Music Randomizer [Off].sh</path>
 		<name>Music Randomizer [Off]</name>
-		<desc>[DISABLE]:  Music Randomizer at Startup
+		<desc>[DISABLE]:  Music Randomizer
  ~/RetroPie/retropiemenu/imp/music/*</desc>
 		<image>./icons/imprandomizeroff.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/Randomizer Settings/Music Randomizer [On].sh</path>
 		<name>Music Randomizer [On]</name>
-		<desc>[ENABLE]:  Music Randomizer at Startup
+		<desc>[ENABLE]:  Music Randomizer
  ~/RetroPie/retropiemenu/imp/music/*</desc>
 		<image>./icons/impstartrandomizer.png</image>
 	</game>
