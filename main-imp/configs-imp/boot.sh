@@ -28,15 +28,6 @@ if [ -f "$IMP/somafm-specials.sh" ]; then bash $IMP/somafm-specials.sh; fi
 # Start HTTP Server if flag 1 - Used at Startup
 if [ $(cat $IMPSettings/http-server.flag) == "1" ]; then sleep 5 && bash "$IMP/httpon.sh"; fi &
 
-# Start 0mxmon
-if [ $(cat /opt/retropie/configs/imp/settings/0mxmon.flag) == "1" ]; then
-	rm /dev/shm/0mxMonLoop.Active > /dev/null 2>&1
-	# kill instances of 0mxmon script
-	PIDplayloop=$(ps -eaf | grep "0mxmon.sh" | awk '{print $2}')
-	kill $PIDplayloop > /dev/null 2>&1
-	bash "$IMP/0mxmon.sh" &
-fi
-
 # Exit if music startup flag 0 and startupsong flag 0
 if [ $(cat $IMPSettings/music-startup.flag) == "0" ] && [ $(cat $IMPSettings/startupsong.flag) == "0" ]; then exit 0; fi
 
@@ -60,8 +51,8 @@ fi
 # [startupsong.play] - Checked by [mpg123loop.sh] - IF [1] Play [startup.mp3] then Playlist
 if [ $(cat $IMPSettings/startupsong.flag) == "1" ]; then echo '1' > $IMPSettings/startupsong.play; fi
 
-# If Randomizer flag NOT = 0 - Random Playlist
-if [ ! $(cat $IMPSettings/randomizerboot.flag) == "0" ]; then
+# If Shuffle @ B00T Flag 1 - Shuffle Current Playlist *Randomizer@Boot is now Shuffle@Boot 202501*
+if [ $(cat $IMPSettings/shuffleboot.flag) == "1" ]; then
 	bash "$IMP/randomizer.sh" &
 	exit 0
 fi
@@ -108,15 +99,6 @@ if [[ $(cat $IMPSettings/a-side.flag) == "1" || $(cat $IMPSettings/b-side.flag) 
 		mv /dev/shm/shuffle $IMPPlaylist/shuffle
 		rm /dev/shm/abc-current
 	fi
-fi
-
-# If Shuffle @ B00T Flag 1 - Shuffle Current Playlist
-if [ $(cat $IMPSettings/shuffleboot.flag) == "1" ]; then
-	# Shuffle the Current Playlist
-	sort --random-sort $IMPPlaylist/init > $IMPPlaylist/shuffle
-	
-	# Turning SHUFFLE On
-	echo "1" > $IMPSettings/shuffle.flag
 fi
 
 # Start the Music Play Script
