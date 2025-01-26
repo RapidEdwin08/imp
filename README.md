@@ -87,11 +87,13 @@ It is RECOMMENDED to use the Default method of [apt-get install] for installing 
 **Music Player** [IMP]  
 Current Playlist  
 **./Music [~/RetroPie/retropiemenu/imp/music]**  
+Previous Tracklist  
 Previous Track  
 Play  
 Pause  
 Stop  
 Next Track  
+Next Tracklist  
 Shuffle Off/On  
 Start All Music [*BGM Settings are Respected*] {Icon Changes to Reflect BGM Settings}  
 Start BGM Music  
