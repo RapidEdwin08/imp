@@ -529,13 +529,13 @@ Save CFG -&gt; Main Menu -&gt; Configuration File -&gt;  &quot;Save Current Conf
 	<game>
 		<path>./imp/Settings/Startup Settings/Shuffle Playlist [On].sh</path>
 		<name>Shuffle Playlist [On]</name>
-		<desc>[ENABLE]:  Shuffle Current Playlist at B00T</desc>
+		<desc>[ENABLE]:  Shuffle Playlist at B00T</desc>
 		<image>./icons/impsettingshufflebooton.png</image>
 	</game>
 	<game>
 		<path>./imp/Settings/Startup Settings/Shuffle Playlist [Off].sh</path>
 		<name>Shuffle Playlist [Off]</name>
-		<desc>[DISABLE]:  Shuffle Current Playlist at B00T</desc>
+		<desc>[DISABLE]:  Shuffle Playlist at B00T</desc>
 		<image>./icons/impsettingshufflebootoff.png</image>
 	</game>
 	<game>
