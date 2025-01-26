@@ -1070,7 +1070,7 @@ fi
 # Supreme Build V2 RéGaLaD/WDG (PiZero 20180827) has a bug where RetroPie-Setup does Not have Joypad Support
 if [ "$(cat ~/.bashrc | grep -q 'SuPreMe BuiLd PI 0/2/3/3+ V2' ; echo $?)" == '0' ]; then
 	# Replace [IMP] Scripts that Require Joypad/Keyboard Input to Close in [retropiemenu]
-	if [ -f main-imp/templates//Current Playlist.sh ]; then
+	if [ -f main-imp/templates/Current Playlist.sh ]; then
 		rm "$IMPMenuRP/Current Playlist.sh"
 		cp main-imp/templates/Current\ Playlist.sh "$IMPMenuRP/Current Playlist.sh"
 	fi
@@ -1081,6 +1081,19 @@ if [ "$(cat ~/.bashrc | grep -q 'SuPreMe BuiLd PI 0/2/3/3+ V2' ; echo $?)" == '0
 	if [ -f main-imp/templates/HTTP\ Server\ Log.sh ]; then
 		rm "$IMPMenuRP/Settings/HTTP Server Settings/HTTP Server Log.sh"
 		cp main-imp/templates/HTTP\ Server\ Log.sh "$IMPMenuRP/Settings/HTTP Server Settings/HTTP Server Log.sh"
+	fi
+fi
+
+# GPi has Minimal Menu Scripts
+if [ -f /opt/RetroFlag/SafeShutdown.py ] || [ -d /opt/gpizero ]; then
+	# Replace [IMP] Scripts that Require Joypad/Keyboard Input to Close in [retropiemenu]
+	if [ -f main-imp/templates/Current Playlist.GPi ]; then
+		rm "$IMPMenuRP/Current Playlist.sh"
+		cp main-imp/templates/Current\ Playlist.GPi "$IMPMenuRP/Current Playlist.sh"
+	fi
+	if [ -f main-imp/templates/Current\ Settings.GPi ]; then
+		rm "$IMPMenuRP/Settings/Current Settings.sh"
+		cp main-imp/templates/Current\ Settings.GPi "$IMPMenuRP/Settings/Current Settings.sh"
 	fi
 fi
 
@@ -1664,12 +1677,14 @@ rm ~/RetroPie/retropiemenu/icons/impliteoff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impliteon.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impmusicdir.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impnext.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impnextalbum.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imppause.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impplay.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impplaylist.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0ff.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impprevious0n.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/imppreviousalbum.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizerall.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizeralla0b0.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/imprandomizeralla0b1.png 2>/dev/null
