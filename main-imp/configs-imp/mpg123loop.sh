@@ -106,23 +106,22 @@ if [ ! $(cat $IMPSettings/infinite.flag) == "0" ]; then
 			# --continue -k to Continue from Last Frame Position from [$currentTRACK]
 			# Obtain the LastFramePosition="$(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1)"
 			while read line; do mpg123 -v --continue -k $(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1) -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST
-   			if [ $(cat $IMPSettings/infinite.flag) == "2" ]; then bash "$IMP/infinitenext.sh" & exit 0; fi
 		fi
-	done &
+		bash "$IMP/nextalbum.sh" & exit 0
+	done  > /dev/null 2>&1 &
 	exit 0
 else
 	# Play all songs in Playlist
 	if [ "$httpSTREAM" == '0' ]; then
 		# mpg123 withOUT -v to Limit the verbosity level If HTTP Stream - Limits Log file size of Long Streams - Frame numbers can not be used to Continue a Stream
-		while read line; do mpg123 -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST &
-		exit 0
+		while read line; do mpg123 -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST  > /dev/null 2>&1 &
 	else
 		# mpg123 WITH - v to Increase the verbosity level and obtain the frame numbers
 		# --continue -k to Continue from Last Frame Position from [$currentTRACK]
 		# Obtain the LastFramePosition="$(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1)"
-		while read line; do mpg123 -v --continue -k $(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1) -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST &
-		exit 0
+		while read line; do mpg123 -v --continue -k $(grep '>*+' $currentTRACK | tail -1 | sed -n -e 's/^.*> //p' | cut -d '+' -f 1) -f "$playerVOL" "$line" > $currentTRACK 2>&1 && bash "$IMP/errorcheck.sh"; done < $currentPLIST  > /dev/null 2>&1 &
 	fi
+	exit 0
 fi
 
 exit 0
