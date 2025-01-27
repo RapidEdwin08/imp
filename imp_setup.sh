@@ -740,7 +740,7 @@ if [ ! -d "$IMPMenuRP/Settings/HTTP Server Settings" ]; then mkdir "$IMPMenuRP/S
 if [ ! -d "$IMPMenuRP/Settings/Randomizer Settings" ]; then mkdir "$IMPMenuRP/Settings/Randomizer Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/Startup Settings" ]; then mkdir "$IMPMenuRP/Settings/Startup Settings"; fi
 if [ ! -d "$IMPMenuRP/Settings/General Settings" ]; then mkdir "$IMPMenuRP/Settings/General Settings"; fi
-##if [ ! -d "$IMPMenuRP/Settings/OMX Monitor" ]; then mkdir "$IMPMenuRP/Settings/OMX Monitor"; fi # *Deprecated*
+##if [ ! -d "$IMPMenuRP/Settings/ Monitor" ]; then mkdir "$IMPMenuRP/Settings/OMX Monitor"; fi # *Deprecated*
 if [ ! -d "$IMPMenuRP/Volume" ]; then mkdir "$IMPMenuRP/Volume"; fi
 
 # Copy Files to configs
@@ -1433,11 +1433,14 @@ echo "1" > /opt/retropie/configs/imp/settings/quitsong.flag
 homeDIR=~/
 sed -i s+'/home/pi/'+"$homeDIR"+ /opt/retropie/configs/imp/impquit.sh
 
-# Add wait for omxplayer
-if [ ! -f /etc/profile.d/09-splashscreen-wait.sh ] && [ -f /usr/bin/omxplayer ]; then
-	echo 'while pgrep omxplayer >/dev/null; do sleep 1; done #Splashscreen-wait' > ~/09-splashscreen-wait.sh
-	chmod 755 ~/09-splashscreen-wait.sh
-	sudo mv ~/09-splashscreen-wait.sh /etc/profile.d/09-splashscreen-wait.sh
+# Add wait for OMX VLC MPV FBI Splashscreen
+if [ ! -f /etc/profile.d/09-splashscreen-wait.sh ]; then
+	echo 'while pgrep vlc >/dev/null; do sleep 1; done #Splashscreen-wait' > /dev/shm/09-splashscreen-wait.sh
+	echo 'while pgrep mpv >/dev/null; do sleep 1; done #Splashscreen-wait' >> /dev/shm/09-splashscreen-wait.sh
+	echo 'while pgrep fbi >/dev/null; do sleep 1; done #Splashscreen-wait' >> /dev/shm/09-splashscreen-wait.sh
+	if [ -f /usr/bin/omxplayer ]; then echo 'while pgrep omxplayer >/dev/null; do sleep 1; done #Splashscreen-wait' >> /dev/shm/09-splashscreen-wait.sh; fi
+	chmod 755 /dev/shm/09-splashscreen-wait.sh
+	sudo mv /dev/shm/09-splashscreen-wait.sh /etc/profile.d/09-splashscreen-wait.sh
 	sudo chown root /etc/profile.d/09-splashscreen-wait.sh
 fi
 
