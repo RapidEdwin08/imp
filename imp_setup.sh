@@ -15,10 +15,20 @@ BGMb="$musicDIR/bgm/B-SIDE"
 
 EXTesSYS='<extension>.rp .sh<\/extension>'
 EXTesSYSimp='<extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U<\/extension>'
-#CMDesSYS='<command>sudo \/home\/pi\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
+CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<\/command>'
 CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>"
 CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
-CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<\/command>'
+# TIOCSTI is now Disabled by Default on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+if [[ ! -d $IMP ]] && [[ "$(cat /etc/emulationstation/es_systems.cfg | grep retropie_packages.sh | grep tty)" == '' ]]; then
+	CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
+	CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
+fi
+if [[ -d $IMP ]] && [[ -f /etc/emulationstation/es_systems.cfg.b4imp ]]; then
+	if [[ "$(cat /etc/emulationstation/es_systems.cfg.b4imp | grep retropie_packages.sh | grep tty)" == '' ]]; then
+		CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
+		CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
+	fi
+fi
 
 rpsKODIautostart=~/RetroPie-Setup/scriptmodules/supplementary/autostart.sh
 rpsKODI='echo -e \"kodi #auto\\nemulationstation #auto\" >>\"$script\"'
