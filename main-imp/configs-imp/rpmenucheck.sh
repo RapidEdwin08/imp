@@ -76,6 +76,7 @@ sed -i s+"$rpsKODIes"+"$impKODIes"+ $rpsKODIautostart
 EXTesSYS='<extension>.rp .sh<\/extension>'
 EXTesSYSimp='<extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U<\/extension>'
 CMDesSYS='<command>sudo \/home\/pi\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
+CMDesSYS62='<command>sudo \/home\/pi\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
 CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
 CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<\/command>'
 
@@ -93,6 +94,7 @@ if [ $(cat /etc/emulationstation/es_systems.cfg | grep -q "$EXTesSYSimp" ; echo 
 	# Replace retropiemenu es_systems.cfg with [IMP]
 	sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ /etc/emulationstation/es_systems.cfg
 	sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ /etc/emulationstation/es_systems.cfg
+	sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ /etc/emulationstation/es_systems.cfg
 	sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /etc/emulationstation/es_systems.cfg
 fi
 
@@ -102,6 +104,7 @@ if [ -f /opt/retropie/configs/all/emulationstation/es_systems.cfg ]; then
 		# Replace retropiemenu es_systems.cfg with [IMP]
 		sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
 		sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
+		sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
 		sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
 	fi
 fi
