@@ -85,6 +85,9 @@ CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<
 #    <extension>.rp .sh</extension>
 #    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt;/dev/tty</command>
 
+# TIOCSTI is now Disabled by Default on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM%</command>
+
 # ------------ [IMP] es_systems.cfg ------------ 
 #    <extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U </extension>
 #    <command>bash /opt/retropie/configs/all/retropiemenu.sh %ROM%</command>      
@@ -107,6 +110,42 @@ if [ -f /opt/retropie/configs/all/emulationstation/es_systems.cfg ]; then
 		sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
 		sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg
 	fi
+fi
+
+# Add [IMP] to es_systems.cfg  HDDON/HDDOFF BAK - Scenario RetroPie Updated
+if [ -f /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk ]; then	
+	# Backup es_systems.cfg if not exist already
+	if [ ! -f /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk.b4imp ]; then sudo cp /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk.b4imp 2>/dev/null; fi
+	
+	# Replace retropiemenu es_systems.cfg with [IMP]
+	sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk
+	sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk
+	sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk
+	sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ /opt/retropie/configs/all/emulationstation/es_systems.cfg.bk
+fi
+
+# Add [IMP] to es_systems.cfg HDDOFF - Scenario RetroPie Updated
+if [ -f ~/RetroPie/scripts/es_systems_HDDOFF.cfg ]; then	
+	# Backup es_systems.cfg if not exist already
+	if [ ! -f ~/RetroPie/scripts/es_systems_HDDOFF.cfg.b4imp ]; then sudo cp ~/RetroPie/scripts/es_systems_HDDOFF.cfg ~/RetroPie/scripts/es_systems_HDDOFF.cfg.b4imp 2>/dev/null; fi
+	
+	# Replace retropiemenu es_systems.cfg with [IMP] - Scenario RetroPie Updated
+	sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDOFF.cfg
+	sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDOFF.cfg
+	sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDOFF.cfg
+	sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDOFF.cfg
+fi
+
+# Add [IMP] to es_systems.cfg  HDDON - Scenario RetroPie Updated
+if [ -f ~/RetroPie/scripts/es_systems_HDDON.cfg ]; then	
+	# Backup es_systems.cfg if not exist already
+	if [ ! -f ~/RetroPie/scripts/es_systems_HDDON.cfg.b4imp ]; then sudo cp ~/RetroPie/scripts/es_systems_HDDON.cfg ~/RetroPie/scripts/es_systems_HDDON.cfg.b4imp 2>/dev/null; fi
+	
+	# Replace retropiemenu es_systems.cfg with [IMP]
+	sudo sed -i s+"$EXTesSYS"+"$EXTesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDON.cfg
+	sudo sed -i s+"$CMDesSYS"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDON.cfg
+	sudo sed -i s+"$CMDesSYS62"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDON.cfg
+	sudo sed -i s+"$CMDesSYShm"+"$CMDesSYSimp"+ ~/RetroPie/scripts/es_systems_HDDON.cfg
 fi
 
 #tput reset
