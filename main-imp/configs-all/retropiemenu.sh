@@ -9,11 +9,20 @@ romDIR=$(dirname "$1")
 menuRP=~/RetroPie/retropiemenu
 IMPmenuRP=~/RetroPie/retropiemenu/imp
 IMP=/opt/retropie/configs/imp
+source ~/RetroPie-Setup/scriptmodules/helpers.sh
+
+function run_retropiemenu() {
+	if [[ "$__os_debian_ver" -ge 13 ]] || compareVersions "$__os_ubuntu_ver" gt 23.04; then
+		sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1"
+	else
+		sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	fi
+}
 
 # Run .rp files as expected in the 0riginal es_systems.cfg
 if [[ "$1" == *".rp" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
@@ -21,7 +30,7 @@ fi
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"Current Playlist.sh" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
@@ -29,7 +38,7 @@ fi
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"Current Settings.sh" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
@@ -37,7 +46,7 @@ fi
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"HTTP Server Log.sh" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
@@ -45,7 +54,7 @@ fi
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"[ReadMe] OMX Monitor.sh" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
@@ -79,7 +88,7 @@ fi
 # If File is IN [retropiemenu] and is .sh then [sudo ... %ROM% > /dev/tty] files as expected in the 0riginal es_systems.cfg
 if [[ "$romDIR" == *"$menuRP"* && $1 == *".sh" ]]; then
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
+	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
