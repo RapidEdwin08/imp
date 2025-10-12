@@ -12,6 +12,7 @@ IMP=/opt/retropie/configs/imp
 source ~/RetroPie-Setup/scriptmodules/helpers.sh
 
 function run_retropiemenu() {
+	# TIOCSTI is now Disabled by Default on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
 	if [[ "$__os_debian_ver" -ge 13 ]] || compareVersions "$__os_ubuntu_ver" gt 23.04; then
 		sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1"
 	else
