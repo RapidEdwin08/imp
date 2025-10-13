@@ -9,11 +9,12 @@ romDIR=$(dirname "$1")
 menuRP=~/RetroPie/retropiemenu
 IMPmenuRP=~/RetroPie/retropiemenu/imp
 IMP=/opt/retropie/configs/imp
-source ~/RetroPie-Setup/scriptmodules/helpers.sh
+IMPSettings=$IMP/settings
 
 function run_retropiemenu() {
-	# TIOCSTI is now Disabled by Default on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
-	if [[ "$__os_debian_ver" -ge 13 ]] || compareVersions "$__os_ubuntu_ver" gt 23.04; then
+	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
+	# Legacy TIOCSTI is to be Disabled by Default going forward on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+	if [ $(cat $IMPSettings/tiocsti-legacy.flag) == "0" ]; then
 		sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1"
 	else
 		sudo ~/RetroPie-Setup/retropie_packages.sh retropiemenu launch "$1" </dev/tty > /dev/tty
@@ -22,7 +23,6 @@ function run_retropiemenu() {
 
 # Run .rp files as expected in the 0riginal es_systems.cfg
 if [[ "$1" == *".rp" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
 	run_retropiemenu "$1"
 	clear
 	exit 0
@@ -30,54 +30,38 @@ fi
 
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"Current Playlist.sh" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
 	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
 
-# Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"Current Settings.sh" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
 	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
 
-# Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
 if [[ "$1" == *"HTTP Server Log.sh" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
 	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
 
-# Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
-if [[ "$1" == *"[ReadMe] OMX Monitor.sh" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
-	run_retropiemenu "$1"
-	clear
-	exit 0
-fi
-
-# Certain Scripts we do NOT want to use with Joypad  Simply [bash %ROM%]
+# Certain Scripts we do NOT want to use with Joypad  Simply <command>bash %ROM%</command>
 if [[ "$1" == *"Desktop.sh" ]]; then
-	#     <command>bash %ROM%</command>
 	bash "$1"
 	clear
 	exit 0
 fi
 
-# Certain Scripts we do NOT want to use with Joypad  Simply [bash %ROM%]
 if [[ "$1" == *"Kodi.sh" ]]; then
-	#     <command>bash %ROM%</command>
 	bash "$1"
 	clear
 	exit 0
 fi
 
 # Remaining [iMP] .sh Scripts do Not need a Joypad - Unnecessary and Slower to Launch with retropie_packages.sh retropiemenu
-# If File is IN [retropiemenu/imp/*] and is .sh then Simply [bash %ROM%]
+# If File is IN [retropiemenu/imp/*] and is .sh then Simply <command>bash %ROM%</command>
 if [[ "$romDIR" == *"$IMPmenuRP"* && $1 == *".sh" ]]; then
 	#     <command>bash %ROM%</command>
 	bash "$1"
@@ -88,15 +72,13 @@ fi
 # Remaining [RetroPie] .sh in [retropiemenu/*] that are NOT [iMP]
 # If File is IN [retropiemenu] and is .sh then [sudo ... %ROM% > /dev/tty] files as expected in the 0riginal es_systems.cfg
 if [[ "$romDIR" == *"$menuRP"* && $1 == *".sh" ]]; then
-	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
 	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
 
-# If File is NOT in [retropiemenu] (like Ports) and is .sh then Simply [bash %ROM%]
+# If File is NOT in [retropiemenu] (like Ports) and is .sh then Simply <command>bash %ROM%</command>
 if [[ ! "$romDIR" == *"$menuRP"* && $1 == *".sh" ]]; then
-	#     <command>bash %ROM%</command>
 	bash "$1"
 	clear
 	exit 0
