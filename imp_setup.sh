@@ -21,15 +21,15 @@ CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu l
 
 # Legacy TIOCSTI is to be Disabled by Default going forward on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
 tiocsti_legacy_flag=1
-source ~/RetroPie-Setup/scriptmodules/helpers.sh
-if [[ "$__os_debian_ver" -ge 13 ]] || compareVersions "$__os_ubuntu_ver" gt 23.04; then tiocsti_legacy_flag=0; fi
 
 if [[ ! -d $IMP ]] && [[ "$(cat /etc/emulationstation/es_systems.cfg | grep retropie_packages.sh | grep tty)" == '' ]]; then
+	tiocsti_legacy_flag=0
 	CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
 	CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
 fi
 if [[ -d $IMP ]] && [[ -f /etc/emulationstation/es_systems.cfg.b4imp ]]; then
 	if [[ "$(cat /etc/emulationstation/es_systems.cfg.b4imp | grep retropie_packages.sh | grep tty)" == '' ]]; then
+		tiocsti_legacy_flag=0
 		CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
 		CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
 	fi
