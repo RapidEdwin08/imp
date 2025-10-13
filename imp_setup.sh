@@ -18,7 +18,12 @@ EXTesSYSimp='<extension>.rp .sh .mp3 .MP3 .pls .PLS .m3u .M3U<\/extension>'
 CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<\/command>'
 CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>"
 CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
-# TIOCSTI is now Disabled by Default on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+
+# Legacy TIOCSTI is to be Disabled by Default going forward on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+tiocsti_legacy_flag=1
+source ~/RetroPie-Setup/scriptmodules/helpers.sh
+if [[ "$__os_debian_ver" -ge 13 ]] || compareVersions "$__os_ubuntu_ver" gt 23.04; then tiocsti_legacy_flag=0; fi
+
 if [[ ! -d $IMP ]] && [[ "$(cat /etc/emulationstation/es_systems.cfg | grep retropie_packages.sh | grep tty)" == '' ]]; then
 	CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
 	CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
@@ -655,6 +660,12 @@ fi
 # Check if [IMP] already Installed
 if [ -d $IMP ]; then
 	dialog --no-collapse --title "   * [IMP] INSTALL DETECTED *   *UNINSTALL [IMP] FIRST *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
+	mainMENU
+fi
+
+# Check if [RetroPie] Installed - Utilizing helpers.sh for OS Detection for Legacy TIOCSTI Flag
+if [ ! -f ~/RetroPie-Setup/scriptmodules/helpers.sh ]; then
+	dialog --no-collapse --title "   * [RetroPie] INSTALL NOT DETECTED *   *INSTALL [RetroPie] FIRST *" --ok-label CONTINUE --msgbox "$impLOGO $impFILEREF"  25 75
 	mainMENU
 fi
 
@@ -1456,6 +1467,10 @@ if [ ! -f /etc/profile.d/09-splashscreen-wait.sh ]; then
 	sudo mv /dev/shm/09-splashscreen-wait.sh /etc/profile.d/09-splashscreen-wait.sh
 	sudo chown root /etc/profile.d/09-splashscreen-wait.sh
 fi
+
+# Legacy TIOCSTI is to be Disabled by Default going forward on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
+if [[ "$tiocsti_legacy_flag" == '0' ]]; then echo "0" > /opt/retropie/configs/imp/settings/tiocsti-legacy.flag; fi
+if [[ "$tiocsti_legacy_flag" == '1' ]]; then echo "1" > /opt/retropie/configs/imp/settings/tiocsti-legacy.flag; fi
 
 impFINISH
 }
