@@ -24,14 +24,14 @@ tiocsti_legacy_flag=1
 
 if [[ ! -d $IMP ]] && [[ "$(cat /etc/emulationstation/es_systems.cfg | grep retropie_packages.sh | grep tty)" == '' ]]; then
 	tiocsti_legacy_flag=0
-	CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
-	CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
+	CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% <\/command>"
+	CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% <\/command>'
 fi
 if [[ -d $IMP ]] && [[ -f /etc/emulationstation/es_systems.cfg.b4imp ]]; then
 	if [[ "$(cat /etc/emulationstation/es_systems.cfg.b4imp | grep retropie_packages.sh | grep tty)" == '' ]]; then
 		tiocsti_legacy_flag=0
-		CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>"
-		CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM%<\/command>'
+		CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% <\/command>"
+		CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% <\/command>'
 	fi
 fi
 
