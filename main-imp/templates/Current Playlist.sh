@@ -56,7 +56,7 @@ streamURL=$(grep -iE 'ICY-URL:' $currentTRACK | cut -b 10-999)
 streamNAME=$(grep -iE 'ICY-NAME:' $currentTRACK | cut -b 11-999)
 streamTITLE=$(grep -iE 'StreamTitle=' $currentTRACK | cut -b 23-999 | cut -d ';' -f 1 )
 pausemode=$(cat $IMPSettings/pause.flag)
-if [[ $pausemode == "1" || $pausemode == "2" ]]; then pausemode="PAUSED"; else pausemode="PLAYING"; fi
+if [[ $pausemode == "1" || $pausemode == "2" ]]; then pausemode="\Z3\ZbPAUSED\Zn"; else pausemode="\Z2PLAYING\Zn"; fi
 
 infinite_mode=$(cat $IMPSettings/infinite.flag)
 if [ $infinite_mode == "0" ]; then infinite_mode="OFF"; fi
@@ -97,29 +97,29 @@ fi
 
 if [[ ! "$streamNAME" == '' ]] && [[ "$streamURL" == '' ]]; then streamURL=$streamNAME; fi
 if [[ ! "$streamURL" == '' ]]; then
-	plistINFO="STREAM [$streamURL]  SHUFFLE [$shuffleMODE]  REPEAT [$infinite_mode]"
+	plistINFO="\Z0STREAM [\Z4$streamURL\Z0]  SHUFFLE [\Z4$shuffleMODE\Z0]  REPEAT [\Z4$infinite_mode\Z0]"
 else
-	plistINFO="TIME ELAPSED [$trackTIME]  SHUFFLE [$shuffleMODE]  REPEAT [$infinite_mode]"
+	plistINFO="\Z0TIME ELAPSED [\Z4$trackTIME\Z0]  SHUFFLE [\Z4$shuffleMODE\Z0]  REPEAT [\Z4$infinite_mode\Z0]"
 fi
 
-currentVOLUME="Volume [%$volume_percent]"
+currentVOLUME="\Z0Volume [\Z4%$volume_percent\Z0]"
 
 currentPLIST=$(
 echo
 result=`pgrep mpg123`
-if [[ "$result" == '' ]]; then pausemode="STOPPED"; fi
-echo "  [$pausemode] Track: $trackFILE"
+if [[ "$result" == '' ]]; then pausemode="\Z1STOPPED\Zn"; fi
+echo "  [$pausemode] Track: \Zb\Z4$trackFILE\Zn"
 if [[ ! "$trackALBUM" == '' ]] || [[ ! "$trackYEAR" == '' ]]; then echo "  $trackALBUM$trackYEAR"; fi
 if [[ ! "$trackARTIST" == '' ]]; then echo "  $trackARTIST"; fi
 if [[ ! "$trackTITLE" == '' ]] || [[ ! "$streamNAME" == '' ]]; then echo "  $trackTITLE$streamNAME"; fi
-if [[ ! "$currentBASE" == '' ]]; then echo "  [$currentBASE]"; fi
-if [[ ! "$currentPLS" == '' ]]; then echo "  [$currentPLSdir]"; fi
+if [[ ! "$currentBASE" == '' ]]; then echo "  [\Zb\Z4$currentBASE\Zn]"; fi
+if [[ ! "$currentPLS" == '' ]]; then echo "  [\Zb\Z4$currentPLSdir\Zn]"; fi
 echo " -------------------"
 
 while read line; do
 	if [[ "$line" == "http"* ]]; then
 		if [[ $line == *"$httpBASE"* ]]; then
-			echo "><  $line  [SELECTED] "
+			echo "\Zb\Z4><  $line  [SELECTED] \Zn"
 		else
 			echo "    $line"
 		fi
@@ -127,9 +127,9 @@ while read line; do
 		currentLINE=$(echo "$line" | sed 's|.*/||'  )
 		currentDIR=$(echo "$line" | rev | cut -d/ -f2 | rev )
 		if [[ $line == *"$mp3BASE"* ]]; then
-			echo "><  $currentLINE  [SELECTED] "
+			echo "\Zb\Z4><  $currentLINE  [SELECTED] \Zn"
 		else
-			echo "    $currentLINE"
+			echo "    \Zb\Z4$currentLINE\Zn"
 		fi
 	fi
 done < $currentLIST
