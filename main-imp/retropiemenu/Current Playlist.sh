@@ -129,7 +129,7 @@ while read line; do
 		if [[ $line == *"$mp3BASE"* ]]; then
 			echo "\Zb\Z4><  $currentLINE  [SELECTED] \Zn"
 		else
-			echo "    \Zb\Z4$currentLINE\Zn"
+			echo "    $currentLINE"
 		fi
 	fi
 done < $currentLIST
@@ -143,7 +143,7 @@ else
 fi
 )
 
-dialog --no-collapse --title "  $currentVOLUME  $plistINFO" --msgbox "$currentPLIST"  0 0
+dialog --colors --no-collapse --title "  $currentVOLUME  $plistINFO" --msgbox "$currentPLIST"  0 0
 
 # read -p " < OK >" </dev/tty
 tput reset
