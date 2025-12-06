@@ -107,7 +107,7 @@ currentVOLUME="\Z0Volume [\Z4%$volume_percent\Z0]"
 currentPLIST=$(
 echo
 result=`pgrep mpg123`
-if [[ "$result" == '' ]]; then pausemode="\Z1STOPPED\Zn"; fi
+if [[ "$result" == '' ]] && [[ "$(cat $IMPSettings/pause.flag)" == "0" ]]; then pausemode="\Z1STOPPED\Zn"; fi
 echo "  [$pausemode] Track: \Zb\Z4$trackFILE\Zn"
 if [[ ! "$trackALBUM" == '' ]] || [[ ! "$trackYEAR" == '' ]]; then echo "  $trackALBUM$trackYEAR"; fi
 if [[ ! "$trackARTIST" == '' ]]; then echo "  $trackARTIST"; fi
