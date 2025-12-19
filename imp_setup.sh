@@ -1765,6 +1765,7 @@ rm ~/RetroPie/retropiemenu/icons/impstartbgmm0a.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstartbgmm0b.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impstop.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume.png 2>/dev/null
+rm ~/RetroPie/retropiemenu/icons/impvolume00.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume05.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume10.png 2>/dev/null
 rm ~/RetroPie/retropiemenu/icons/impvolume20.png 2>/dev/null
