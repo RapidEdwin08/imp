@@ -659,6 +659,12 @@ Save CFG -&gt; Main Menu -&gt; Configuration File -&gt;  &quot;Save Current Conf
 		<image>./icons/impvolume.png</image>
 	</folder>
 	<game>
+		<path>./imp/Volume/[00] Player Volume.sh</path>
+		<name>[MUTE] Player Volume</name>
+		<desc>[IMP] Integrated Music Player.</desc>
+		<image>./icons/impvolume00.png</image>
+	</game>
+	<game>
 		<path>./imp/Volume/[05] Player Volume.sh</path>
 		<name>[05] Player Volume</name>
 		<desc>[IMP] Integrated Music Player.</desc>
@@ -767,3 +773,4 @@ Save CFG -&gt; Main Menu -&gt; Configuration File -&gt;  &quot;Save Current Conf
  ~/RetroPie/retropiemenu/imp/music/_roms_music</desc>
 		<image>./icons/impromsmusic.png</image>
 	</folder>
+
