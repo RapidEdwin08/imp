@@ -162,6 +162,15 @@ Should you need to STOP [IMP], Use [STOP] from [retropiemenu] OR manually bash t
 bash /opt/retropie/configs/imp/stop.sh
 ```
 
+## IMP-CLI
+**IMP-CLI [>= v2025.12]:**  
+***IMP-CLI*** is a Command Line Interface focused primarily on IMP's Playback Controls  
+[imp-cli.sh] can be found in ES -> RunCommand Menu -> User Menu -> [imp-cli.sh]  
+[imp-cli] can be ran directly from Terminal:
+```bash
+imp-cli
+```
+
 ## IMPORTANT
 
 ** EMULATIONSTATION FAILS TO LOAD [Assertion mType == FOLDER failed]**  
