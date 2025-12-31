@@ -19,6 +19,9 @@ CMDesSYSimp='<command>bash \/opt\/retropie\/configs\/all\/retropiemenu.sh %ROM%<
 CMDesSYS="<command>sudo \/home\/$USER\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>"
 CMDesSYShm='<command>sudo ~\/RetroPie-Setup\/retropie_packages.sh retropiemenu launch %ROM% \&lt;\/dev\/tty \&gt\;\/dev\/tty<\/command>'
 
+# If no user is specified (for RetroPie below v4.8.9)
+if [[ -z "$__user" ]]; then __user="$SUDO_USER"; [[ -z "$__user" ]] && __user="$(id -un)"; fi
+
 # Legacy TIOCSTI is to be Disabled by Default going forward on Kernels >= 6.2 - Try Not to Use </dev/tty > /dev/tty
 tiocsti_legacy_flag=1
 
@@ -772,6 +775,43 @@ sudo chmod 755 $IMP/*.py 2>/dev/null
 # Copy Files to retropiemenu
 cp -R main-imp/retropiemenu/* $IMPMenuRP
 
+# [imp-cli] Copy retropiemenu files to IMP Install
+mkdir -p $IMP/retropiemenu
+cp -R main-imp/retropiemenu/* $IMP/retropiemenu
+
+# [imp-cli] Copy to runcommand-menu
+mkdir -p /opt/retropie/configs/all/runcommand-menu/
+cp main-imp/configs-imp/imp-cli.sh /opt/retropie/configs/all/runcommand-menu/
+chmod 755 /opt/retropie/configs/all/runcommand-menu/imp-cli.sh
+
+# [imp-cli] Copy to /usr/bin/
+sudo cp main-imp/configs-imp/imp-cli.sh /usr/bin/imp-cli
+sudo chmod 755 /usr/bin/imp-cli
+sudo chown root /usr/bin/imp-cli
+
+# Create IMP.desktop shortcut
+homeDIR=~/
+cp main-imp/icons/imp/imp.png $IMP/imp-cli.png
+
+shortcut_name="IMP"
+cat >"$IMP/$shortcut_name.desktop" << _EOF_
+[Desktop Entry]
+Name=$shortcut_name
+GenericName=$shortcut_name
+Comment=Integrated Music Player
+Exec=/usr/bin/imp-cli
+Icon=$IMP/imp-cli.png
+Terminal=true
+Type=Application
+Categories=AudioVideo;Audio;Player;
+Keywords=IMP;Music;Player
+StartupWMClass=IntegratedMusicPlayer
+Name[en_US]=$shortcut_name
+_EOF_
+chmod 755 "$IMP/$shortcut_name.desktop"
+if [[ -d "$homeDIR/Desktop" ]]; then rm -f "$homeDIR/Desktop/$shortcut_name.desktop"; cp "$IMP/$shortcut_name.desktop" "$homeDIR/Desktop/$shortcut_name.desktop"; chown $__user:$__user "$homeDIR/Desktop/$shortcut_name.desktop"; fi
+rm -f "/usr/share/applications/$shortcut_name.desktop"; sudo cp "$IMP/$shortcut_name.desktop" "/usr/share/applications/$shortcut_name.desktop"; sudo chown $__user:$__user "/usr/share/applications/$shortcut_name.desktop"
+
 # Backup autostart.sh if not exist already
 if [ ! -f /opt/retropie/configs/all/autostart.sh.b4imp ] && [ -f /opt/retropie/configs/all/autostart.sh ]; then
 	mv /opt/retropie/configs/all/autostart.sh /opt/retropie/configs/all/autostart.sh.b4imp
@@ -1478,6 +1518,7 @@ impFINISH
 impUNINSTALL()
 {
 tput reset
+homeDIR=~/
 
 # Check if IMP Installed
 if [ ! -d "$IMP" ]; then
@@ -1656,7 +1697,16 @@ rm $IMP/* 2>/dev/null
 # rm -R $IMP
 rm -d $IMP/playlist/ 2>/dev/null
 rm -d $IMP/settings/ 2>/dev/null
+rm -Rf /opt/retropie/configs/imp/retropiemenu/ 2>/dev/null # I Don't like to use $vars with rm -Rf
 rm -d $IMP/ 2>/dev/null
+
+# Remove [imp-cli]
+rm -f /opt/retropie/configs/all/runcommand-menu/imp-cli.sh 2>/dev/null
+sudo rm -f /usr/bin/imp-cli 2>/dev/null
+
+# Remove [imp-cli] .desktop shortcuts
+rm -f "$homeDIR/Desktop/IMP.desktop" 2>/dev/null
+sudo rm -f "/usr/share/applications/IMP.desktop" 2>/dev/null
 
 # Disable Idle IMP @autostart
 rm ~/.config/autostart/imp.desktop > /dev/null 2>&1
