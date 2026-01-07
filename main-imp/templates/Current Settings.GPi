@@ -1,11 +1,7 @@
 #!/bin/bash
 # 202501 Minimal Modifications for Funciontality with GPi
 
-blue='\033[0;34m'
-RED='\033[0;31m'
-GREEN='\033[0;32m'
-YEL='\033[1;33m'
-NC='\033[0m'        #No Color
+# 202510 Converted to dialog
 
 IMP=/opt/retropie/configs/imp
 versionIMP=$(cat $IMP/VERSION)
@@ -30,65 +26,65 @@ startupsong_mode=$(cat $IMPSettings/startupsong.flag)
 shuffleboot_mode=$(cat $IMPSettings/shuffleboot.flag)
 quitsong_flag=$(cat $IMPSettings/quitsong.flag)
 
-if [ $aside_music == "1" ]; then aside_music=" ON"; else aside_music="OFF"; fi
-if [ $bside_music == "1" ]; then bside_music="ON "; else bside_music="OFF"; fi
-if [ $music_start == "1" ]; then music_start=" ON"; else music_start="OFF"; fi
-#if [ $music_over_game == "1" ]; then music_over_game="ON "; else music_over_game="OFF"; fi
-if ! [ $delay_startup == "000" ]; then delay_startup="$delay_startup"; else delay_startup="OFF"; fi
-if ! [ $delay_playback == "00" ]; then delay_playback="$delay_playback "; else delay_playback="OFF"; fi
-if [ $fade_out == "1" ]; then fade_out="x1 "; elif [ $fade_out == "5" ]; then fade_out="x5 "; elif [ $fade_out == "10" ]; then fade_out="x10"; else fade_out="OFF"; fi
-if [ $http_setting == "1" ]; then http_setting="ON "; else http_setting="OFF"; fi
-if [ $infinite_mode == "0" ]; then infinite_mode="[ ]"; infinite_state="OFF"; fi
-if [ $infinite_mode == "1" ]; then infinite_mode="[1]"; infinite_state="ON "; fi
-if [ $infinite_mode == "2" ]; then infinite_mode="ALL"; infinite_state="ON "; fi
-if [ $lite_mode == "1" ]; then lite_mode="ON "; else lite_mode="OFF"; fi
-if [ $startupsong_mode == "1" ]; then startupsong_mode="ON "; else startupsong_mode="OFF"; fi
-if [ $shuffleboot_mode == "1" ]; then shuffleboot_mode="ON "; else shuffleboot_mode="OFF"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="ALL"; randomizer_boot="OFF"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="ALL"; randomizer_boot="OFF"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "1" ]; then randomizer_mode="ALL"; randomizer_boot="OFF"; fi
-if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "2" ]; then randomizer_mode="BGM"; randomizer_boot="OFF"; fi
-if [ $randomizer_boot == "0" ] &&  [ $randomizer_mode == "3" ]; then randomizer_mode="PLS"; randomizer_boot="OFF"; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="ALL"; randomizer_boot="ON "; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode="ALL"; randomizer_boot="ON "; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode="BGM"; randomizer_boot="ON "; fi
-if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode="PLS"; randomizer_boot="ON "; fi
-if [ $quitsong_flag == "1" ]; then quitsong_mode="ON "; else quitsong_mode="OFF"; fi
+if [ $aside_music == "1" ]; then aside_music=" \Z2ON\Zn"; else aside_music="\Z1OFF\Zn"; fi
+if [ $bside_music == "1" ]; then bside_music=" \Z2ON\Zn"; else bside_music="\Z1OFF\Zn"; fi
+if [ $music_start == "1" ]; then music_start=" \Z2ON\Zn"; else music_start="\Z1OFF\Zn"; fi
+#if [ $music_over_game == "1" ]; then music_over_game=" \Z2ON\Zn"; else music_over_game="\Z1OFF\Zn"; fi
+if ! [ $delay_startup == "000" ]; then delay_startup="\Z4$delay_startup\Zn"; else delay_startup="\Z1OFF\Zn"; fi
+if ! [ $delay_playback == "00" ]; then delay_playback="\Z4$delay_playback\Zn "; else delay_playback="\Z1OFF\Zn"; fi
+if [ $fade_out == "1" ]; then fade_out="\Z2x1\Zn "; elif [ $fade_out == "5" ]; then fade_out="\Z2x5\Zn "; elif [ $fade_out == "10" ]; then fade_out="\Z2x10\Zn"; else fade_out="\Z1OFF\Zn"; fi
+if [ $http_setting == "1" ]; then http_setting=" \Z2ON\Zn"; else http_setting="\Z1OFF\Zn"; fi
+if [ $infinite_mode == "0" ]; then infinite_mode="\Z1[ ]\Zn"; infinite_state="\Z1OFF\Zn"; fi
+if [ $infinite_mode == "1" ]; then infinite_mode="\Z2[1]\Zn"; infinite_state="\Z2ON\Zn "; fi
+if [ $infinite_mode == "2" ]; then infinite_mode="\Z2ALL\Zn"; infinite_state="\Z2ON\Zn "; fi
+if [ $lite_mode == "1" ]; then lite_mode="\Z2ON\Zn "; else lite_mode="\Z1OFF\Zn"; fi
+if [ $startupsong_mode == "1" ]; then startupsong_mode="\Z2ON\Zn "; else startupsong_mode="\Z1OFF\Zn"; fi
+if [ $shuffleboot_mode == "1" ]; then shuffleboot_mode="\Z2ON\Zn "; else shuffleboot_mode="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="\Z1ALL\Zn"; randomizer_boot="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="\Z1ALL\Zn"; randomizer_boot="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "1" ]; then randomizer_mode="\Z1ALL\Zn"; randomizer_boot="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "0" ] && [ $randomizer_mode == "2" ]; then randomizer_mode="\Z1BGM\Zn"; randomizer_boot="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "0" ] &&  [ $randomizer_mode == "3" ]; then randomizer_mode="\Z1PLS\Zn"; randomizer_boot="\Z1OFF\Zn"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "0" ]; then randomizer_mode="\Z2ALL\Zn"; randomizer_boot=" \Z2ON\Zn"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "1" ]; then randomizer_mode="\Z2ALL\Zn"; randomizer_boot=" \Z2ON\Zn"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "2" ]; then randomizer_mode="\Z2BGM\Zn"; randomizer_boot=" \Z2ON\Zn"; fi
+if [ $randomizer_boot == "1" ] && [ $randomizer_mode == "3" ]; then randomizer_mode="\Z2PLS\Zn"; randomizer_boot=" \Z2ON\Zn"; fi
+if [ $quitsong_flag == "1" ]; then quitsong_mode="\Z2ON\Zn "; else quitsong_mode="\Z1OFF\Zn"; fi
 
 # Idle Settings for SLEEP
 idleORkill="Stop IMP"
 if [ -f /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh ]; then
-	sleepIMPsleep="ON "
+	sleepIMPsleep="\Z2ON\Zn "
 	if [ -f /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh ]; then
-		idleORkill="KillDisplay"
+		idleORkill="\Z1KillDisplay\Zn"
 	fi
 else
-	sleepIMPsleep="OFF"
+	sleepIMPsleep="\Z1OFF\Zn"
 fi
 
 # Idle Settings for SCREENSAVER
 if [ -f /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh ] && [ -f /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh ]; then
-	sleepIMPscreen="ANY"
+	sleepIMPscreen="\Z2ANY\Zn"
 	if [ "$(cat /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh | grep -q 'random video' ; echo $?)" == '0' ]; then
-		sleepIMPscreen="VID"
+		sleepIMPscreen="\Z2VID\Zn"
 	fi
 else
-	sleepIMPscreen="OFF"
+	sleepIMPscreen="\Z1OFF\Zn"
 fi
 
 # Lower Idle Settings for SCREENSAVER
 lowerVOLUME=$(cat $IMPSettings/lower-idle.volume)
-if [ $lowerVOLUME == "32768" ]; then volume_percent="MAX"; fi
-if [ $lowerVOLUME == "29484" ]; then volume_percent="%90"; fi
-if [ $lowerVOLUME == "26208" ]; then volume_percent="%80"; fi
-if [ $lowerVOLUME == "22932" ]; then volume_percent="%70"; fi
-if [ $lowerVOLUME == "19656" ]; then volume_percent="%60"; fi
-if [ $lowerVOLUME == "16380" ]; then volume_percent="%50"; fi
-if [ $lowerVOLUME == "13104" ]; then volume_percent="%40"; fi
-if [ $lowerVOLUME == "9828" ]; then volume_percent="%30"; fi
-if [ $lowerVOLUME == "6552" ]; then volume_percent="%20"; fi
-if [ $lowerVOLUME == "3276" ]; then volume_percent="%10"; fi
-if [ $lowerVOLUME == "1638" ]; then volume_percent="%5 "; fi
+if [ $lowerVOLUME == "32768" ]; then volume_percent="\Z4MAX\Zn"; fi
+if [ $lowerVOLUME == "29484" ]; then volume_percent="\Z4%90\Zn"; fi
+if [ $lowerVOLUME == "26208" ]; then volume_percent="\Z4%80\Zn"; fi
+if [ $lowerVOLUME == "22932" ]; then volume_percent="\Z4%70\Zn"; fi
+if [ $lowerVOLUME == "19656" ]; then volume_percent="\Z4%60\Zn"; fi
+if [ $lowerVOLUME == "16380" ]; then volume_percent="\Z4%50\Zn"; fi
+if [ $lowerVOLUME == "13104" ]; then volume_percent="\Z4%40\Zn"; fi
+if [ $lowerVOLUME == "9828" ]; then volume_percent="\Z4%30\Zn"; fi
+if [ $lowerVOLUME == "6552" ]; then volume_percent="\Z4%20\Zn"; fi
+if [ $lowerVOLUME == "3276" ]; then volume_percent="\Z4%10\Zn"; fi
+if [ $lowerVOLUME == "1638" ]; then volume_percent="\Z6%5\Zn "; fi
 #sleepIMPvolume="$volume_percent"
 sleepIMPvolume="   "
 
@@ -100,11 +96,11 @@ if [ $lower_idle == "1" ]; then
 fi
 
 if [ $music_over_game == "1" ]; then
-	music_over_game="ON "
+	music_over_game="\Z2ON\Zn "
 elif [ $music_over_game == "2" ]; then
 	music_over_game="$volume_percent"
 else
-	music_over_game="OFF"
+	music_over_game="\Z1OFF\Zn"
 fi
 
 ##omxM0Nflag=$(cat $IMPSettings/0mxmon.flag)
@@ -123,7 +119,7 @@ httpPORT=$(cat $IMPSettings/http-server.port)
 # DEPRECATION: Python 2.7 reached the end of its life on January 1st, 2020. Python2.x is no longer maintained.
 # httpPID=$(ps -ef |grep SimpleHTTPServer |grep $http_port |awk '{print $2}')
 httpPID=$(ps -ef |grep http.server |grep $http_port |awk '{print $2}')
-if [[ "$httpPID" == '' ]]; then http_server="STOPPED"; else http_server="RUNNING"; fi
+if [[ "$httpPID" == '' ]]; then http_server="\Z1STOPPED\Zn"; else http_server="\Z2RUNNING\Zn"; fi
 
 impSETTINGScurrent=$(
 echo "
@@ -159,15 +155,15 @@ http.server: [$http_setting]
 $currentHTTP
 
 Music Folders:"
-echo '$HOME/RetroPie/
+echo "\Zb$HOME/RetroPie/
 retropiemenu/imp/music
 
 $HOME/RetroPie/
-roms/music'
+roms/music\Zn"
 )
 
 tput reset
-dialog --no-collapse --title "Current Settings" --ok-label OK --msgbox "$impSETTINGScurrent"  0 0
+dialog --colors --no-collapse --title "Current Settings" --ok-label OK --msgbox "$impSETTINGScurrent"  0 0
 #read -p " ..." </dev/tty
 tput reset
 exit 0
