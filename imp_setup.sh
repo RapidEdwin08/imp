@@ -787,7 +787,7 @@ chmod 755 /opt/retropie/configs/all/runcommand-menu/imp-cli.sh
 
 # [imp-cli] Copy to /usr/bin/
 sudo cp main-imp/configs-imp/imp-cli.sh /usr/bin/imp-cli
-chmod 755 /usr/bin/imp-cli
+sudo chmod 755 /usr/bin/imp-cli
 sudo chown root /usr/bin/imp-cli
 
 # Create IMP.desktop shortcut
