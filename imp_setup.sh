@@ -770,8 +770,8 @@ if [ ! -d "$IMPMenuRP/Volume" ]; then mkdir "$IMPMenuRP/Volume"; fi
 
 # Copy Files to configs
 cp -R main-imp/configs-imp/* "$IMP"
-sudo chmod 755 $IMP/*.sh 2>/dev/null
-sudo chmod 755 $IMP/*.py 2>/dev/null
+chmod 755 $IMP/*.sh 2>/dev/null
+chmod 755 $IMP/*.py 2>/dev/null
 
 # Copy Files to retropiemenu
 cp -R main-imp/retropiemenu/* $IMPMenuRP
@@ -787,7 +787,7 @@ chmod 755 /opt/retropie/configs/all/runcommand-menu/imp-cli.sh
 
 # [imp-cli] Copy to /usr/bin/
 sudo cp main-imp/configs-imp/imp-cli.sh /usr/bin/imp-cli
-sudo chmod 755 /usr/bin/imp-cli
+chmod 755 /usr/bin/imp-cli
 sudo chown root /usr/bin/imp-cli
 
 # Create IMP.desktop shortcut
@@ -1166,7 +1166,7 @@ fi
 if [ "$selectTYPE" == "$IMPcustom" ]; then
 	# If Found RUN [custom-imp.sh]
 	if [ -f custom-imp/custom-imp.sh ]; then
-	sudo chmod 755 custom-imp/custom-imp.sh
+	chmod 755 custom-imp/custom-imp.sh
 	bash custom-imp/custom-imp.sh
 fi
 	
@@ -1421,7 +1421,7 @@ if [ "$installFLAG" == 'streams' ]; then
 	# *Deprecated* Department Store Christmas and DOOMED are now dedicated channels
 	##if [ ! -f "$IMP/somafm-specials.sh" ]; then
 		##cp main-imp/icons/somafm/somafm-specials.sh $IMP/somafm-specials.sh
-		##sudo chmod 755 $IMP/somafm-specials.sh
+		##chmod 755 $IMP/somafm-specials.sh
 		##bash $IMP/somafm-specials.sh
 	##fi
 fi
@@ -1437,7 +1437,7 @@ if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsett
 " >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
 echo 'bash /opt/retropie/configs/imp/run-onstart.sh idle &
 exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
 mkdir /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop > /dev/null 2>&1
 echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
 echo "screenSAVERsetting=\$(cat /opt/retropie/configs/all/emulationstation/es_settings.cfg | grep \"ScreenSaverBehavior\" | awk -F'=' '{print \$3}'| cut -c 2- | rev | cut -c 5- | rev)
@@ -1445,19 +1445,19 @@ if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsett
 " >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
 echo 'bash /opt/retropie/configs/imp/run-onend.sh idle &
 exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
 
 # Enable Idle IMP @ESSleep
 mkdir /opt/retropie/configs/all/emulationstation/scripts/sleep > /dev/null 2>&1
 echo '#!/bin/bash
 bash /opt/retropie/configs/imp/run-onstart.sh sleep &
 exit 0' > /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/sleep/impstop.sh
 mkdir /opt/retropie/configs/all/emulationstation/scripts/wake > /dev/null 2>&1
 echo '#!/bin/bash
 bash /opt/retropie/configs/imp/run-onend.sh sleep &
 exit 0' > /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/wake/impstart.sh
 rm /opt/retropie/configs/all/emulationstation/scripts/sleep/impXdisplay0.sh > /dev/null 2>&1
 rm /opt/retropie/configs/all/emulationstation/scripts/wake/impXdisplay1.sh > /dev/null 2>&1
 
@@ -2755,7 +2755,7 @@ if [ ! "$pcUTILchoice" == '' ]; then
 			echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 			echo 'bash /opt/retropie/configs/imp/impquit.sh &' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 			echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
-			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
+			chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/impstop.sh
 		fi
 		
 		if [ "$PCutilitySELECT" == ' ADD [QUIT SONG] to Emulationstation [QUIT] ' ]; then
@@ -2774,7 +2774,7 @@ if [ ! "$pcUTILchoice" == '' ]; then
 			echo 'if [ $(cat /opt/retropie/configs/imp/settings/quitsong.flag) == "0" ]; then exit 0; fi' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
 			echo 'mpg123 -f "$(cat /opt/retropie/configs/imp/settings/volume.flag)" "$HOME/RetroPie/retropiemenu/imp/music/bgm/quit.mp3" > /dev/null 2>&1' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
 			echo 'exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
-			sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
+			chmod 755 /opt/retropie/configs/all/emulationstation/scripts/quit/quitsong.sh
 		fi
 		
 		if [ "$PCutilitySELECT" == ' REMOVE [IMP-START] from System [AUTOSTART] ' ]; then
