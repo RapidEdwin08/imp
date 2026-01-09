@@ -4,7 +4,8 @@
 tput reset; tput civis # Reset and Hide Cursor
 
 # Show Blank/Fake Image to produce Blank Screen
-sudo fbi -T 2 -a -noverbose ~/Blank.png > /dev/null 2>&1 & sleep 2 && sudo kill $(pgrep fbi) > /dev/null 2>&1
+##sudo fbi -T 2 -a -noverbose ~/Blank.png > /dev/null 2>&1 & sleep 2 && sudo kill $(pgrep fbi) > /dev/null 2>&1; clear & clear
+sudo fbi -T 1 -a -noverbose ~/Blank.png > /dev/null 2>&1 & sleep 2 && sudo kill $(pgrep fbi) > /dev/null 2>&1; clear & clear
 
 # Issue on rPi4 where omxplayer will get Stuck L00PING the Same Video - KILL omxplayer @ES Sleep
 pkill -KILL omxplayer > /dev/null 2>&1
