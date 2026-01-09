@@ -37,7 +37,7 @@ chocolate-doom_plus.sh '+Chocolate Doom Setup.sh' CacheSX2Cleaner.sh '[GIT pi-ap
 'OpenBOR - PAK Extract (v0-67).sh' 'OpenBOR PAK Extract.sh' '[QJoyPad] Desktop.sh' \
 lzdoom-dazi.sh lzdoom-sijl.sh gzdoom-sijl.sh uzdoom-sijl.sh \
 lr-atari800-tweaks.sh rott-darkwar_plus.sh yquake2_plus.sh \
-vlc-downgrade-es.sh; do
+vlc-downgrade-es.sh icon-selector.sh; do
 	if [[ "$1" == *"$joyscript" ]]; then
 		sudo $joy2key stop 2>/dev/null; $joy2key start
 		bash "$1"
