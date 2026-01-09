@@ -11,6 +11,7 @@ IMPmenuRP=~/RetroPie/retropiemenu/imp
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
 joy2key=/opt/retropie/admin/joy2key/joy2key
+ADVmenuRP=~/RetroPie/retropiemenu/advanced; # GPi [advanced] Scripts
 
 function run_retropiemenu() {
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
@@ -29,8 +30,7 @@ if [[ "$1" == *".rp" || "$1" == *".RP" ]]; then
 	exit 0
 fi
 
-# Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
-# *202512* use [joy2key] instead of [retropie_packages.sh retropiemenu] for quicker loading
+# Certain Scripts we want to use with Joypad - *202512* launch [joy2key] instead of [retropie_packages.sh retropiemenu] for quicker loading
 for joyscript in 'Current Playlist.sh' 'Current Settings.sh' 'HTTP Server Log.sh' '[ReadMe] OMX Monitor.sh' \
 sysinfo.sh boot-selector.sh overclock.sh screen-mode.sh gamelist-metadata-refresh.sh romsetswap.sh \
 chocolate-doom_plus.sh '+Chocolate Doom Setup.sh' CacheSX2Cleaner.sh '[GIT pi-apps].sh' \
@@ -39,13 +39,22 @@ lzdoom-dazi.sh lzdoom-sijl.sh gzdoom-sijl.sh uzdoom-sijl.sh \
 lr-atari800-tweaks.sh rott-darkwar_plus.sh yquake2_plus.sh \
 vlc-downgrade-es.sh icon-selector.sh; do
 	if [[ "$1" == *"$joyscript" ]]; then
-		sudo $joy2key stop 2>/dev/null; $joy2key start
+		sudo $joy2key stop 2>/dev/null; $joy2key start &
 		bash "$1"
 		sudo $joy2key stop 2>/dev/null
 		clear
 		exit 0
 	fi
 done
+
+# GPi [advanced] Scripts we want to use with Joypad - *202512* launch [joy2key] instead of [retropie_packages.sh retropiemenu] for quicker loading
+if [[ "$romDIR" == *"$ADVmenuRP"* && $1 == *".sh" ]]; then
+	sudo $joy2key stop 2>/dev/null; $joy2key start &
+	bash "$1"
+	sudo $joy2key stop 2>/dev/null
+	clear
+	exit 0
+fi
 
 # Certain Scripts we do NOT want to use with Joypad  Simply <command>bash %ROM%</command>
 for nojoyscript in 'Desktop.sh' 'Kodi.sh'; do
@@ -80,7 +89,7 @@ if [[ ! "$romDIR" == *"$menuRP"* && $1 == *".sh" ]]; then
 	exit 0
 fi
 
-# IF .mp3 .pls .m3u then Run with [iMP]
+# IF [.mp3 .pls .m3u] then Run with [iMP]
 for musicfile in .mp3 .MP3 .Mp3 .mP3 .pls .PLS .Pls .PLs .pLS .plS .m3u .M3U .m3U .M3u; do
 	if [[ "$1" == *"$musicfile" ]]; then
 		bash $IMP/rom.sh "$1"
