@@ -15,7 +15,7 @@ if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsett
 
 echo 'bash /opt/retropie/configs/imp/run-onstart.sh idle &
 exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-start/impstop.sh
 
 mkdir /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop > /dev/null 2>&1
 echo '#!/bin/bash' > /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
@@ -28,7 +28,7 @@ if [ ! \"\$screenSAVERsetting\" == \"random video\" ] && [ ! \"\$screenSAVERsett
 
 echo 'bash /opt/retropie/configs/imp/run-onend.sh idle &
 exit 0' >> /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
-sudo chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
+chmod 755 /opt/retropie/configs/all/emulationstation/scripts/screensaver-stop/impstart.sh
 
 #tput reset
 exit 0
