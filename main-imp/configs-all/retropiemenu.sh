@@ -10,6 +10,7 @@ menuRP=~/RetroPie/retropiemenu
 IMPmenuRP=~/RetroPie/retropiemenu/imp
 IMP=/opt/retropie/configs/imp
 IMPSettings=$IMP/settings
+joy2key=/opt/retropie/admin/joy2key/joy2key
 
 function run_retropiemenu() {
 	#    <command>sudo /home/pi/RetroPie-Setup/retropie_packages.sh retropiemenu launch %ROM% &lt;/dev/tty &gt; /dev/tty</command>
@@ -22,43 +23,38 @@ function run_retropiemenu() {
 }
 
 # Run .rp files as expected in the 0riginal es_systems.cfg
-if [[ "$1" == *".rp" ]]; then
+if [[ "$1" == *".rp" || "$1" == *".RP" ]]; then
 	run_retropiemenu "$1"
 	clear
 	exit 0
 fi
 
 # Certain Scripts we want to use with Joypad - Launch with retropie_packages.sh retropiemenu
-if [[ "$1" == *"Current Playlist.sh" ]]; then
-	run_retropiemenu "$1"
-	clear
-	exit 0
-fi
-
-if [[ "$1" == *"Current Settings.sh" ]]; then
-	run_retropiemenu "$1"
-	clear
-	exit 0
-fi
-
-if [[ "$1" == *"HTTP Server Log.sh" ]]; then
-	run_retropiemenu "$1"
-	clear
-	exit 0
-fi
+# *202512* use [joy2key] instead of [retropie_packages.sh retropiemenu] for quicker loading
+for joyscript in 'Current Playlist.sh' 'Current Settings.sh' 'HTTP Server Log.sh' '[ReadMe] OMX Monitor.sh' \
+sysinfo.sh boot-selector.sh overclock.sh screen-mode.sh gamelist-metadata-refresh.sh romsetswap.sh \
+chocolate-doom_plus.sh '+Chocolate Doom Setup.sh' CacheSX2Cleaner.sh '[GIT pi-apps].sh' \
+'OpenBOR - PAK Extract (v0-67).sh' 'OpenBOR PAK Extract.sh' '[QJoyPad] Desktop.sh' \
+lzdoom-dazi.sh lzdoom-sijl.sh gzdoom-sijl.sh uzdoom-sijl.sh \
+lr-atari800-tweaks.sh rott-darkwar_plus.sh yquake2_plus.sh \
+vlc-downgrade-es.sh; do
+	if [[ "$1" == *"$joyscript" ]]; then
+		sudo $joy2key stop 2>/dev/null; $joy2key start
+		bash "$1"
+		sudo $joy2key stop 2>/dev/null
+		clear
+		exit 0
+	fi
+done
 
 # Certain Scripts we do NOT want to use with Joypad  Simply <command>bash %ROM%</command>
-if [[ "$1" == *"Desktop.sh" ]]; then
-	bash "$1"
-	clear
-	exit 0
-fi
-
-if [[ "$1" == *"Kodi.sh" ]]; then
-	bash "$1"
-	clear
-	exit 0
-fi
+for nojoyscript in 'Desktop.sh' 'Kodi.sh'; do
+	if [[ "$1" == *"$nojoyscript" ]]; then
+		bash "$1"
+		clear
+		exit 0
+	fi
+done
 
 # Remaining [iMP] .sh Scripts do Not need a Joypad - Unnecessary and Slower to Launch with retropie_packages.sh retropiemenu
 # If File is IN [retropiemenu/imp/*] and is .sh then Simply <command>bash %ROM%</command>
@@ -84,28 +80,13 @@ if [[ ! "$romDIR" == *"$menuRP"* && $1 == *".sh" ]]; then
 	exit 0
 fi
 
-# IF .mp3 .MP3 then Run with [iMP]
-if [[ "$1" == *".mp3" || "$1" == *".MP3" ]]; then
-	# bash "$1"
-	bash $IMP/rom.sh "$1"
-	clear
-	exit 0
-fi
-
-# IF .pls .PLS then Run with [iMP]
-if [[ "$1" == *".pls" || "$1" == *".PLS" ]]; then
-	# bash "$1"
-	bash $IMP/rom.sh "$1"
-	clear
-	exit 0
-fi
-
-# IF .m3u .M3U then Run with [iMP]
-if [[ "$1" == *".m3u" || "$1" == *".M3U" ]]; then
-	# bash "$1"
-	bash $IMP/rom.sh "$1"
-	clear
-	exit 0
-fi
+# IF .mp3 .pls .m3u then Run with [iMP]
+for musicfile in .mp3 .MP3 .Mp3 .mP3 .pls .PLS .Pls .PLs .pLS .plS .m3u .M3U .m3U .M3u; do
+	if [[ "$1" == *"$musicfile" ]]; then
+		bash $IMP/rom.sh "$1"
+		clear
+		exit 0
+	fi
+done
 
 exit 0
