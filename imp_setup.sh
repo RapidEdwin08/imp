@@ -206,7 +206,7 @@ installTYPE=$(dialog --no-collapse --title "  $internetSTATUS" \
 tput reset
 
 # If ESC then Exit
-if [ "$installTYPE" == '' ]; then exit 0; fi
+if [ "$installTYPE" == '' ]; then sysinfo 2>/dev/null; exit 0; fi
 
 if [ "$installTYPE" == 'R' ]; then
 	selectTYPE="REBOOT"
@@ -583,6 +583,7 @@ else
 fi
 
 tput reset
+sysinfo 2>/dev/null
 exit 0
 }
 
@@ -2017,6 +2018,7 @@ if [ "$confREBOOT" == '1' ]; then tput reset; sudo reboot; fi
 if [ "$confREBOOT" == '2' ]; then mainMENU; fi
 
 tput reset
+sysinfo 2>/dev/null
 exit 0
 }
 
@@ -2816,10 +2818,10 @@ impINSTALLflag=$(dialog --no-collapse --title "   *DISCLAIMER* Install at your o
 if [ "$impINSTALLflag" == '1' ]; then installFLAG=streams; fi
 if [ "$impINSTALLflag" == '2' ]; then installFLAG=minimal; fi
 if [ "$impINSTALLflag" == '3' ]; then installFLAG=offline; fi
-if [ "$impINSTALLflag" == '' ]; then tput reset; exit 0; fi
+if [ "$impINSTALLflag" == '' ]; then tput reset; sysinfo 2>/dev/null; exit 0; fi
 
 mainMENU
 
 tput reset
+sysinfo 2>/dev/null
 exit 0
-
