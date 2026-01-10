@@ -34,7 +34,6 @@ fi
 for joyscript in 'Current Playlist.sh' 'Current Settings.sh' 'HTTP Server Log.sh' '[ReadMe] OMX Monitor.sh' \
 sysinfo.sh boot-selector.sh overclock.sh screen-mode.sh gamelist-metadata-refresh.sh romsetswap.sh \
 chocolate-doom_plus.sh '+Chocolate Doom Setup.sh' CacheSX2Cleaner.sh '[GIT pi-apps].sh' \
-'OpenBOR - PAK Extract (v0-67).sh' 'OpenBOR PAK Extract.sh' '[QJoyPad] Desktop.sh' \
 lzdoom-dazi.sh lzdoom-sijl.sh gzdoom-sijl.sh uzdoom-sijl.sh \
 lr-atari800-tweaks.sh rott-darkwar_plus.sh yquake2_plus.sh \
 vlc-downgrade-es.sh icon-selector.sh; do
@@ -56,8 +55,8 @@ if [[ "$romDIR" == *"$ADVmenuRP"* && $1 == *".sh" ]]; then
 	exit 0
 fi
 
-# Certain Scripts we do NOT want to use with Joypad  Simply <command>bash %ROM%</command>
-for nojoyscript in 'Desktop.sh' 'Kodi.sh'; do
+# Certain Scripts we do NOT want to use with Joypad Simply <command>bash %ROM%</command>
+for nojoyscript in 'Desktop.sh' 'Kodi.sh' '[QJoyPad] Desktop.sh' 'OpenBOR - PAK Extract (v0-67).sh' 'OpenBOR PAK Extract.sh'; do
 	if [[ "$1" == *"$nojoyscript" ]]; then
 		bash "$1"
 		clear
