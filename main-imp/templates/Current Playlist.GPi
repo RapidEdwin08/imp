@@ -123,7 +123,7 @@ while read line; do
 		if [[ $line == *"$httpBASE"* ]]; then
 			echo "\Zb\Z4*$line*\Zn"
 		else
-			echo " $line"
+			echo " \Zn$line"
 		fi
 	else
 		currentLINE=$(echo "$line" | sed 's|.*/||'  )
@@ -131,7 +131,7 @@ while read line; do
 		if [[ $line == *"$mp3BASE"* ]]; then
 			echo "\Zb\Z4><  $currentLINE  [SELECTED] \Zn"
 		else
-			echo "    $currentLINE"
+			echo "    \Zn$currentLINE"
 		fi
 	fi
 done < $currentLIST
