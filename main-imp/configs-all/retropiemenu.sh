@@ -36,7 +36,7 @@ sysinfo.sh boot-selector.sh overclock.sh screen-mode.sh gamelist-metadata-refres
 chocolate-doom_plus.sh '+Chocolate Doom Setup.sh' CacheSX2Cleaner.sh '[GIT pi-apps].sh' \
 lzdoom-dazi.sh lzdoom-sijl.sh gzdoom-sijl.sh uzdoom-sijl.sh \
 lr-atari800-tweaks.sh rott-darkwar_plus.sh yquake2_plus.sh \
-vlc-downgrade-es.sh icon-selector.sh; do
+vlc-downgrade-es.sh icon-selector.sh run_bighardmaker.sh; do
 	if [[ "$1" == *"$joyscript" ]]; then
 		sudo $joy2key stop 2>/dev/null; $joy2key start &
 		bash "$1"
