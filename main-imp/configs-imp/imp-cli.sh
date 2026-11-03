@@ -1,5 +1,5 @@
 #!/bin/bash
-# 202512 IMP CLI
+# 202611 IMP CLI
 
 IMP=/opt/retropie/configs/imp
 #IMPrpMENU=~/RetroPie/retropiemenu/imp # Do not rely on default retropiemenu location
@@ -39,7 +39,7 @@ impMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\
 	13 "<> Start Randomizer" \
 	14 "~ Randomizer [Mode]" \
 	15 "~ Repeat [Mode]" \
-	S "# Current Settings #" \
+	S "~ Settings" \
 	V "^ {Volume}" 2>&1>/dev/tty)
 
 # Confirmed - Otherwise Back to Main Menu
@@ -126,8 +126,8 @@ if [ "$impMENU" == '15' ]; then
 fi
 
 if [ "$impMENU" == 'S' ]; then
-	bash $IMPrpMENU/Settings/Current\ Settings.sh
-	impMAINmenu
+	defaultITEM=C
+	setMAINmenu
 fi
 
 if [ "$impMENU" == 'V' ]; then
@@ -382,7 +382,6 @@ defaultITEM=$impMENU
 impMAINmenu
 }
 
-
 impMUSICmenu()
 {
 clear
@@ -509,6 +508,809 @@ if [[ ! "${currentMUSICdir}" == "$musicDIR" ]] && [[ ! "${currentMUSICdir}" == '
 fi
 
 impMAINmenu
+}
+
+setMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+setMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	S "General Settings              \Zb_-+-_                                " \
+	B "BGM Settings                 \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	G "Game Settings           \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	H "HTTP Server Settings    \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	I "Idle Settings          \Zb.:;':--.-:-----::---:-                      " \
+	R "Randomizer Settings   \Zb'::.   -.------   .-:                        " \
+	U "Start-Up Settings      \Zb:-   ':------:. '::.                        " \
+	- "                       \Zb=-'  .::-..-::-  ='                         " \
+	- "                            \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	- "                            \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                            \Zb'::-'..-'\Zn                             " \
+	- "                             \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$setMENU" == '' ] || [ ! "$setMENU" == '-' ]; then
+	defaultITEM=$setMENU
+fi
+
+if [ "$setMENU" == '-' ]; then
+	defaultITEM=-
+	setMAINmenu
+fi
+
+if [ "$setMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	setMAINmenu
+fi
+
+if [ "$setMENU" == 'S' ]; then
+	defaultITEM=C
+	GENsetMAINmenu
+fi
+
+if [ "$setMENU" == 'B' ]; then
+	defaultITEM=C
+	BGMsetMAINmenu
+fi
+
+if [ "$setMENU" == 'G' ]; then
+	defaultITEM=C
+	GAMEsetMAINmenu
+fi
+
+if [ "$setMENU" == 'H' ]; then
+	defaultITEM=C
+	HTTPsetMAINmenu
+fi
+
+if [ "$setMENU" == 'I' ]; then
+	defaultITEM=C
+	IDLEsetMAINmenu
+fi
+
+if [ "$setMENU" == 'R' ]; then
+	defaultITEM=C
+	RNDMsetMAINmenu
+fi
+
+if [ "$setMENU" == 'U' ]; then
+	defaultITEM=C
+	STARTsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '' ]; then
+	defaultITEM=S
+else
+	defaultITEM=$setMENU
+fi
+impMAINmenu
+}
+
+GENsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+GENsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	0 "Fade Volume [0ff]             \Zb_-+-_                                " \
+	1 "Fade Volume [x1]             \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	2 "Fade Volume [x5]        \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	3 "Fade Volume [x10]       \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	4 "IMP Lite [Off]         \Zb.:;':--.-:-----::---:-                      " \
+	5 "IMP Lite [On]         \Zb'::.   -.------   .-:                        " \
+	6 "Repeat Mode [Off]      \Zb:-   ':------:. '::.                        " \
+	7 "Repeat Mode [1]        \Zb=-'  .::-..-::-  ='                         " \
+	8 "Repeat Mode [ALL]           \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	- "                            \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                            \Zb'::-'..-'\Zn                             " \
+	- "                             \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$GENsetMENU" == '' ] || [ ! "$GENsetMENU" == '-' ]; then
+	defaultITEM=$GENsetMENU
+fi
+
+if [ "$GENsetMENU" == '-' ]; then
+	defaultITEM=-
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '0' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Fade\ Volume\ \[0ff\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Fade\ Volume\ \[x1\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Fade\ Volume\ \[x5\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Fade\ Volume\ \[x10\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/IMP\ Lite\ \[Off\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '5' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/IMP\ Lite\ \[On\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '6' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Infinite\ IMP\ \[Off\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '7' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Infinite\ IMP\ \[On\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '8' ]; then
+	bash $IMPrpMENU/Settings/General\ Settings/Infinite\ IMP\ \[ALL\].sh
+	GENsetMAINmenu
+fi
+
+if [ "$GENsetMENU" == '' ]; then
+	defaultITEM=S
+else
+	defaultITEM=$GENsetMENU
+fi
+setMAINmenu
+}
+
+BGMsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+BGMsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	1 "BGM A-Side [Off]              \Zb_-+-_                                " \
+	2 "BGM A-Side [On]              \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	3 "BGM B-Side [Off]        \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	4 "BGM B-Side [On]         \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	5 "Play Quit Song [Off]   \Zb.:;':--.-:-----::---:-                      " \
+	6 "Play Quit Song [On]   \Zb'::.   -.------   .-:                        " \
+	7 "Startup Song [Off]     \Zb:-   ':------:. '::.                        " \
+	8 "Startup Song [On]      \Zb=-'  .::-..-::-  ='                         " \
+	- "                            \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	- "                            \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                            \Zb'::-'..-'\Zn                             " \
+	- "                             \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$BGMsetMENU" == '' ] || [ ! "$BGMsetMENU" == '-' ]; then
+	defaultITEM=$BGMsetMENU
+fi
+
+if [ "$BGMsetMENU" == '-' ]; then
+	defaultITEM=-
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/BGM\ A-Side\ \[Off\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/BGM\ A-Side\ \[On\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/BGM\ B-Side\ \[Off\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/BGM\ B-Side\ \[On\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '5' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/Play\ Quit\ Song\ \[Off\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '6' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/Play\ Quit\ Song\ \[On\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '7' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/Play\ Startup\ Song\ \[Off\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '8' ]; then
+	bash $IMPrpMENU/Settings/BGM\ Settings/Play\ Startup\ Song\ \[On\].sh
+	BGMsetMAINmenu
+fi
+
+if [ "$BGMsetMENU" == '' ]; then
+	defaultITEM=B
+else
+	defaultITEM=$BGMsetMENU
+fi
+setMAINmenu
+}
+
+GAMEsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+GAMEsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	1 "[00] Delay @Game End         \Zb_-+-_                                " \
+	2 "[05] Delay @Game End        \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	3 "[10] Delay @Game End   \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	4 "[15] Delay @Game End   \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	5 "[20] Delay @Game End  \Zb.:;':--.-:-----::---:-                      " \
+	6 "[25] Delay @Game End \Zb'::.   -.------   .-:                        " \
+	7 "[30] Delay @Game End  \Zb:-   ':------:. '::.                        " \
+	8 "Music 0ver Games[Off] \Zb=-'  .::-..-::-  ='                         " \
+	9 "Music 0ver Games[On]       \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	10 "Music Idle 0ver Games[On]  \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                           \Zb'::-'..-'\Zn                             " \
+	- "                            \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$GAMEsetMENU" == '' ] || [ ! "$GAMEsetMENU" == '-' ]; then
+	defaultITEM=$GAMEsetMENU
+fi
+
+if [ "$GAMEsetMENU" == '-' ]; then
+	defaultITEM=-
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[00\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[05\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[10\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[15\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '5' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[20\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '6' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[25\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '7' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/\[30\]\ Delay\ At\ Game\ End.sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '8' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/Music\ 0ver\ Games\ \[Off\].sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '9' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/Music\ 0ver\ Games\ \[On\].sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '10' ]; then
+	bash $IMPrpMENU/Settings/Game\ Settings/Music\ Idle\ 0ver\ Games\ \[On\].sh
+	GAMEsetMAINmenu
+fi
+
+if [ "$GAMEsetMENU" == '' ]; then
+	defaultITEM=G
+else
+	defaultITEM=$GAMEsetMENU
+fi
+setMAINmenu
+}
+
+HTTPsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+HTTPsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	1 "HTTP Server Log               \Zb_-+-_                                " \
+	2 "HTTP Server Music [On]       \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	3 "HTTP Server Roms [On]   \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	4 "HTTP Server [Off]       \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	- "                       \Zb.:;':--.-:-----::---:-                      " \
+	- "                      \Zb'::.   -.------   .-:                        " \
+	- "                       \Zb:-   ':------:. '::.                        " \
+	- "                       \Zb=-'  .::-..-::-  ='                         " \
+	- "                            \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	- "                            \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                            \Zb'::-'..-'\Zn                             " \
+	- "                             \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$HTTPsetMENU" == '' ] || [ ! "$HTTPsetMENU" == '-' ]; then
+	defaultITEM=$HTTPsetMENU
+fi
+
+if [ "$HTTPsetMENU" == '-' ]; then
+	defaultITEM=-
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/HTTP\ Server\ Settings/HTTP\ Server\ Log.sh
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/HTTP\ Server\ Settings/HTTP\ Server\ Music\ \[On\].sh
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/HTTP\ Server\ Settings/HTTP\ Server\ Roms\ \[On\].sh
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/HTTP\ Server\ Settings/HTTP\ Server\ \[Off\].sh
+	HTTPsetMAINmenu
+fi
+
+if [ "$HTTPsetMENU" == '' ]; then
+	defaultITEM=H
+else
+	defaultITEM=$HTTPsetMENU
+fi
+setMAINmenu
+}
+
+IDLEsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+IDLEsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	X "Idle @Screensaver [0ff]       \Zb_-+-_                                " \
+	V "Idle @Screensaver [Video]    \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	A "Idle @Screensaver [Any] \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	S "Idle Behavior [Stop]    \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	L "Idle Behavior [Volume] \Zb.:;':--.-:-----::---:-                      " \
+	D "Stop IMP @Sleep [0ff] \Zb'::.   -.------   .-:                        " \
+	P "Stop IMP @Sleep [0n]   \Zb:-   ':------:. '::.                        " \
+	K "KillDisplay @Sleep[0n] \Zb=-'  .::-..-::-  ='                         " \
+	0 "%05 Idle IMP Volume         \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	1 "%10 Idle IMP Volume         \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	2 "%20 Idle IMP Volume         \Zb'::-'..-'\Zn                             " \
+	3 "%30 Idle IMP Volume          \Zb.:-:.'''\Zn                             " \
+	4 "%40 Idle IMP Volume                                      " \
+	5 "%50 Idle IMP Volume                                      " \
+	6 "%60 Idle IMP Volume                                      " \
+	7 "%70 Idle IMP Volume                                      " \
+	8 "%80 Idle IMP Volume                                      " \
+	9 "%90 Idle IMP Volume                                      " \
+	M "[MAX] Idle IMP Volume               " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$IDLEsetMENU" == '' ] || [ ! "$IDLEsetMENU" == '-' ]; then
+	defaultITEM=$IDLEsetMENU
+fi
+
+if [ "$IDLEsetMENU" == '-' ]; then
+	defaultITEM=-
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'X' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Idle\ at\ Screensaver\ \[0ff\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'V' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Idle\ at\ Screensaver\ \[Video\]\ \[0n\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'A' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Idle\ at\ Screensaver\ \[Any\]\ \[0n\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'S' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Idle\ IMP\ Behavior\ \[Stop\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'L' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Idle\ IMP\ Behavior\ \[Volume\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'D' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Stop\ IMP\ at\ Sleep\ \[0ff\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'P' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Stop\ IMP\ Sleep\ \[0n\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'K' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/Stop+Kill\ Display\ at\ Sleep\ \[0n\].sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '0' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[05\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[10\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[20\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[30\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[40\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '5' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[50\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '6' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[60\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '7' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[70\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '8' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[80\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '9' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[90\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == 'M' ]; then
+	bash $IMPrpMENU/Settings/Idle\ Settings/\[MAX\]\ Idle\ IMP\ Volume.sh
+	IDLEsetMAINmenu
+fi
+
+if [ "$IDLEsetMENU" == '' ]; then
+	defaultITEM=I
+else
+	defaultITEM=$IDLEsetMENU
+fi
+setMAINmenu
+}
+
+RNDMsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+RNDMsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	0 "Randomizer [Off]              \Zb_-+-_                                " \
+	1 "Randomizer [On]              \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	2 "Randomizer Mode [ALL]   \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	3 "Randomizer Mode [BGM]   \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	4 "Randomizer Mode [PLS]  \Zb.:;':--.-:-----::---:-                      " \
+	- "                      \Zb'::.   -.------   .-:                        " \
+	- "                       \Zb:-   ':------:. '::.                        " \
+	- "                       \Zb=-'  .::-..-::-  ='                         " \
+	- "                            \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	- "                            \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	- "                            \Zb'::-'..-'\Zn                             " \
+	- "                             \Zb.:-:.'''\Zn       " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$RNDMsetMENU" == '' ] || [ ! "$RNDMsetMENU" == '-' ]; then
+	defaultITEM=$RNDMsetMENU
+fi
+
+if [ "$RNDMsetMENU" == '-' ]; then
+	defaultITEM=-
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '0' ]; then
+	bash $IMPrpMENU/Settings/Randomizer\ Settings/Music\ Randomizer\ \[Off\].sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/Randomizer\ Settings/Music\ Randomizer\ \[On\].sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/Randomizer\ Settings/Randomizer\ Mode\ \[ALL\].sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/Randomizer\ Settings/Randomizer\ Mode\ \[BGM\].sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/Randomizer\ Settings/Randomizer\ Mode\ \[PLS\].sh
+	RNDMsetMAINmenu
+fi
+
+if [ "$RNDMsetMENU" == '' ]; then
+	defaultITEM=R
+else
+	defaultITEM=$RNDMsetMENU
+fi
+setMAINmenu
+}
+
+STARTsetMAINmenu()
+{
+sleep 0.2 # Refresh Status
+clear
+
+STARTsetMENU=$(dialog --colors --no-collapse --default-item "$defaultITEM" --title "\Z0${currentMUSICdir}\Zn" \
+	--ok-label " SELECT " --cancel-label BACK \
+	--menu "             \Zn\Z1I\Znntegrated \Z1M\Znusic \Z1P\Znlayer for \Z1R\Znetro\Z1P\Znie \Z1v\Zn$versionIMP" 25 75 20 \
+	C "# Current Settings #                      " \
+	N "Music @Startup [Off]          \Zb_-+-_                                " \
+	Y "Music @Startup [On]          \Zb'#\Zn\Z1*\Zn\Zb=\Zn\Z1*\Zn\Zb#-                               " \
+	X "Shuffle Playlist [Off]  \Zb\Z7^\Zn\Zb....-|:\Z7^\Zn\Zb:|:-../:\Z7^\Zn\Zb                         " \
+	S "Shuffle Playlist [On]   \Zb'-+++#::\Zb\Z7_\Zn\Zb::#+++-''                         " \
+	0 "[000] Delay @Startup   \Zb.:;':--.-:-----::---:-                      " \
+	1 "[005] Delay @Startup  \Zb'::.   -.------   .-:                        " \
+	2 "[010] Delay @Startup   \Zb:-   ':------:. '::.                        " \
+	3 "[015] Delay @Startup   \Zb=-'  .::-..-::-  ='                         " \
+	4 "[020] Delay @Startup        \Zb.::-.'-\Zb\Z7^\Zn\Zb--\Zn                             " \
+	5 "[025] Delay @Startup        \Zb'-\Z7^\Zn\Zb-. .-:'\Zn                             " \
+	6 "[030] Delay @Startup        \Zb'::-'..-'\Zn                             " \
+	7 "[030] Delay @Startup         \Zb.:-:.'''\Zn                             " \
+	8 "[035] Delay @Startup                                     " \
+	9 "[040] Delay @Startup                                     " \
+	A "[045] Delay @Startup                                     " \
+	B "[055] Delay @Startup                                     " \
+	C "[060] Delay @Startup                                     " \
+	D "[070] Delay @Startup                                     " \
+	E "[080] Delay @Startup                                     " \
+	F "[090] Delay @Startup                                     " \
+	G "[100] Delay @Startup                                     " \
+	H "[110] Delay @Startup                                     " \
+	I "[120] Delay @Startup                " 2>&1>/dev/tty)
+
+# Confirmed - Otherwise Back to Main Menu
+if [ ! "$STARTsetMENU" == '' ] || [ ! "$STARTsetMENU" == '-' ]; then
+	defaultITEM=$STARTsetMENU
+fi
+
+if [ "$STARTsetMENU" == '-' ]; then
+	defaultITEM=-
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Current\ Settings.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'N' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/Music\ At\ Startup\ \[Off\].sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'Y' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/Music\ At\ Startup\ \[On\].sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'X' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/Shuffle\ Playlist\ \[Off\].sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'S' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/Shuffle\ Playlist\ \[On\].sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '0' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[000\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '1' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[005\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '2' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[010\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '3' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[015\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '4' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[020\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '5' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[025\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '6' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[030\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '7' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[035\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '8' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[040\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '9' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[045\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'A' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[050\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'B' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[055\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'C' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[060\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'D' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[070\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'E' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[080\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'F' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[090\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'G' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[100\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'H' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[110\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == 'I' ]; then
+	bash $IMPrpMENU/Settings/Startup\ Settings/\[120\]\ Delay\ At\ Startup.sh
+	STARTsetMAINmenu
+fi
+
+if [ "$STARTsetMENU" == '' ]; then
+	defaultITEM=U
+else
+	defaultITEM=$STARTsetMENU
+fi
+setMAINmenu
 }
 
 impMAINmenu
